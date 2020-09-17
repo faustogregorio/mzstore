@@ -1,0 +1,29 @@
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+mat-form-field.mat-form-field {
+  font-size: 10px;
+  width: 500px;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-thick {
+  color: rgba(255, 255, 255, 0.87);
+}
+
+::ng-deep
+  .mat-form-field-appearance-outline.mat-focused
+  .mat-form-field-outline-thick {
+  color: rgba(255, 255, 255, 0.87);
+}
+
+input::-webkit-input-placeholder,
+     textarea::-webkit-input-placeholder {
+     color: #ccc;
+     text-shadow: none;
+     -webkit-text-fill-color: initial;
+}
