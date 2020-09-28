@@ -8,6 +8,11 @@ import { CategoriaComponent } from './../components/categoria/categoria.componen
 import { FiltrarComponent } from '../components/filtrar/filtrar.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatTreeModule} from '@angular/material/tree';
+import { MatIconModule } from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+
 @NgModule({
   declarations: [
     HomeComponent,
@@ -17,7 +22,11 @@ import { FlexLayoutModule } from '@angular/flex-layout';
   imports: [
     CommonModule,
     HomeRoutingModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatGridListModule,
+    MatTreeModule,
+    MatIconModule,
+    MatButtonModule
   ]
 })
 export class HomeModule { }

@@ -1,0 +1,26 @@
+<div style="width: 100%;min-height: calc(100vh - 54px - var(--footer-div-height));" fxLayout="row" fxLayoutAlign="center center">
+  <div style="width: 448px;border-radius: 15px;" class="mat-elevation-z1">
+    <form style="height: 500px;padding: 48px;" fxLayout="column">
+      <div style="margin-bottom: 20px;" fxLayoutAlign="center">
+        <img src="assets/img/logo.png" alt="" height="80px" width="auto">
+      </div>
+     <h2 align="center">Acceder a tu cuenta</h2>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Correo Electrónico</mat-label>
+        <input matInput type="email">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Contraseña</mat-label>
+        <input matInput [type]="hide ? 'password' : 'text'">
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" type="button">
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      </mat-form-field>
+      <div style="margin-top: 20px;" fxLayoutAlign="space-between">
+        <button mat-button color="primary" type="button" routerLink="/auth/signup">Crear tu cuenta</button>
+        <button mat-flat-button color="primary">Acceder</button>
+      </div>
+    </form>
+  </div>
+</div>

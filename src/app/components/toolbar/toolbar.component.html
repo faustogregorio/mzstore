@@ -9,7 +9,7 @@
   >
     <mat-icon>menu</mat-icon>
   </button>
-  <span>MZstore</span>
+  <a routerLink="/">MZstore</a>
   <span class="example-spacer"></span>
 <form style="margin-top: 13px;">
   <mat-form-field appearance="outline" style="color: white;">
@@ -40,22 +40,26 @@
     mat-icon-button
     class="example-icon favorite-icon"
     aria-label="Example icon-button with heart icon"
+    routerLink="/carrito"
   >
     <mat-icon matBadge="15" matBadgeColor="warn">shopping_cart</mat-icon>
   </button>
+
   <button
     mat-icon-button
     class="example-icon favorite-icon"
     aria-label="Example icon-button with heart icon"
+    routerLink="/auth"
   >
-    <mat-icon>local_shipping</mat-icon>
+    <mat-icon>account_circle</mat-icon>
   </button>
   <button
     mat-icon-button
     class="example-icon favorite-icon"
     aria-label="Example icon-button with heart icon"
+    routerLink="/admin"
   >
-    <mat-icon>login</mat-icon>
+    <mat-icon>admin_panel_settings</mat-icon>
   </button>
 </div>
 <!-- <mat-toolbar color="primary">
