@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { HttpClientModule } from '@angular/common/http';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -30,6 +31,7 @@ import { FooterComponent } from './components/footer/footer.component';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
     FlexLayoutModule,

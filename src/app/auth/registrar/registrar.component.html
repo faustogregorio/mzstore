@@ -1,6 +1,6 @@
 <div style="width: 100%;min-height: calc(100vh - 54px - var(--footer-div-height));" fxLayout="row" fxLayoutAlign="center center">
   <div style="width: 448px;border-radius: 15px;" class="mat-elevation-z1">
-    <form style="height: 538px;padding: 48px;" fxLayout="column">
+    <form style="height: 538px;padding: 48px;" fxLayout="column" [formGroup]="registrarForm" (ngSubmit)="onSubmit()">
       <div style="margin-bottom: 20px;">
         <img src="assets/img/logo.png" alt="" height="80px" width="auto">
       </div>
@@ -8,36 +8,52 @@
 
       <mat-form-field appearance="outline">
         <mat-label>Nombre completo</mat-label>
-        <input matInput type="text">
+        <input matInput type="text" formControlName="nombre_completo">
+        <mat-error *ngIf="verificarError('nombre_completo', 'required')">INGRESE SU NOMBRE COMPLETO</mat-error>
+        <mat-error *ngIf="verificarError('nombre_completo', 'pattern')">SOLO LETRAS DEL ALFABETO ESPAÑOL</mat-error>
+        <mat-error *ngIf="verificarError('nombre_completo', 'maxlength')">MÁXIMO 100 CARACTERES</mat-error>
       </mat-form-field>
       <div fxLayout="row wrap" fxLayoutGap="5px">
         <mat-form-field appearance="outline" fxFlex="130px">
           <mat-label>Teléfono</mat-label>
-          <input type="tel" matInput>
+          <input type="tel" matInput formControlName="telefono">
           <mat-icon matSuffix>phone</mat-icon>
+          <mat-error *ngIf="verificarError('telefono', 'required')">REQUERIDO</mat-error>
+          <mat-error *ngIf="verificarError('telefono', 'pattern')">SOLO NÚMEROS</mat-error>
+          <mat-error *ngIf="verificarError('telefono', 'maxlength')">TELÉFONO DE 10 DÍGITOS</mat-error>
+          <mat-error *ngIf="verificarError('telefono', 'minlength')">TELÉFONO DE 10 DÍGITOS</mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline" fxFlex="217px">
           <mat-label>Correo Electrónico</mat-label>
-          <input type="email" matInput>
+          <input type="email" matInput formControlName="email">
+          <mat-error *ngIf="verificarError('email', 'required')">INGRESE SU EMAIL</mat-error>
+          <mat-error *ngIf="verificarError('email', 'email')">EMAIL INVÁLIDO</mat-error>
+          <mat-error *ngIf="verificarError('email', 'maxlength')">MÁXIMO 100 CARACTERES</mat-error>
         </mat-form-field>
       </div>
       <div fxLayout="row wrap" fxLayoutGap="5px">
         <mat-form-field appearance="outline" fxFlex="173.5px">
           <mat-label>Contraseña</mat-label>
-          <input matInput [type]="hide ? 'password' : 'text'">
+          <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
           <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" type="button">
           <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
           </button>
+          <mat-error *ngIf="verificarError('password', 'required')">INGRESE UNA CONTRASEÑA</mat-error>
+          <mat-error *ngIf="verificarError('password', 'pattern')">SOLO LETRAS Y NÚMEROS</mat-error>
+          <mat-error *ngIf="verificarError('password', 'maxlength')">MÁXIMO 20 CARACTERES</mat-error>
+          <mat-error *ngIf="verificarError('password', 'minlength')">MÍNIMO 6 CARACTERES</mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline" fxFlex="173.5px">
           <mat-label>Confirmar Contraseña</mat-label>
-          <input matInput [type]="hide ? 'password' : 'text'">
+          <input matInput [type]="hide ? 'password' : 'text'" formControlName="confirmar_password">
+          <mat-error *ngIf="verificarError('confirmar_password', 'required')">REQUERIDO</mat-error>
+          <mat-error *ngIf="verificarError('confirmar_password', 'confirmedValidator')">NO COINCIDE</mat-error>
+
         </mat-form-field>
       </div>
-
       <div style="margin-top: 20px;" fxLayoutAlign="space-between">
         <button mat-button color="primary" type="button" routerLink="/auth/login">Acceder a tu cuenta</button>
-        <button mat-flat-button color="primary">Crear</button>
+        <button mat-flat-button color="primary" [disabled]="registrarForm.invalid">Crear</button>
       </div>
     </form>
   </div>

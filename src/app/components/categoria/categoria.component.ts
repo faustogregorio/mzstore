@@ -36,6 +36,57 @@ const TREE_DATA: FoodNode[] = [
         ]
       },
     ]
+  },{
+    name: 'Vegetables',
+    children: [
+      {
+        name: 'Green',
+        children: [
+          { name: 'Broccoli' },
+          { name: 'Brussels sprouts' },
+        ]
+      }, {
+        name: 'Orange',
+        children: [
+          { name: 'Pumpkins' },
+          { name: 'Carrots' },
+        ]
+      },
+    ]
+  },{
+    name: 'Vegetables',
+    children: [
+      {
+        name: 'Green',
+        children: [
+          { name: 'Broccoli' },
+          { name: 'Brussels sprouts' },
+        ]
+      }, {
+        name: 'Orange',
+        children: [
+          { name: 'Pumpkins' },
+          { name: 'Carrots' },
+        ]
+      },
+    ]
+  },{
+    name: 'Vegetables',
+    children: [
+      {
+        name: 'Green',
+        children: [
+          { name: 'Broccoli' },
+          { name: 'Brussels sprouts' },
+        ]
+      }, {
+        name: 'Orange',
+        children: [
+          { name: 'Pumpkins' },
+          { name: 'Carrots' },
+        ]
+      },
+    ]
   },
 ];
 
@@ -80,5 +131,9 @@ export class CategoriaComponent implements OnInit {
   }
 
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
+
+  prueba(message: string): void {
+    console.log('soy una prueba', message);
+  }
 
 }

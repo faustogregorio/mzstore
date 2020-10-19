@@ -12,6 +12,8 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import {MatTreeModule} from '@angular/material/tree';
 import { MatIconModule } from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import {MatButtonModule} from '@angular/material/button';
     MatGridListModule,
     MatTreeModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatMenuModule,
+    MatPaginatorModule
   ]
 })
 export class HomeModule { }

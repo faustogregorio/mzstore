@@ -170,31 +170,13 @@
             </mat-grid-list>
           </div>
         </mat-grid-tile>
-        <!-- <mat-grid-tile>
-          <div style="width: 100%;">
-            <mat-grid-list cols="1" rowHeight="1:1" gutterSize="0px">
-              <mat-grid-tile rowspan="1">
-                <img
-                src="https://resources.claroshop.com/medios-plazavip/mkt/5ca3e10cc1dd9_p30lite-azul-front-800x800-72-dpijpg.jpg"
-                alt=""
-                width="100%"
-                height="auto"
-              />
-              </mat-grid-tile>
-            </mat-grid-list>
-            <mat-grid-list cols="1" rowHeight="5:3" gutterSize="0px">
-              <mat-grid-tile>
-                <p style="text-align: center;">
-                  Lorem ipsum dolor
-                </p>
-              </mat-grid-tile>
-            </mat-grid-list>
-            <mat-grid-list cols="1" rowHeight="53px" gutterSize="0px">
-              <mat-grid-tile style="background-color: pink;">583.22 pesos</mat-grid-tile>
-            </mat-grid-list>
-          </div>
-        </mat-grid-tile> -->
       </mat-grid-list>
+      <div style="height: 100px;" fxLayoutAlign="end center">
+        <mat-paginator [length]="100"
+        [pageSize]="10"
+        [pageSizeOptions]="[5, 10, 25, 100]">
+</mat-paginator>
+      </div>
     </div>
   </div>
 </div>
