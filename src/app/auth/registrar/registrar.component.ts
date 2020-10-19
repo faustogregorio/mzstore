@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from '../auth.service';
 import { User } from '../user.model';
 
@@ -14,7 +15,8 @@ export class RegistrarComponent implements OnInit {
   user: User;
   constructor(
     private formBuilder: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    private _snackBar: MatSnackBar
   ) {
     this.registrarForm = this.formBuilder.group({
       id_usuario: [0],
@@ -52,6 +54,11 @@ export class RegistrarComponent implements OnInit {
   verificarError(controlName: string, errorName: string): boolean {
     return this.registrarForm.controls[controlName].hasError(errorName);
   }
+  openSnackBar(message: string, action: string): void {
+    this._snackBar.open(message, action, {
+      duration: 2000,
+    });
+  }
   verificarCoincidenciaPassword(controlName: string, matchingControlName: string): Validators {
     return (formGroup: FormGroup) => {
       const control = formGroup.controls[controlName];
@@ -68,17 +75,3 @@ export class RegistrarComponent implements OnInit {
   }
 }
 
-/* export function ConfirmedValidator(controlName: string, matchingControlName: string){
-  return (formGroup: FormGroup) => {
-      const control = formGroup.controls[controlName];
-      const matchingControl = formGroup.controls[matchingControlName];
-      if (matchingControl.errors && !matchingControl.errors.confirmedValidator) {
-          return;
-      }
-      if (control.value !== matchingControl.value) {
-          matchingControl.setErrors({ confirmedValidator: true });
-      } else {
-          matchingControl.setErrors(null);
-      }
-  }
-} */
