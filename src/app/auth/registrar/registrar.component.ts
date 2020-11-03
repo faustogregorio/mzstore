@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from '../auth.service';
-import { User } from '../user.model';
+import { RegistrarRespuesta, User } from '../user.model';
 
 @Component({
   selector: 'app-registrar',
@@ -16,7 +16,7 @@ export class RegistrarComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private _snackBar: MatSnackBar
+    private snackBar: MatSnackBar
   ) {
     this.registrarForm = this.formBuilder.group({
       id_usuario: [0],
@@ -39,12 +39,15 @@ export class RegistrarComponent implements OnInit {
       console.log(this.registrarForm.value);
       this.user = this.registrarForm.value;
       this.authService.registrarUsuario(this.user).subscribe(
-        result => {
+        (result: RegistrarRespuesta) => {
           console.log(result);
+          this.openSnackBar(result.message, '');
         }, error => {
           console.log(error);
           console.log(error.error.message);
           console.log(error.status);
+          this.openSnackBar(error.error.message, '');
+
         }
       );
     }
@@ -55,8 +58,8 @@ export class RegistrarComponent implements OnInit {
     return this.registrarForm.controls[controlName].hasError(errorName);
   }
   openSnackBar(message: string, action: string): void {
-    this._snackBar.open(message, action, {
-      duration: 2000,
+    this.snackBar.open(message, action, {
+      duration: 3000,
     });
   }
   verificarCoincidenciaPassword(controlName: string, matchingControlName: string): Validators {
@@ -74,4 +77,3 @@ export class RegistrarComponent implements OnInit {
     };
   }
 }
-

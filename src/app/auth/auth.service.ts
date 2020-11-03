@@ -1,7 +1,7 @@
 import { environment } from './../../environments/environment.prod';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { User } from './user.model';
+import { LoginRespuesta, RegistrarRespuesta, User } from './user.model';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -13,7 +13,11 @@ export class AuthService {
     private http: HttpClient
   ) { }
 
-  registrarUsuario(user: User): Observable<object> {
-    return this.http.post(`${environment.api}user/create.php`, user);
+  registrarUsuario(user: User): Observable<RegistrarRespuesta> {
+    return this.http.post<RegistrarRespuesta>(`${environment.api}user/create.php`, user);
+  }
+
+  login(email: string, password: string): Observable<LoginRespuesta> {
+    return this.http.post<LoginRespuesta>(`${environment.api}user/login.php`, { email, password });
   }
 }
