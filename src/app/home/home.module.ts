@@ -1,10 +1,9 @@
+import { SharedModule } from './../shared/shared.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
-
-import { CategoriaComponent } from './../components/categoria/categoria.component';
 import { FiltrarComponent } from '../components/filtrar/filtrar.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
@@ -18,12 +17,12 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 @NgModule({
   declarations: [
     HomeComponent,
-    CategoriaComponent,
     FiltrarComponent
   ],
   imports: [
     CommonModule,
     HomeRoutingModule,
+    SharedModule,
     FlexLayoutModule,
     MatGridListModule,
     MatTreeModule,

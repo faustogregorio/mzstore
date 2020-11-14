@@ -16,9 +16,13 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatListModule} from '@angular/material/list';
+import {MatCardModule} from '@angular/material/card';
 
 
 import { FooterComponent } from './components/footer/footer.component';
+import { SharedModule } from './shared/shared.module';
 
 
 @NgModule({
@@ -32,6 +36,7 @@ import { FooterComponent } from './components/footer/footer.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    SharedModule,
     ReactiveFormsModule,
     FormsModule,
     FlexLayoutModule,
@@ -41,7 +46,10 @@ import { FooterComponent } from './components/footer/footer.component';
     MatBadgeModule,
     MatAutocompleteModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatSidenavModule,
+    MatListModule,
+    MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]

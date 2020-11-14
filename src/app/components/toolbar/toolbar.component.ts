@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-toolbar',
@@ -10,6 +11,10 @@ import { map, startWith } from 'rxjs/operators';
   styleUrls: ['./toolbar.component.scss']
 })
 export class ToolbarComponent implements OnInit {
+
+  @Output() menuClicked = new EventEmitter<string>();
+  @Input() esAdmin?: boolean;
+  @Input() isAuthenticated?: boolean;
 
   myControl = new FormControl();
   options: string[] = ['One', 'Two', 'Three'];
@@ -26,6 +31,7 @@ export class ToolbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.esAdmin);
 
   }
 
@@ -36,7 +42,13 @@ export class ToolbarComponent implements OnInit {
   }
 
   redirectTo(route: string): void {
+    this.menuClicked.emit('cerrar');
     this.router.navigate([route]);
   }
+
+  clickMenu(clicked: string): void {
+    this.menuClicked.emit(clicked);
+  }
+
 
 }

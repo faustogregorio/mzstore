@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { LoginRespuesta } from '../user.model';
 
@@ -17,7 +18,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private router: Router
   ) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email, Validators.maxLength(100)]],
@@ -35,13 +37,17 @@ export class LoginComponent implements OnInit {
       this.authService.login(this.email, this.password).subscribe(
         (result: LoginRespuesta) => {
           console.log(result);
-          // const nombre = result.nombre_completo.split(' ')[0];
           this.openSnackBar(result.nombre_completo.toUpperCase(), 'BIENVENIDO ');
+          localStorage.setItem('Authorization', result.token);
+          this.authService.updateAuthenticationStatus(result.success, this.authService.getTokenData.data.esAdmin);
+          this.router.navigate(['/usuario']);
 
         }, error => {
           console.log(error);
-          console.log(error.error.message);
-          this.openSnackBar(error.error.message, 'ERROR!');
+          this.openSnackBar(error.error  ? error.error.message : error, 'ERROR');
+          this.loginForm.patchValue({
+            password: ['']
+          });
         }
       );
     } else {

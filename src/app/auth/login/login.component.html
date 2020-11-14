@@ -9,8 +9,8 @@
       <mat-form-field appearance="outline">
         <mat-label>Correo Electrónico</mat-label>
         <input matInput type="email" formControlName="email">
-        <mat-error *ngIf="verificarError('email', 'required')">INGRESE SU EMAIL</mat-error>
-          <mat-error *ngIf="verificarError('email', 'email')">EMAIL INVÁLIDO</mat-error>
+        <mat-error *ngIf="verificarError('email', 'required')">INGRESE SU CORREO ELECTRÓNICO</mat-error>
+          <mat-error *ngIf="verificarError('email', 'email')">CORREO ELECTRÓNICO INVÁLIDO</mat-error>
           <mat-error *ngIf="verificarError('email', 'maxlength')">MÁXIMO 100 CARACTERES</mat-error>
       </mat-form-field>
       <mat-form-field appearance="outline">

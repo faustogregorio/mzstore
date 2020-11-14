@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 
@@ -100,14 +100,14 @@ interface ExampleFlatNode {
 /**
  * @title Tree with flat nodes
  */
+
 @Component({
-  selector: 'app-categoria',
-  templateUrl: './categoria.component.html',
-  styleUrls: ['./categoria.component.scss']
+  selector: 'app-categories',
+  templateUrl: './categories.component.html',
+  styleUrls: ['./categories.component.scss']
 })
-export class CategoriaComponent implements OnInit {
-
-
+export class CategoriesComponent implements OnInit {
+  @Output() selectedOption = new EventEmitter();
 
   private _transformer = (node: FoodNode, level: number) => {
     return {
@@ -135,5 +135,7 @@ export class CategoriaComponent implements OnInit {
   prueba(message: string): void {
     console.log('soy una prueba', message);
   }
-
+  selectOption(): void {
+    this.selectedOption.emit();
+  }
 }

@@ -6,14 +6,21 @@
     mat-icon-button
     class="example-icon"
     aria-label="Example icon-button with menu icon"
+    (click)="clickMenu('principal')"
   >
     <mat-icon>menu</mat-icon>
   </button>
 
-  <img src="assets/img/logo.jpg" alt="" height="40px" style="cursor: pointer;" (click)="redirectTo('/')">
+  <img
+    src="assets/img/logo.jpg"
+    alt=""
+    height="40px"
+    style="cursor: pointer"
+    (click)="redirectTo('')"
+  />
 
   <span class="example-spacer"></span>
-<form style="margin-top: 13px;">
+  <!-- <form style="margin-top: 13px;">
   <mat-form-field appearance="outline" style="color: white;">
     <input
       type="text"
@@ -34,35 +41,48 @@
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>
-</form>
+</form> -->
 
+  <!--   <span class="example-spacer"></span> -->
 
-  <span class="example-spacer"></span>
-  <button
-    mat-icon-button
-    class="example-icon favorite-icon"
-    aria-label="Example icon-button with heart icon"
-    routerLink="/carrito"
+  <div
+    fxLayoutAlign="center center"
+    style="margin-right: 20px"
+    fxLayoutGap="5px"
   >
-    <mat-icon matBadge="15" matBadgeColor="warn">shopping_cart</mat-icon>
-  </button>
+    <button
+      mat-icon-button
+      class="example-icon favorite-icon"
+      aria-label="Example icon-button with heart icon"
+      (click)="clickMenu('cuenta')"
+    >
+      <mat-icon
+        >{{
+          isAuthenticated
+            ? "person"
+            : "person_outline"
+        }}
 
-  <button
-    mat-icon-button
-    class="example-icon favorite-icon"
-    aria-label="Example icon-button with heart icon"
-    routerLink="/auth"
-  >
-    <mat-icon>account_circle</mat-icon>
-  </button>
-  <button
-    mat-icon-button
-    class="example-icon favorite-icon"
-    aria-label="Example icon-button with heart icon"
-    routerLink="/admin"
-  >
-    <mat-icon>admin_panel_settings</mat-icon>
-  </button>
+      </mat-icon>
+    </button>
+    <button
+      mat-icon-button
+      class="example-icon favorite-icon"
+      aria-label="Example icon-button with heart icon"
+      (click)="redirectTo('/admin')"
+      *ngIf="esAdmin"
+    >
+      <mat-icon>admin_panel_settings</mat-icon>
+    </button>
+    <button
+      mat-icon-button
+      class="example-icon favorite-icon"
+      aria-label="Example icon-button with heart icon"
+      (click)="redirectTo('/carrito')"
+    >
+      <mat-icon matBadge="15" matBadgeColor="warn">shopping_cart</mat-icon>
+    </button>
+  </div>
 </div>
 <!-- <mat-toolbar color="primary">
   <button

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { RegistrarRespuesta, User } from '../user.model';
 
@@ -16,7 +17,8 @@ export class RegistrarComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private router: Router
   ) {
     this.registrarForm = this.formBuilder.group({
       id_usuario: [0],
@@ -41,12 +43,13 @@ export class RegistrarComponent implements OnInit {
       this.authService.registrarUsuario(this.user).subscribe(
         (result: RegistrarRespuesta) => {
           console.log(result);
-          this.openSnackBar(result.message, '');
+          localStorage.setItem('Authorization', result.token);
+          this.authService.updateAuthenticationStatus(result.success, this.authService.getTokenData.data.esAdmin);
+          this.router.navigate(['/usuario']);
+          this.openSnackBar(this.registrarForm.value.nombre_completo, 'BIENVENIDO');
         }, error => {
           console.log(error);
-          console.log(error.error.message);
-          console.log(error.status);
-          this.openSnackBar(error.error.message, '');
+          this.openSnackBar(error.error ? error.error.message : error, 'ERROR');
 
         }
       );
