@@ -1,20 +1,39 @@
-<div style="width: var(--categoria-div-width);">
-  <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" style="background-color: whitesmoke;">
-    <!-- This is the tree node template for leaf nodes -->
-    <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding (click)="prueba(node.name)">
-      <!-- use a disabled button to provide padding for tree leaf -->
-      <button mat-icon-button disabled></button>
-      <span class="mat-small" (click)="selectOption()">{{node.name}}</span>
-    </mat-tree-node>
-    <!-- This is the tree node template for expandable nodes -->
-    <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding (click)="prueba(node.name)">
-      <button mat-icon-button matTreeNodeToggle
-              [attr.aria-label]="'Toggle ' + node.name">
-        <mat-icon class="mat-icon-rtl-mirror">
-          {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
-        </mat-icon>
-      </button>
-      <span (click)="selectOption()">{{node.name}}</span>
-    </mat-tree-node>
-  </mat-tree>
+<div style="width: var(--categoria-div-width)">
+  <mat-card class="example-card">
+    <p class="mat-h2">Categorias</p>
+
+    <mat-card-content>
+      <mat-accordion>
+        <mat-expansion-panel
+        (opened)="getArticulosPorCategoria(categoria.id_categoria)"
+        (closed)="reset()"
+          *ngFor="let categoria of categorias"
+        >
+          <mat-expansion-panel-header >
+            <mat-panel-title> {{categoria.categoria}} </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div fxLayout="column" *ngIf="subcategorias.length > 0">
+            <div *ngFor="let subcategoria of subcategorias">
+              <mat-checkbox (change)="onCheckboxSubcategoriasChanged(subcategoria.id_subcategoria, $event.checked)">
+                {{ subcategoria.subcategoria }}
+              </mat-checkbox>
+            </div>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="example-card">
+    <p class="mat-h2">Marcas</p>
+
+    <mat-card-content>
+      <div fxLayout="column">
+        <div *ngFor="let marca of marcas">
+          <mat-checkbox [checked]="checked" (change)="onCheckboxMarcasChanged(marca.id_marca, $event.checked)" >
+            {{ marca.marca }}
+          </mat-checkbox>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
 </div>

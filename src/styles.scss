@@ -35,6 +35,7 @@ $catalogo-theme: mat-light-theme((
 
 /* You can add global styles to this file, and also import other style files */
 :root {
+  --toolbar-div-height: 54px;
   --categoria-div-width: 300px;
   --footer-div-height: 100px;
   --toolbar-text-color: 255,255,255;

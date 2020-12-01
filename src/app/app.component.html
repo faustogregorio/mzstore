@@ -2,11 +2,15 @@
 <router-outlet></router-outlet>
 <app-footer></app-footer> -->
 
-<div class="example-container">
-  <app-toolbar (menuClicked)="onMenuClicked($event)" [esAdmin]="esAdmin" [isAuthenticated]="isAuthenticated"></app-toolbar>
+<div class="container">
+  <app-toolbar
+    (menuClicked)="onMenuClicked($event)"
+    [esAdmin]="esAdmin"
+    [isAuthenticated]="isAuthenticated"
+  ></app-toolbar>
 
   <mat-sidenav-container
-    class="example-sidenav-container"
+    class="sidenav-container"
     [style.marginTop.px]="0"
     hasBackdrop="true"
   >
@@ -17,10 +21,73 @@
       fixedTopGap="56"
       autoFocus="false"
     >
+    <p class="mat-h2" align="center">Categoria</p>
+    <mat-accordion>
+      <mat-expansion-panel
+        (opened)="panelOpenState = true"
+        (closed)="panelOpenState = false"
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title> Celulares y telefonía </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p>I'm visible because I am open</p>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel
+        (opened)="panelOpenState = true"
+        (closed)="panelOpenState = false"
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title> Ropa, Calzado y Accesorios </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p>I'm visible because I am open</p>
+      </mat-expansion-panel>
+      <mat-expansion-panel
+        (opened)="panelOpenState = true"
+        (closed)="panelOpenState = false"
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Películas, Series de TV y Música
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p>I'm visible because I am open</p>
+      </mat-expansion-panel>
+      <mat-expansion-panel
+        (opened)="panelOpenState = true"
+        (closed)="panelOpenState = false"
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title> Electrónica y Tecnología </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p>I'm visible because I am open</p>
+      </mat-expansion-panel>
+      <mat-expansion-panel
+        (opened)="panelOpenState = true"
+        (closed)="panelOpenState = false"
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Salud, Belleza y Cuidado personal
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p>I'm visible because I am open</p>
+      </mat-expansion-panel>
+      <mat-expansion-panel
+        (opened)="panelOpenState = true"
+        (closed)="panelOpenState = false"
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title> Animales y Mascotas </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p>I'm visible because I am open</p>
+      </mat-expansion-panel>
+    </mat-accordion>
+    <p class="mat-small" align="right" style="padding: 15px;"> ©2020-2020 MZstore </p>
       <!-- <mat-nav-list>
         <a mat-list-item routerLink="." *ngFor="let nav of fillerNav">{{nav}}</a>
       </mat-nav-list> -->
-      <app-categories (selectedOption)="onSelectedOption()"></app-categories>
+      <!-- <app-categories (selectedOption)="onSelectedOption()"></app-categories> -->
     </mat-sidenav>
     <mat-sidenav
       #snav2
@@ -30,7 +97,7 @@
       fixedTopGap="56"
       autoFocus="false"
     >
-      <mat-card class="example-card mat-elevation-z0" *ngIf="isAuthenticated">
+      <mat-card style="width: 300px;" class="card mat-elevation-z0" *ngIf="isAuthenticated">
         <mat-card-header>
           <div mat-card-avatar>
             <mat-icon style="font-size: 3rem" [style.color]="colorIcono"
@@ -43,12 +110,45 @@
           <mat-card-subtitle>{{ datosToken.data.email }}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-actions>
-          <mat-action-list>
-            <button mat-list-item (click)="login()">Ver mis Pedidos</button>
-            <button mat-list-item (click)="login()">
-              Modificar mis Datos Personales
-            </button>
-          </mat-action-list>
+          <mat-nav-list>
+            <mat-list-item
+              (click)="redirectTo('/admin/articulos')"
+              *ngIf="esAdmin"
+            >
+              <mat-icon matListIcon>list</mat-icon>
+              <span matLine>ARTÍCULOS</span>
+            </mat-list-item>
+            <mat-list-item (click)="redirectTo('/usuario/datos')">
+              <mat-icon matListIcon>edit</mat-icon>
+              <span matLine>DATOS PERSONALES</span>
+            </mat-list-item>
+            <mat-list-item (click)="redirectTo('/usuario/pedidos')">
+              <mat-icon matListIcon>list</mat-icon>
+              <span class="mat-h4" matLine>MIS PEDIDOS</span>
+            </mat-list-item>
+            <mat-list-item
+              (click)="redirectTo('/admin/add-articulo')"
+              *ngIf="esAdmin"
+            >
+              <mat-icon matListIcon>add</mat-icon>
+              <span class="mat-h4" matLine>NUEVO ARTÍCULO</span>
+            </mat-list-item>
+
+            <mat-list-item
+              (click)="redirectTo('/admin/pedidos')"
+              *ngIf="esAdmin"
+            >
+              <mat-icon matListIcon>list</mat-icon>
+              <span class="mat-h4" matLine>TODOS LOS PEDIDOS</span>
+            </mat-list-item>
+            <mat-list-item
+              (click)="redirectTo('/admin/usuarios')"
+              *ngIf="esAdmin"
+            >
+              <mat-icon matListIcon>people</mat-icon>
+              <span class="mat-h4" matLine>USUARIOS</span>
+            </mat-list-item>
+          </mat-nav-list>
         </mat-card-actions>
         <mat-divider></mat-divider>
         <mat-card-actions>

@@ -1,31 +1,26 @@
-import { SharedModule } from './../shared/shared.module';
+
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
-import { FiltrarComponent } from '../components/filtrar/filtrar.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
-import {MatGridListModule} from '@angular/material/grid-list';
-import {MatTreeModule} from '@angular/material/tree';
+import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
-import {MatButtonModule} from '@angular/material/button';
-import {MatMenuModule} from '@angular/material/menu';
-import {MatPaginatorModule} from '@angular/material/paginator';
+import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
-    HomeComponent,
-    FiltrarComponent
+    HomeComponent
   ],
   imports: [
     CommonModule,
     HomeRoutingModule,
-    SharedModule,
     FlexLayoutModule,
     MatGridListModule,
-    MatTreeModule,
     MatIconModule,
     MatButtonModule,
     MatMenuModule,

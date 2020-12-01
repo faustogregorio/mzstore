@@ -1,23 +1,24 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { UsuariosRoutingModule } from './usuarios-routing.module';
-import { UsuariosComponent } from './usuarios.component';
+import { UsuarioRoutingModule } from './usuario-routing.module';
+import { UsuarioComponent } from './usuario.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { UsuarioComponent } from './usuario/usuario.component';
+import { PedidosComponent } from './pedidos/pedidos.component';
+import { DatosPersonalesComponent } from './datos-personales/datos-personales.component';
 
 @NgModule({
-  declarations: [UsuariosComponent, UsuarioComponent],
+  declarations: [UsuarioComponent, PedidosComponent, DatosPersonalesComponent],
   imports: [
     CommonModule,
-    UsuariosRoutingModule,
+    UsuarioRoutingModule,
     FlexLayoutModule,
     MatGridListModule,
     MatButtonModule,
     MatIconModule
   ]
 })
-export class UsuariosModule { }
+export class UsuarioModule { }

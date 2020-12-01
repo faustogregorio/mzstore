@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-filtrar',
@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./filtrar.component.scss']
 })
 export class FiltrarComponent implements OnInit {
-
+  @Output() filtrarPor = new EventEmitter<number>();
   filtro: string;
   filtros: string[];
 
@@ -24,6 +24,7 @@ export class FiltrarComponent implements OnInit {
 
   filtrar(option: number): void {
     console.log(option);
+    this.filtrarPor.emit(option);
     this.filtro = this.filtros[option];
   }
 

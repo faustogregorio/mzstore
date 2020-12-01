@@ -1,0 +1,224 @@
+<div
+  style="
+    width: 100%;
+    min-height: calc(
+      100vh - var(--footer-div-height) - var(--toolbar-div-height)
+    );
+  "
+  fxLayoutAlign="center"
+>
+  <div fxFlex="1300px">
+    <div style="width: 100%; margin: 24px 0px 24px 0px">
+      <span class="mat-h4"
+        >Nuevo artículo<span style="font-weight: 500">{{
+          ": " + articulo
+        }}</span></span
+      >
+    </div>
+
+    <mat-horizontal-stepper labelPosition="bottom" #stepper>
+      <mat-step
+        [stepControl]="informacionBasicaForm"
+        errorMessage="¡Verifica el formulario!"
+      >
+        <form [formGroup]="informacionBasicaForm">
+          <ng-template matStepLabel>Información Básica</ng-template>
+          <div style="width: 100%" fxLayout="row" fxLayoutGap="24px">
+            <div fxFlex="50%" fxLayout="row wrap">
+              <mat-form-field appearance="fill" fxFlex="100%">
+                <mat-label>Artículo</mat-label>
+                <input
+                  matInput
+                  placeholder="Artículo"
+                  formControlName="articulo"
+                />
+                <mat-hint>Nombre del artículo</mat-hint>
+              </mat-form-field>
+              <div
+                style="margin: 24px 0px 24px 0px"
+                fxFlex="100%"
+                fxLayout="row"
+                fxLayoutGap="24px"
+              >
+                <mat-form-field appearance="fill" fxFlex="50%">
+                  <mat-label>Precio</mat-label>
+                  <input
+                    matInput
+                    type="number"
+                    placeholder="Precio"
+                    formControlName="precio"
+                    class="right-align"
+                  />
+                  <span matPrefix>$&nbsp;</span>
+                  <span matSuffix>.00 MX</span>
+                  <mat-hint>Precio del artículo</mat-hint>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" fxFlex="50%">
+                  <mat-label>Cantidad</mat-label>
+                  <input
+                    matInput
+                    type="number"
+                    placeholder="Cantidad"
+                    formControlName="stock"
+                    class="right-align"
+                  />
+                  <span matSuffix>&nbsp;Artículos</span>
+                  <mat-hint>Cantodad de artículos disponibles</mat-hint>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div fxFlex="50%">
+              <mat-form-field appearance="fill" fxFlex="100%">
+                <mat-label>Descripción</mat-label>
+                <textarea
+                  matInput
+                  placeholder="Descripción"
+                  formControlName="descripcion"
+                  cdkTextareaAutosize
+                  #autosize="cdkTextareaAutosize"
+                  cdkAutosizeMinRows="7"
+                  cdkAutosizeMaxRows="10"
+                ></textarea>
+
+                <mat-hint>Descripción del artículo</mat-hint>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div fxLayoutAlign="end">
+            <button mat-button color="primary" matStepperNext>Siguiente</button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step
+        [stepControl]="imagenPrincipalForm"
+        errorMessage="Adjunta al menos una imagen"
+      >
+        <form [formGroup]="imagenPrincipalForm">
+          <ng-template matStepLabel>Imagenes</ng-template>
+
+          <div
+            style="width: 100%; margin-bottom: 24px"
+            fxLayout="column"
+            fxLayoutAlign="start center"
+            fxLayoutGap="24px"
+          >
+            <div>
+              <input
+                style="display: none"
+                type="file"
+                accept="image/*"
+                (change)="onFileChangeImagenes($event)"
+                multiple
+                #files
+              />
+              <!-- <label for="" style="margin-right: 10px;">Imagenes: </label> -->
+
+              <button
+                mat-flat-button
+                type="button"
+                color="accent"
+                (click)="addFileImagenes()"
+              >
+                <mat-icon>attach_file</mat-icon>
+                Adjuntar
+              </button>
+            </div>
+            <div>
+              <img
+                style="margin: 12px"
+                *ngFor="let imagen of imagenes"
+                [src]="imagen"
+                height="150px"
+              />
+            </div>
+          </div>
+
+          <div fxLayoutAlign="end">
+            <button mat-button color="primary" matStepperPrevious>Atrás</button>
+            <button mat-button color="primary" matStepperNext>Siguiente</button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step
+        [stepControl]="categoriaForm"
+        errorMessage="¡Verifica el formulario!"
+      >
+        <form [formGroup]="categoriaForm">
+          <ng-template matStepLabel>Categoría</ng-template>
+          <div
+            style="width: 100%; margin-bottom: 24px"
+            fxLayoutAlign="center"
+            fxLayoutGap="24px"
+          >
+            <mat-form-field appearance="fill" fxFlex="24%">
+              <mat-label>Categoria</mat-label>
+              <mat-select formControlName="id_categoria">
+                <mat-option
+                  *ngFor="let categoria of categorias"
+                  [value]="categoria.id_categoria"
+                  >{{ categoria.categoria }}</mat-option
+                >
+              </mat-select>
+              <mat-hint>Categoría a la que pertenece</mat-hint>
+              <!-- <mat-error *ngIf="categoriaForm.hasError('required')">You must make a selection</mat-error>
+              <mat-error *ngIf="categoriaForm.hasError('pattern') && !selected.hasError('required')">
+                Your selection is invalid
+              </mat-error> -->
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" fxFlex="24%">
+              <mat-label>Subcategoria</mat-label>
+              <mat-select formControlName="id_subcategoria">
+                <mat-option
+                  *ngFor="let subcategoria of subcategorias"
+                  [value]="subcategoria.id_subcategoria"
+                  >{{ subcategoria.subcategoria }}</mat-option
+                >
+              </mat-select>
+              <mat-hint>Subcategoría a la que pertenece</mat-hint>
+              <!-- <mat-error *ngIf="categoriaForm.hasError('required')">You must make a selection</mat-error>
+              <mat-error *ngIf="categoriaForm.hasError('pattern') && !selected.hasError('required')">
+                Your selection is invalid
+              </mat-error> -->
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" fxFlex="24%">
+              <mat-label>Marca</mat-label>
+              <mat-select formControlName="id_marca">
+                <mat-option
+                  *ngFor="let marca of marcas"
+                  [value]="marca.id_marca"
+                  >{{ marca.marca }}</mat-option
+                >
+              </mat-select>
+              <mat-hint>Marca del artículo</mat-hint>
+              <!-- <mat-error *ngIf="categoriaForm.hasError('required')">You must make a selection</mat-error>
+              <mat-error *ngIf="categoriaForm.hasError('pattern') && !selected.hasError('required')">
+                Your selection is invalid
+              </mat-error> -->
+            </mat-form-field>
+          </div>
+        </form>
+
+        <div fxLayoutAlign="end">
+          <button mat-button color="primary" matStepperPrevious>Atrás</button>
+          <button
+            mat-button
+            color="accent"
+            (click)="stepper.reset()"
+            [disabled]="
+              informacionBasicaForm.invalid ||
+              imagenPrincipalForm.invalid ||
+              categoriaForm.invalid
+            "
+          >
+            Añadir
+          </button>
+        </div>
+      </mat-step>
+    </mat-horizontal-stepper>
+  </div>
+</div>

@@ -7,12 +7,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/json',
-    Authorization: localStorage.getItem('Authorization') || ''
-  })
-};
+
 
 @Injectable({
   providedIn: 'root'
@@ -33,6 +28,12 @@ export class AuthService {
   }
 
   login(email: string, password: string): Observable<LoginRespuesta> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: localStorage.getItem('Authorization') || ''
+      })
+    };
     return this.http.post<LoginRespuesta>(`${environment.api}user/login.php`, { email, password }, httpOptions)
       .pipe(
         catchError(this.handleError)
@@ -40,6 +41,12 @@ export class AuthService {
   }
 
   get isAuthenticated(): Observable<Authenticated> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: localStorage.getItem('Authorization') || ''
+      })
+    };
     return this.http.get<Authenticated>(`${environment.api}authenticated.php`, httpOptions);
   }
 

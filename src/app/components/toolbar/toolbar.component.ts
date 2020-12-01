@@ -18,16 +18,16 @@ export class ToolbarComponent implements OnInit {
 
   myControl = new FormControl();
   options: string[] = ['One', 'Two', 'Three'];
-  filteredOptions: Observable<string[]>;
+  // filteredOptions: Observable<string[]>;
 
   constructor(
     private router: Router
   ) {
-    this.filteredOptions = this.myControl.valueChanges
+    /* this.filteredOptions = this.myControl.valueChanges
       .pipe(
         startWith(''),
         map(value => this._filter(value))
-      );
+      ); */
   }
 
   ngOnInit(): void {
@@ -35,11 +35,11 @@ export class ToolbarComponent implements OnInit {
 
   }
 
-  private _filter(value: string): string[] {
+  /* private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
 
     return this.options.filter(option => option.toLowerCase().includes(filterValue));
-  }
+  } */
 
   redirectTo(route: string): void {
     this.menuClicked.emit('cerrar');
@@ -47,7 +47,13 @@ export class ToolbarComponent implements OnInit {
   }
 
   clickMenu(clicked: string): void {
-    this.menuClicked.emit(clicked);
+    if (this.isAuthenticated || clicked === 'principal') {
+      this.menuClicked.emit(clicked);
+
+    } else {
+      localStorage.removeItem('Authorization');
+      this.router.navigate(['/auth/login']);
+    }
   }
 
 

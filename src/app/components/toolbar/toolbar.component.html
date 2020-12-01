@@ -1,71 +1,55 @@
 <div
   style="height: 54px; width: 100%; background-color: black; color: white"
-  fxLayoutAlign="space-between center"
+  fxLayoutAlign="center"
 >
-  <button
-    mat-icon-button
-    class="example-icon"
-    aria-label="Example icon-button with menu icon"
-    (click)="clickMenu('principal')"
-  >
-    <mat-icon>menu</mat-icon>
-  </button>
-
-  <img
-    src="assets/img/logo.jpg"
-    alt=""
-    height="40px"
-    style="cursor: pointer"
-    (click)="redirectTo('')"
-  />
-
-  <span class="example-spacer"></span>
-  <!-- <form style="margin-top: 13px;">
-  <mat-form-field appearance="outline" style="color: white;">
-    <input
-      type="text"
-      placeholder="Buscar..."
-      aria-label="Number"
-      matInput
-      [formControl]="myControl"
-      [matAutocomplete]="auto"
-      style="font-size: 14px;"
-    />
-    <mat-icon matSuffix style="font-size: 22px;">search</mat-icon>
-    <mat-autocomplete #auto="matAutocomplete">
-      <mat-option
-        *ngFor="let option of filteredOptions | async"
-        [value]="option"
+  <div style="height: 100%; width: 1300px" fxLayoutAlign="space-between">
+    <div fxLayoutAlign="center center">
+      <button
+        mat-icon-button
+        class="example-icon"
+        aria-label="Example icon-button with menu icon"
+        (click)="clickMenu('principal')"
       >
-        {{ option }}
-      </mat-option>
-    </mat-autocomplete>
-  </mat-form-field>
-</form> -->
+        <mat-icon>menu</mat-icon>
+      </button>
 
-  <!--   <span class="example-spacer"></span> -->
+      <img
+        src="assets/img/logo.jpg"
+        alt=""
+        height="40px"
+        style="cursor: pointer"
+        (click)="redirectTo('')"
+      />
+    </div>
 
-  <div
-    fxLayoutAlign="center center"
-    style="margin-right: 20px"
-    fxLayoutGap="5px"
-  >
-    <button
-      mat-icon-button
-      class="example-icon favorite-icon"
-      aria-label="Example icon-button with heart icon"
-      (click)="clickMenu('cuenta')"
+    <div
+      fxLayoutAlign="center center"
+      style="margin-right: 20px"
+      fxLayoutGap="5px"
     >
-      <mat-icon
-        >{{
-          isAuthenticated
-            ? "person"
-            : "person_outline"
-        }}
-
-      </mat-icon>
-    </button>
     <button
+        mat-icon-button
+        class="example-icon favorite-icon"
+      >
+        <mat-icon>search</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        class="example-icon favorite-icon"
+        aria-label="Example icon-button with heart icon"
+        (click)="clickMenu('cuenta')"
+      >
+        <mat-icon
+          >{{
+            isAuthenticated
+              ? esAdmin
+                ? "admin_panel_settings"
+                : "person"
+              : "person_outline"
+          }}
+        </mat-icon>
+      </button>
+      <!-- <button
       mat-icon-button
       class="example-icon favorite-icon"
       aria-label="Example icon-button with heart icon"
@@ -73,46 +57,15 @@
       *ngIf="esAdmin"
     >
       <mat-icon>admin_panel_settings</mat-icon>
-    </button>
-    <button
-      mat-icon-button
-      class="example-icon favorite-icon"
-      aria-label="Example icon-button with heart icon"
-      (click)="redirectTo('/carrito')"
-    >
-      <mat-icon matBadge="15" matBadgeColor="warn">shopping_cart</mat-icon>
-    </button>
+    </button> -->
+      <button
+        mat-icon-button
+        class="example-icon favorite-icon"
+        (click)="redirectTo('/carrito')"
+      >
+        <mat-icon matBadge="15" matBadgeColor="warn">shopping_cart</mat-icon>
+      </button>
+
+    </div>
   </div>
 </div>
-<!-- <mat-toolbar color="primary">
-  <button
-    mat-icon-button
-    class="example-icon"
-    aria-label="Example icon-button with menu icon"
-  >
-    <mat-icon>menu</mat-icon>
-  </button>
-  <span>MZstore</span>
-  <span class="example-spacer"></span>
-  <button
-    mat-icon-button
-    class="example-icon favorite-icon"
-    aria-label="Example icon-button with heart icon"
-  >
-    <mat-icon matBadge="15" matBadgeColor="warn">shopping_cart</mat-icon>
-  </button>
-  <button
-    mat-icon-button
-    class="example-icon favorite-icon"
-    aria-label="Example icon-button with heart icon"
-  >
-    <mat-icon>local_shipping</mat-icon>
-  </button>
-  <button
-    mat-icon-button
-    class="example-icon favorite-icon"
-    aria-label="Example icon-button with heart icon"
-  >
-    <mat-icon>login</mat-icon>
-  </button>
-</mat-toolbar> -->

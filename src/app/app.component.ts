@@ -22,6 +22,8 @@ export class AppComponent implements OnInit, OnDestroy {
   @ViewChild('snav2') userSidenav?: MatSidenav;
   @ViewChild('snav2') userSidenavElementRef?: ElementRef;
 
+  panelOpenState = false;
+
   constructor(
     private authService: AuthService,
     private router: Router
@@ -76,15 +78,20 @@ export class AppComponent implements OnInit, OnDestroy {
     this.router.navigate(['/auth/login']);
   }
 
+  redirectTo(ruta: string): void {
+    this.userSidenav?.close();
+    this.router.navigate([ruta]);
+  }
+
   onMenuClicked(snav: string): void {
     console.log(snav, ' que');
     if (snav === 'cuenta') {
       this.menuSidenav?.close();
-      if (!this.isAuthenticated) {
+      /* if (!this.isAuthenticated) {
         this.login();
-      } else {
-        this.userSidenav?.toggle();
-      }
+      } else { */
+      this.userSidenav?.toggle();
+      /* } */
     } else if (snav === 'cerrar') {
       this.userSidenav?.close();
       this.menuSidenav?.close();

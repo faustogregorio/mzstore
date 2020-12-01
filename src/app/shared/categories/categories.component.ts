@@ -1,141 +1,157 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FlatTreeControl } from '@angular/cdk/tree';
-import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
+import { Categoria, ResponseArticulo, ResponseCategoria, ResponseMarca, ResponseSubcategoria, Subcategoria, Articulo } from './../../buscar/buscar.model';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Marca } from 'src/app/buscar/buscar.model';
+import { BuscarService } from 'src/app/buscar/buscar.service';
+import { MatAccordion } from '@angular/material/expansion';
+import { BehaviorSubject, from, Observable, of, Subscription } from 'rxjs';
 
-/**
- * Food data with nested structure.
- * Each node has a name and an optional list of children.
- */
-interface FoodNode {
+export interface Task {
   name: string;
-  children?: FoodNode[];
+  completed: boolean;
 }
-
-const TREE_DATA: FoodNode[] = [
-  {
-    name: 'Fruit',
-    children: [
-      { name: 'Apple' },
-      { name: 'Banana' },
-      { name: 'Fruit loops' },
-    ]
-  }, {
-    name: 'Vegetables',
-    children: [
-      {
-        name: 'Green',
-        children: [
-          { name: 'Broccoli' },
-          { name: 'Brussels sprouts' },
-        ]
-      }, {
-        name: 'Orange',
-        children: [
-          { name: 'Pumpkins' },
-          { name: 'Carrots' },
-        ]
-      },
-    ]
-  },{
-    name: 'Vegetables',
-    children: [
-      {
-        name: 'Green',
-        children: [
-          { name: 'Broccoli' },
-          { name: 'Brussels sprouts' },
-        ]
-      }, {
-        name: 'Orange',
-        children: [
-          { name: 'Pumpkins' },
-          { name: 'Carrots' },
-        ]
-      },
-    ]
-  },{
-    name: 'Vegetables',
-    children: [
-      {
-        name: 'Green',
-        children: [
-          { name: 'Broccoli' },
-          { name: 'Brussels sprouts' },
-        ]
-      }, {
-        name: 'Orange',
-        children: [
-          { name: 'Pumpkins' },
-          { name: 'Carrots' },
-        ]
-      },
-    ]
-  },{
-    name: 'Vegetables',
-    children: [
-      {
-        name: 'Green',
-        children: [
-          { name: 'Broccoli' },
-          { name: 'Brussels sprouts' },
-        ]
-      }, {
-        name: 'Orange',
-        children: [
-          { name: 'Pumpkins' },
-          { name: 'Carrots' },
-        ]
-      },
-    ]
-  },
-];
-
-/** Flat node with expandable and level information */
-interface ExampleFlatNode {
-  expandable: boolean;
-  name: string;
-  level: number;
-}
-
-/**
- * @title Tree with flat nodes
- */
-
 @Component({
   selector: 'app-categories',
   templateUrl: './categories.component.html',
   styleUrls: ['./categories.component.scss']
 })
 export class CategoriesComponent implements OnInit {
-  @Output() selectedOption = new EventEmitter();
 
-  private _transformer = (node: FoodNode, level: number) => {
-    return {
-      expandable: !!node.children && node.children.length > 0,
-      name: node.name,
-      level: level
-    };
-  }
-
-  treeControl = new FlatTreeControl<ExampleFlatNode>(node => node.level, node => node.expandable);
-
-  treeFlattener = new MatTreeFlattener(this._transformer, node => node.level, node => node.expandable, node => node.children);
-
-  dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
-
-  constructor() {
-    this.dataSource.data = TREE_DATA;
+  marcas: Marca[] = [];
+  categorias: Categoria[] = [];
+  subcategorias: Subcategoria[] = [];
+  articulos: Articulo[] = [];
+  articulosFiltradosPorSubcategorias: Articulo[] = [];
+  articulosFiltradosPorMarca: Articulo[] = [];
+  checked = false;
+  constructor(
+    private buscarService: BuscarService
+  ) {
+    this.getCategorias();
   }
 
   ngOnInit(): void {
   }
-
-  hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
-
-  prueba(message: string): void {
-    console.log('soy una prueba', message);
+  getMarcasFromArticulos(articulos: Articulo[]): void {
+    const idMarcas: number[] = [];
+    this.marcas = articulos.filter(
+      articulo => {
+        if (!idMarcas.includes(articulo.id_marca)) {
+          idMarcas.push(articulo.id_marca);
+          return { id_marca: articulo.id_marca, marca: articulo.marca };
+        }
+        return;
+      }
+    );
   }
-  selectOption(): void {
-    this.selectedOption.emit();
+
+  getCategorias(): void {
+    this.buscarService.getCategorias().subscribe(
+      (response: ResponseCategoria) => {
+        console.log(response);
+        this.categorias = response.categorias;
+      }, error => {
+        console.log(error);
+      }
+    );
+  }
+
+  getArticulosPorCategoria(idCategoria: number): void {
+    this.buscarService.getArticulosPorCategoria(idCategoria).subscribe(
+      (response: ResponseArticulo) => {
+        console.log(response);
+        this.articulos = response.articulos;
+        this.buscarService.updateArticulos(response.articulos);
+        this.getSubcategoriasFromArticulos();
+        this.getMarcasFromArticulos(response.articulos);
+      }
+    );
+  }
+
+  getSubcategoriasFromArticulos(): void {
+    const tempArray: number[] = [];
+    this.subcategorias = this.articulos.filter(
+      articulo => {
+        if (!tempArray.includes(articulo.id_subcategoria)) {
+          tempArray.push(articulo.id_subcategoria);
+          return { id_subcategoria: articulo.id_subcategoria, subcategoria: articulo.subcategoria };
+        }
+        return;
+      }
+    );
+  }
+
+  onCheckboxSubcategoriasChanged(idSubcategoria: number, checked: boolean): void {
+    console.log('idSubcategoria: ', idSubcategoria, ' checked: ', checked);
+    if (checked) {
+      this.articulosFiltradosPorSubcategorias = [...this.articulosFiltradosPorSubcategorias, ...this.articulos.filter(
+        (articulo: Articulo) => {
+          if (articulo.id_subcategoria === idSubcategoria) {
+            return articulo;
+          }
+          return;
+        }
+      )];
+    } else {
+      this.articulosFiltradosPorSubcategorias = this.articulosFiltradosPorSubcategorias.filter(
+        (articulo: Articulo) => {
+          if (articulo.id_subcategoria !== idSubcategoria) {
+            return articulo;
+          }
+          return;
+        });
+    }
+    if (this.articulosFiltradosPorSubcategorias.length > 0) {
+      this.buscarService.updateArticulos(this.articulosFiltradosPorSubcategorias);
+      this.getMarcasFromArticulos(this.articulosFiltradosPorSubcategorias);
+    } else {
+      this.buscarService.updateArticulos(this.articulos);
+      this.getMarcasFromArticulos(this.articulos);
+      this.articulosFiltradosPorSubcategorias = [];
+    }
+    this.articulosFiltradosPorMarca = [];
+    this.uncheckeingCheckbox();
+  }
+
+  onCheckboxMarcasChanged(idMarca: number, checked: boolean): void {
+    console.log('idSubcategoria: ', idMarca, ' checked: ', checked);
+    const articulos = this.articulosFiltradosPorSubcategorias.length > 0 ? this.articulosFiltradosPorSubcategorias : this.articulos;
+    if (checked) {
+      this.articulosFiltradosPorMarca = [...this.articulosFiltradosPorMarca, ...articulos.filter(
+        (articulo: Articulo) => {
+          if (articulo.id_marca === idMarca) {
+            return articulo;
+          }
+          return;
+        }
+      )];
+    } else {
+      this.articulosFiltradosPorMarca = this.articulosFiltradosPorMarca.filter(
+        (articulo: Articulo) => {
+          if (articulo.id_marca !== idMarca) {
+            return articulo;
+          }
+          return;
+        });
+    }
+    if (this.articulosFiltradosPorMarca.length > 0) {
+      this.buscarService.updateArticulos(this.articulosFiltradosPorMarca);
+    } else {
+      this.buscarService.updateArticulos(this.articulos);
+      this.articulosFiltradosPorMarca = [];
+    }
+  }
+
+  uncheckeingCheckbox(): void {
+    this.checked = true;
+    setTimeout(() => {
+      this.checked = false;
+    }, 0);
+
+  }
+
+  reset(): void {
+    this.subcategorias = [];
+    this.articulosFiltradosPorSubcategorias = [];
+    this.articulosFiltradosPorMarca = [];
   }
 }
