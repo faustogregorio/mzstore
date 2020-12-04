@@ -1,4 +1,4 @@
-import { Categoria, ResponseArticulo, ResponseCategoria, ResponseMarca, ResponseSubcategoria, Subcategoria, Articulo } from './../../buscar/buscar.model';
+import { Categoria, ResponseBuscarArticulo, ResponseCategoria, ResponseMarca, ResponseSubcategoria, Subcategoria, BuscarArticulo } from './../../buscar/buscar.model';
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { Marca } from 'src/app/buscar/buscar.model';
 import { BuscarService } from 'src/app/buscar/buscar.service';
@@ -19,9 +19,9 @@ export class CategoriesComponent implements OnInit {
   marcas: Marca[] = [];
   categorias: Categoria[] = [];
   subcategorias: Subcategoria[] = [];
-  articulos: Articulo[] = [];
-  articulosFiltradosPorSubcategorias: Articulo[] = [];
-  articulosFiltradosPorMarca: Articulo[] = [];
+  articulos: BuscarArticulo[] = [];
+  articulosFiltradosPorSubcategorias: BuscarArticulo[] = [];
+  articulosFiltradosPorMarca: BuscarArticulo[] = [];
   checked = false;
   constructor(
     private buscarService: BuscarService
@@ -31,7 +31,7 @@ export class CategoriesComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  getMarcasFromArticulos(articulos: Articulo[]): void {
+  getMarcasFromArticulos(articulos: BuscarArticulo[]): void {
     const idMarcas: number[] = [];
     this.marcas = articulos.filter(
       articulo => {
@@ -57,7 +57,7 @@ export class CategoriesComponent implements OnInit {
 
   getArticulosPorCategoria(idCategoria: number): void {
     this.buscarService.getArticulosPorCategoria(idCategoria).subscribe(
-      (response: ResponseArticulo) => {
+      (response: ResponseBuscarArticulo) => {
         console.log(response);
         this.articulos = response.articulos;
         this.buscarService.updateArticulos(response.articulos);
@@ -84,7 +84,7 @@ export class CategoriesComponent implements OnInit {
     console.log('idSubcategoria: ', idSubcategoria, ' checked: ', checked);
     if (checked) {
       this.articulosFiltradosPorSubcategorias = [...this.articulosFiltradosPorSubcategorias, ...this.articulos.filter(
-        (articulo: Articulo) => {
+        (articulo: BuscarArticulo) => {
           if (articulo.id_subcategoria === idSubcategoria) {
             return articulo;
           }
@@ -93,7 +93,7 @@ export class CategoriesComponent implements OnInit {
       )];
     } else {
       this.articulosFiltradosPorSubcategorias = this.articulosFiltradosPorSubcategorias.filter(
-        (articulo: Articulo) => {
+        (articulo: BuscarArticulo) => {
           if (articulo.id_subcategoria !== idSubcategoria) {
             return articulo;
           }
@@ -117,7 +117,7 @@ export class CategoriesComponent implements OnInit {
     const articulos = this.articulosFiltradosPorSubcategorias.length > 0 ? this.articulosFiltradosPorSubcategorias : this.articulos;
     if (checked) {
       this.articulosFiltradosPorMarca = [...this.articulosFiltradosPorMarca, ...articulos.filter(
-        (articulo: Articulo) => {
+        (articulo: BuscarArticulo) => {
           if (articulo.id_marca === idMarca) {
             return articulo;
           }
@@ -126,7 +126,7 @@ export class CategoriesComponent implements OnInit {
       )];
     } else {
       this.articulosFiltradosPorMarca = this.articulosFiltradosPorMarca.filter(
-        (articulo: Articulo) => {
+        (articulo: BuscarArticulo) => {
           if (articulo.id_marca !== idMarca) {
             return articulo;
           }

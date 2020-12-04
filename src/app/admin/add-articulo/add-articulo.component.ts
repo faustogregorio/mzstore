@@ -6,6 +6,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { take } from 'rxjs/operators';
 import { Categoria, Marca, ResponseCategoria, ResponseMarca, ResponseSubcategoria, Subcategoria } from 'src/app/buscar/buscar.model';
 import { AdminService } from '../admin.service';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ResponseSaveArticulo } from '../admin.model';
 
 @Component({
   selector: 'app-add-articulo',
@@ -16,6 +19,50 @@ import { AdminService } from '../admin.service';
   }]
 })
 export class AddArticuloComponent implements OnInit {
+  editorConfig: AngularEditorConfig = {
+    editable: true,
+    spellcheck: true,
+    height: 'auto',
+    minHeight: '0',
+    maxHeight: 'auto',
+    width: 'auto',
+    minWidth: '0',
+    translate: 'yes',
+    enableToolbar: true,
+    showToolbar: true,
+    placeholder: 'Descripción del artículo...',
+    defaultParagraphSeparator: '',
+    defaultFontName: '',
+    defaultFontSize: '',
+    fonts: [
+      { class: 'arial', name: 'Arial' },
+      { class: 'times-new-roman', name: 'Times New Roman' },
+      { class: 'calibri', name: 'Calibri' },
+      { class: 'comic-sans-ms', name: 'Comic Sans MS' }
+    ],
+    customClasses: [
+      {
+        name: 'quote',
+        class: 'quote',
+      },
+      {
+        name: 'redText',
+        class: 'redText'
+      },
+      {
+        name: 'titleText',
+        class: 'titleText',
+        tag: 'h1',
+      },
+    ],
+    sanitize: false,
+    toolbarPosition: 'bottom',
+    toolbarHiddenButtons: [
+      [],
+      ['insertImage', 'insertVideo']
+    ]
+  };
+
   @ViewChild('autosize') autosize?: CdkTextareaAutosize;
 
   informacionBasicaForm: FormGroup;
@@ -32,10 +79,11 @@ export class AddArticuloComponent implements OnInit {
   constructor(
     private ngZone: NgZone,
     private formBuilder: FormBuilder,
-    private adminService: AdminService
-    ) {
+    private adminService: AdminService,
+    private snackBar: MatSnackBar
+  ) {
     this.informacionBasicaForm = this.formBuilder.group({
-      articulo: ['', Validators.required],
+      articulo: ['', [Validators.required, Validators.pattern('^[^]+$')]],
       descripcion: ['', Validators.required],
       precio: ['', Validators.required],
       stock: ['', Validators.required]
@@ -48,6 +96,10 @@ export class AddArticuloComponent implements OnInit {
       id_subcategoria: [0, [Validators.required, Validators.min(1)]],
       id_marca: [0, [Validators.required, Validators.min(1)]],
     });
+  }
+
+  get descripcion(): string {
+    return this.informacionBasicaForm.get('descripcion')?.value;
   }
 
   ngOnInit(): void {
@@ -101,10 +153,58 @@ export class AddArticuloComponent implements OnInit {
     return this.informacionBasicaForm.get('articulo')?.value;
   }
 
+  saveArticulo(): void {
+    if (this.informacionBasicaForm.valid && this.fileImagenes.length > 0 && this.categoriaForm.valid) {
+      let formData = new FormData();
+      formData = Object.assign(this.appendImagenes(formData), this.appendAtributosDelArticulo(formData));
+
+      console.log('FORMDATA: ', formData);
+      this.adminService.saveArticulo(formData).subscribe(
+        (response: ResponseSaveArticulo) => {
+          console.log(response);
+          this.openSnackBar(response.message);
+          this.clear();
+        }
+      );
+
+
+    } else {
+      this.openSnackBar('Operación no valida, verifique por favor');
+    }
+  }
+
+  appendImagenes(formData: FormData): FormData {
+    for (const file of this.fileImagenes) {
+      formData.append('imagenes[]', file);
+    }
+    return formData;
+  }
+
+  appendAtributosDelArticulo(formData: FormData): FormData {
+    const articulo = Object.assign(this.informacionBasicaForm.value, this.categoriaForm.value);
+    formData.append('articulo', JSON.stringify(articulo));
+    return formData;
+  }
+
+  openSnackBar(message: string, action = 'ACEPTAR'): void {
+    this.snackBar.open(message, action, {
+      duration: 3000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top'
+    });
+  }
+
   triggerResize(): void {
     // Wait for changes to be applied, then trigger textarea resize.
     this.ngZone.onStable.pipe(take(1))
       .subscribe(() => this.autosize?.resizeToFitContent(true));
+  }
+
+  clear(): void {
+    this.fileImagenes = [];
+    this.informacionBasicaForm.reset();
+    this.imagenPrincipalForm.reset();
+    this.categoriaForm.reset();
   }
 
 }

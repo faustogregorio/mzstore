@@ -16,11 +16,13 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatStepperModule } from '@angular/material/stepper';
 import { TextFieldModule } from '@angular/cdk/text-field';
-import {MatSelectModule} from '@angular/material/select';
-
+import { MatSelectModule } from '@angular/material/select';
+import { AngularEditorModule } from '@kolkov/angular-editor';
+import { SafeHtmlPipe } from './safe-html.pipe';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
-  declarations: [AdminComponent, AddArticuloComponent, ArticulosComponent, PedidosComponent, UsuariosComponent],
+  declarations: [AdminComponent, AddArticuloComponent, ArticulosComponent, PedidosComponent, UsuariosComponent, SafeHtmlPipe],
   imports: [
     CommonModule,
     AdminRoutingModule,
@@ -34,7 +36,9 @@ import {MatSelectModule} from '@angular/material/select';
     MatInputModule,
     MatStepperModule,
     TextFieldModule,
-    MatSelectModule
+    MatSelectModule,
+    AngularEditorModule,
+    MatSnackBarModule
   ]
 })
 export class AdminModule { }

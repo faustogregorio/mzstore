@@ -24,7 +24,7 @@
         <form [formGroup]="informacionBasicaForm">
           <ng-template matStepLabel>Información Básica</ng-template>
           <div style="width: 100%" fxLayout="row" fxLayoutGap="24px">
-            <div fxFlex="50%" fxLayout="row wrap">
+            <div fxFlex="50%" fxLayout="row wrap" fxLayoutAlign="start start">
               <mat-form-field appearance="fill" fxFlex="100%">
                 <mat-label>Artículo</mat-label>
                 <input
@@ -70,7 +70,12 @@
             </div>
 
             <div fxFlex="50%">
-              <mat-form-field appearance="fill" fxFlex="100%">
+              <angular-editor
+                formControlName="descripcion"
+                [config]="editorConfig"
+              >
+              </angular-editor>
+              <!-- <mat-form-field appearance="fill" fxFlex="100%">
                 <mat-label>Descripción</mat-label>
                 <textarea
                   matInput
@@ -83,11 +88,15 @@
                 ></textarea>
 
                 <mat-hint>Descripción del artículo</mat-hint>
-              </mat-form-field>
+              </mat-form-field> -->
+              <div style="width: 100%;">
+                <div [innerHtml]="descripcion | safeHtml"></div>
+
+              </div>
             </div>
           </div>
 
-          <div fxLayoutAlign="end">
+          <div style="margin-top: 24px;" fxLayoutAlign="end">
             <button mat-button color="primary" matStepperNext>Siguiente</button>
           </div>
         </form>
@@ -126,7 +135,7 @@
                 Adjuntar
               </button>
             </div>
-            <div>
+            <div *ngIf="fileImagenes.length > 0">
               <img
                 style="margin: 12px"
                 *ngFor="let imagen of imagenes"
@@ -193,6 +202,7 @@
                   [value]="marca.id_marca"
                   >{{ marca.marca }}</mat-option
                 >
+                <mat-option value="otro" style="color: blue;">Otro</mat-option>
               </mat-select>
               <mat-hint>Marca del artículo</mat-hint>
               <!-- <mat-error *ngIf="categoriaForm.hasError('required')">You must make a selection</mat-error>
@@ -208,14 +218,14 @@
           <button
             mat-button
             color="accent"
-            (click)="stepper.reset()"
+            (click)="saveArticulo()"
             [disabled]="
               informacionBasicaForm.invalid ||
               imagenPrincipalForm.invalid ||
               categoriaForm.invalid
             "
           >
-            Añadir
+            Guardar Artículo
           </button>
         </div>
       </mat-step>

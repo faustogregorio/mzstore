@@ -2,13 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from './../../environments/environment.prod';
-import { ResponseMarca, ResponseCategoria, ResponseSubcategoria, ResponseArticulo, Articulo } from './buscar.model';
+import { ResponseMarca, ResponseCategoria, ResponseSubcategoria, ResponseBuscarArticulo, BuscarArticulo } from './buscar.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BuscarService {
-  articulosChanged = new BehaviorSubject<Articulo[]>([]);
+  articulosChanged = new BehaviorSubject<BuscarArticulo[]>([]);
   constructor(
     private http: HttpClient
   ) { }
@@ -25,12 +25,12 @@ export class BuscarService {
     return this.http.get<ResponseSubcategoria>(`${environment.api}/subcategoria/subcategorias.php`);
   }
 
-  getArticulosPorCategoria(idCategoria: number): Observable<ResponseArticulo> {
-    return this.http.post<ResponseArticulo>(`${environment.api}/articulo/articulosPorCategoria.php`,
+  getArticulosPorCategoria(idCategoria: number): Observable<ResponseBuscarArticulo> {
+    return this.http.post<ResponseBuscarArticulo>(`${environment.api}/articulo/articulosPorCategoria.php`,
       { id_categoria: idCategoria });
   }
 
-  updateArticulos(artculos: Articulo[]): void {
+  updateArticulos(artculos: BuscarArticulo[]): void {
     this.articulosChanged.next(artculos);
   }
 }

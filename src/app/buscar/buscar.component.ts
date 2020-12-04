@@ -1,8 +1,9 @@
 import { Subscription } from 'rxjs';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { Articulo, Marca } from './buscar.model';
+import { BuscarArticulo, Marca } from './buscar.model';
 import { BuscarService } from './buscar.service';
+import { environment } from 'src/environments/environment.prod';
 
 @Component({
   selector: 'app-buscar',
@@ -12,14 +13,15 @@ import { BuscarService } from './buscar.service';
 export class BuscarComponent implements OnInit, OnDestroy {
   /* @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator; */
   // marcas: Marca[] = [];
+  urlImagenes = environment.urlImagenes;
   articulosChanged$: Subscription;
-  articulos: Articulo[] = [];
+  articulos: BuscarArticulo[] = [];
   filtrar = 0;
   constructor(
     private buscarService: BuscarService
   ) {
     this.articulosChanged$ = this.buscarService.articulosChanged.subscribe(
-      (articulos: Articulo[]) => {
+      (articulos: BuscarArticulo[]) => {
         console.log('BUscar: ', articulos);
         if (this.filtrar !== 0) {
           this.articulos = this.filtrar === 1 ? articulos.sort(this.filtrarArticulos('precio')) : articulos.sort(this.filtrarArticulos('precio', 'desc'));

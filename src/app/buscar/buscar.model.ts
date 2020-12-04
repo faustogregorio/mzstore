@@ -26,11 +26,11 @@ export interface Subcategoria {
   subcategoria: string;
 }
 
-export interface ResponseArticulo {
+export interface ResponseBuscarArticulo {
   success: boolean;
-  articulos: Articulo[];
+  articulos: BuscarArticulo[];
 }
-export interface Articulo {
+export interface BuscarArticulo {
   id_articulo: number;
   articulo: string;
   precio: string;

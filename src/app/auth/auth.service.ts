@@ -47,7 +47,7 @@ export class AuthService {
         Authorization: localStorage.getItem('Authorization') || ''
       })
     };
-    return this.http.get<Authenticated>(`${environment.api}authenticated.php`, httpOptions);
+    return this.http.get<Authenticated>(`${environment.api}auth.php`, httpOptions);
   }
 
   get authenticationValue(): boolean {
