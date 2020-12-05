@@ -1,14 +1,14 @@
 
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
-import { CdkTextareaAutosize } from '@angular/cdk/text-field';
-import { Component, NgZone, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { take } from 'rxjs/operators';
 import { Categoria, Marca, ResponseCategoria, ResponseMarca, ResponseSubcategoria, Subcategoria } from 'src/app/buscar/buscar.model';
 import { AdminService } from '../admin.service';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ResponseSaveArticulo } from '../admin.model';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { GestionarCategoriasSubcategoriasMarcasComponent } from '../gestionar-categorias-subcategorias-marcas/gestionar-categorias-subcategorias-marcas.component';
 
 @Component({
   selector: 'app-add-articulo',
@@ -42,28 +42,57 @@ export class AddArticuloComponent implements OnInit {
     ],
     customClasses: [
       {
-        name: 'quote',
-        class: 'quote',
+        name: 'Display 4',
+        class: 'mat-display-4',
       },
       {
-        name: 'redText',
-        class: 'redText'
+        name: 'Display 3',
+        class: 'mat-display-3',
       },
       {
-        name: 'titleText',
-        class: 'titleText',
-        tag: 'h1',
+        name: 'Display 2',
+        class: 'mat-display-2',
+      },
+      {
+        name: 'Display 1',
+        class: 'mat-display-1',
+      },
+      {
+        name: 'Título 1',
+        class: 'mat-h1',
+      },
+      {
+        name: 'Título 2',
+        class: 'mat-h2'
+      },
+      {
+        name: 'Título 3',
+        class: 'mat-h3',
+      },
+      {
+        name: 'Título 4',
+        class: 'mat-h4',
+      },
+      {
+        name: 'Body 1',
+        class: 'mat-body',
+      },
+      {
+        name: 'Body Bold',
+        class: 'mat-body-strong',
+      },
+      {
+        name: 'Caption',
+        class: 'mat-small',
       },
     ],
     sanitize: false,
     toolbarPosition: 'bottom',
     toolbarHiddenButtons: [
-      [],
+      ['heading'],
       ['insertImage', 'insertVideo']
     ]
   };
-
-  @ViewChild('autosize') autosize?: CdkTextareaAutosize;
 
   informacionBasicaForm: FormGroup;
   imagenPrincipalForm: FormGroup;
@@ -77,10 +106,10 @@ export class AddArticuloComponent implements OnInit {
   subcategorias: Subcategoria[] = [];
   marcas: Marca[] = [];
   constructor(
-    private ngZone: NgZone,
     private formBuilder: FormBuilder,
     private adminService: AdminService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private bottomSheet: MatBottomSheet
   ) {
     this.informacionBasicaForm = this.formBuilder.group({
       articulo: ['', [Validators.required, Validators.pattern('^[^]+$')]],
@@ -92,9 +121,25 @@ export class AddArticuloComponent implements OnInit {
       imagen: ['', Validators.required]
     });
     this.categoriaForm = this.formBuilder.group({
-      id_categoria: [0, [Validators.required, Validators.min(1)]],
-      id_subcategoria: [0, [Validators.required, Validators.min(1)]],
-      id_marca: [0, [Validators.required, Validators.min(1)]],
+      id_categoria: ['', [Validators.required, Validators.min(1)]],
+      id_subcategoria: ['', [Validators.required, Validators.min(1)]],
+      id_marca: ['', [Validators.required, Validators.min(1)]],
+    });
+
+    this.categoriaForm.get('id_categoria')?.valueChanges.subscribe((idCategoria: number) => {
+      if (idCategoria === 0) {
+        this.openBottomSheet('categorias', this.categorias);
+      }
+    });
+    this.categoriaForm.get('id_subcategoria')?.valueChanges.subscribe((idSubcategoria: number) => {
+      if (idSubcategoria === 0) {
+        this.openBottomSheet('subcategorias', this.subcategorias);
+      }
+    });
+    this.categoriaForm.get('id_marca')?.valueChanges.subscribe((idMarca: number) => {
+      if (idMarca === 0) {
+        this.openBottomSheet('marcas', this.marcas);
+      }
     });
   }
 
@@ -186,18 +231,54 @@ export class AddArticuloComponent implements OnInit {
     return formData;
   }
 
+  openBottomSheet(opcion: string, arrayObject: Categoria[] | Subcategoria[] | Marca[]): void {
+    const arrayObjectCopy: Array<{ id: number, valor: string }> = [];
+    for (const item of arrayObject) {
+      arrayObjectCopy.push({ id: Object.values(item)[0], valor: Object.values(item)[1] });
+    }
+    const bottomSheetRef = this.bottomSheet.open(GestionarCategoriasSubcategoriasMarcasComponent, {
+      data: { opcion, arrayObject: arrayObjectCopy },
+      disableClose: false
+    });
+    bottomSheetRef.afterDismissed().subscribe(
+      (result) => {
+        /* console.log('me la di: ', result);
+        console.log(opcion);
+        this.categorias = result; */
+        this.updateValorMasRecienteCategoriaForm(opcion);
+      }
+    );
+  }
+
+  updateValorMasRecienteCategoriaForm(opcion: string): void {
+    console.log(this.categorias);
+    switch (opcion) {
+      case 'categorias':
+        this.categoriaForm.patchValue({
+          id_categoria: Math.max(...this.categorias.map(categoria => categoria.id_categoria))
+        });
+        break;
+      case 'subcategorias':
+        this.categoriaForm.patchValue({
+          id_subcategoria: Math.max(...this.subcategorias.map(subcategoria => subcategoria.id_subcategoria))
+        });
+        break;
+      case 'marcas':
+        this.categoriaForm.patchValue({
+          id_marca: Math.max(...this.marcas.map(marca => marca.id_marca))
+        });
+        break;
+      default:
+        break;
+    }
+  }
+
   openSnackBar(message: string, action = 'ACEPTAR'): void {
     this.snackBar.open(message, action, {
       duration: 3000,
       horizontalPosition: 'center',
       verticalPosition: 'top'
     });
-  }
-
-  triggerResize(): void {
-    // Wait for changes to be applied, then trigger textarea resize.
-    this.ngZone.onStable.pipe(take(1))
-      .subscribe(() => this.autosize?.resizeToFitContent(true));
   }
 
   clear(): void {

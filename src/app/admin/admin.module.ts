@@ -20,9 +20,22 @@ import { MatSelectModule } from '@angular/material/select';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { SafeHtmlPipe } from './safe-html.pipe';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { GestionarCategoriasSubcategoriasMarcasComponent } from './gestionar-categorias-subcategorias-marcas/gestionar-categorias-subcategorias-marcas.component';
+import { InputCategoriaSubcategoriaMarcaComponent } from './gestionar-categorias-subcategorias-marcas/input-categoria-subcategoria-marca/input-categoria-subcategoria-marca.component';
+import {MatListModule} from '@angular/material/list';
 
 @NgModule({
-  declarations: [AdminComponent, AddArticuloComponent, ArticulosComponent, PedidosComponent, UsuariosComponent, SafeHtmlPipe],
+  declarations: [
+    AdminComponent,
+    AddArticuloComponent,
+    ArticulosComponent,
+    PedidosComponent,
+    UsuariosComponent,
+    SafeHtmlPipe,
+    GestionarCategoriasSubcategoriasMarcasComponent,
+    InputCategoriaSubcategoriaMarcaComponent
+  ],
   imports: [
     CommonModule,
     AdminRoutingModule,
@@ -38,7 +51,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     TextFieldModule,
     MatSelectModule,
     AngularEditorModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatBottomSheetModule,
+    MatListModule
   ]
 })
 export class AdminModule { }

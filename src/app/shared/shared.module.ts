@@ -11,7 +11,7 @@ import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [
-    CategoriesComponent
+    CategoriesComponent,
   ],
   imports: [
     CommonModule,
