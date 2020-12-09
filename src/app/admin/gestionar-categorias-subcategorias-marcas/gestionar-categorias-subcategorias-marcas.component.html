@@ -1,15 +1,42 @@
-<div [formGroup]="arrayObjectForm">
-  <ng-container  formArrayName="lista">
-    <div
-      *ngFor="let control of lista.controls; let i = index"
-    >
-    <app-input-categoria-subcategoria-marca
-      [formGroupControl]="control"
-      [index]="i"
-      (removeItem)="onRemoveItem($event)"
-    >
-
-    </app-input-categoria-subcategoria-marca>
+<div
+  matRipple
+  [matRippleCentered]="true"
+  style="
+    position: fixed;
+    height: 45px;
+    width: 90px;
+    border-radius: 0 0 90px 90px;
+    left: calc(50% - 45px);
+    top: -10px;
+    background-color: #3f51b5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 99;
+  "
+  (click)="onDismissBottomSheet()"
+>
+  <mat-icon style="color: whitesmoke">close</mat-icon>
+</div>
+<form style="width: 100%" (ngSubmit)="onSubmit()" [formGroup]="form">
+  <mat-form-field appearance="fill" style="width: 100%">
+    <mat-label>{{ data.opcion.toUpperCase() }}</mat-label>
+    <input matInput formControlName="valor" />
+    <mat-icon matSuffix>add</mat-icon>
+    <mat-hint>{{ "Ingresar " + data.opcion }}</mat-hint>
+  </mat-form-field>
+</form>
+<div [formGroup]="arrayObjectForm" style="width: 100%">
+  <ng-container formArrayName="lista">
+    <div *ngFor="let _ of lista.controls; index as i">
+      <app-input-categoria-subcategoria-marca
+        [formGroupControl]="rowFormGroup(i)"
+        [index]="i"
+        (removeItem)="onRemoveItem($event)"
+        (updateItem)="onUpdatedItem($event)"
+      >
+      </app-input-categoria-subcategoria-marca>
       <!-- <app-social-networks
         [redesSocialesDatos]="redesSocialesDatos"
         [redeSocialeForm]="redSocial"
@@ -30,4 +57,3 @@
     </app-input-categoria-subcategoria-marca>
   </div>
  </div> -->
-

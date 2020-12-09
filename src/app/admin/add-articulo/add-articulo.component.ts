@@ -9,6 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ResponseSaveArticulo } from '../admin.model';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { GestionarCategoriasSubcategoriasMarcasComponent } from '../gestionar-categorias-subcategorias-marcas/gestionar-categorias-subcategorias-marcas.component';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-add-articulo',
@@ -32,14 +33,6 @@ export class AddArticuloComponent implements OnInit {
     showToolbar: true,
     placeholder: 'Descripción del artículo...',
     defaultParagraphSeparator: '',
-    defaultFontName: '',
-    defaultFontSize: '',
-    fonts: [
-      { class: 'arial', name: 'Arial' },
-      { class: 'times-new-roman', name: 'Times New Roman' },
-      { class: 'calibri', name: 'Calibri' },
-      { class: 'comic-sans-ms', name: 'Comic Sans MS' }
-    ],
     customClasses: [
       {
         name: 'Display 4',
@@ -89,8 +82,8 @@ export class AddArticuloComponent implements OnInit {
     sanitize: false,
     toolbarPosition: 'bottom',
     toolbarHiddenButtons: [
-      ['heading'],
-      ['insertImage', 'insertVideo']
+      ['heading','fontName'],
+      ['insertImage', 'insertVideo', 'fontSize']
     ]
   };
 
@@ -99,7 +92,7 @@ export class AddArticuloComponent implements OnInit {
   categoriaForm: FormGroup;
 
   @ViewChild('files', { static: true }) files?: ElementRef;
-  imagenes = new Array<string>();
+  imagenes = new Array<{ index: number, data: string }>();
   fileImagenes = [];
 
   categorias: Categoria[] = [];
@@ -128,17 +121,17 @@ export class AddArticuloComponent implements OnInit {
 
     this.categoriaForm.get('id_categoria')?.valueChanges.subscribe((idCategoria: number) => {
       if (idCategoria === 0) {
-        this.openBottomSheet('categorias', this.categorias);
+        this.openBottomSheet('categoria', this.categorias);
       }
     });
     this.categoriaForm.get('id_subcategoria')?.valueChanges.subscribe((idSubcategoria: number) => {
       if (idSubcategoria === 0) {
-        this.openBottomSheet('subcategorias', this.subcategorias);
+        this.openBottomSheet('subcategoria', this.subcategorias);
       }
     });
     this.categoriaForm.get('id_marca')?.valueChanges.subscribe((idMarca: number) => {
       if (idMarca === 0) {
-        this.openBottomSheet('marcas', this.marcas);
+        this.openBottomSheet('marca', this.marcas);
       }
     });
   }
@@ -175,6 +168,7 @@ export class AddArticuloComponent implements OnInit {
   }
   onFileChangeImagenes(event: any): void {
     this.imagenes = [];
+    let i = 0;
     this.fileImagenes = event.target.files;
     if (this.fileImagenes.length > 0) {
       this.imagenPrincipalForm.patchValue({
@@ -183,11 +177,19 @@ export class AddArticuloComponent implements OnInit {
       for (const file of this.fileImagenes) {
         const reader = new FileReader();
         reader.onload = (e: any) => {
-          this.imagenes.push(e.target.result);
+          this.imagenes.push({ index: i, data: e.target.result });
+          i++;
         };
         reader.readAsDataURL(file);
       }
+    } else {
+      this.imagenPrincipalForm.patchValue({
+        imagen: ''
+      });
     }
+  }
+  drop(event: CdkDragDrop<string[]>): void {
+    moveItemInArray(this.imagenes, event.previousIndex, event.currentIndex);
   }
 
   addFileImagenes(): void {
@@ -203,24 +205,22 @@ export class AddArticuloComponent implements OnInit {
       let formData = new FormData();
       formData = Object.assign(this.appendImagenes(formData), this.appendAtributosDelArticulo(formData));
 
-      console.log('FORMDATA: ', formData);
       this.adminService.saveArticulo(formData).subscribe(
         (response: ResponseSaveArticulo) => {
-          console.log(response);
           this.openSnackBar(response.message);
           this.clear();
+        }, error => {
+          this.openSnackBar(error.error.message, 'Error!');
         }
       );
-
-
     } else {
       this.openSnackBar('Operación no valida, verifique por favor');
     }
   }
 
   appendImagenes(formData: FormData): FormData {
-    for (const file of this.fileImagenes) {
-      formData.append('imagenes[]', file);
+    for (const imagen of this.imagenes) {
+      formData.append('imagenes[]', this.fileImagenes[imagen.index]);
     }
     return formData;
   }
@@ -238,32 +238,53 @@ export class AddArticuloComponent implements OnInit {
     }
     const bottomSheetRef = this.bottomSheet.open(GestionarCategoriasSubcategoriasMarcasComponent, {
       data: { opcion, arrayObject: arrayObjectCopy },
-      disableClose: false
+      disableClose: true
     });
     bottomSheetRef.afterDismissed().subscribe(
-      (result) => {
-        /* console.log('me la di: ', result);
-        console.log(opcion);
-        this.categorias = result; */
+      (result: Array<{ id: number, valor: string }>) => {
+        switch (opcion) {
+          case 'categoria':
+            const categorias: Array<{ id_categoria: number, categoria: string }> = [];
+            for (const categoria of result) {
+              categorias.push({ id_categoria: categoria.id, categoria: categoria.valor });
+            }
+            this.categorias = categorias;
+            break;
+          case 'subcategoria':
+            const subcategorias: Array<{ id_subcategoria: number, subcategoria: string }> = [];
+            for (const subcategoria of result) {
+              subcategorias.push({ id_subcategoria: subcategoria.id, subcategoria: subcategoria.valor });
+            }
+            this.subcategorias = subcategorias;
+            break;
+          case 'marca':
+            const marcas: Array<{ id_marca: number, marca: string }> = [];
+            for (const marca of result) {
+              marcas.push({ id_marca: marca.id, marca: marca.valor });
+            }
+            this.marcas = marcas;
+            break;
+          default:
+            break;
+        }
         this.updateValorMasRecienteCategoriaForm(opcion);
       }
     );
   }
 
   updateValorMasRecienteCategoriaForm(opcion: string): void {
-    console.log(this.categorias);
     switch (opcion) {
-      case 'categorias':
+      case 'categoria':
         this.categoriaForm.patchValue({
           id_categoria: Math.max(...this.categorias.map(categoria => categoria.id_categoria))
         });
         break;
-      case 'subcategorias':
+      case 'subcategoria':
         this.categoriaForm.patchValue({
           id_subcategoria: Math.max(...this.subcategorias.map(subcategoria => subcategoria.id_subcategoria))
         });
         break;
-      case 'marcas':
+      case 'marca':
         this.categoriaForm.patchValue({
           id_marca: Math.max(...this.marcas.map(marca => marca.id_marca))
         });

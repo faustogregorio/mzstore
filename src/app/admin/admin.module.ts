@@ -23,7 +23,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { GestionarCategoriasSubcategoriasMarcasComponent } from './gestionar-categorias-subcategorias-marcas/gestionar-categorias-subcategorias-marcas.component';
 import { InputCategoriaSubcategoriaMarcaComponent } from './gestionar-categorias-subcategorias-marcas/input-categoria-subcategoria-marca/input-categoria-subcategoria-marca.component';
-import {MatListModule} from '@angular/material/list';
+import { MatListModule } from '@angular/material/list';
+import { MatRippleModule } from '@angular/material/core';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -53,7 +55,9 @@ import {MatListModule} from '@angular/material/list';
     AngularEditorModule,
     MatSnackBarModule,
     MatBottomSheetModule,
-    MatListModule
+    MatListModule,
+    MatRippleModule,
+    DragDropModule
   ]
 })
 export class AdminModule { }

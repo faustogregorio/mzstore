@@ -1,5 +1,17 @@
-<div style="width: 100%;" *ngIf="formGroupControl" [formGroup]="formGroupControl">
-  <mat-list role="list">
+<div style="width: 100%;" [formGroup]="formGroupControl">
+  <!-- <mat-list role="list">
     <mat-list-item role="listitem">{{ valor }}</mat-list-item>
-  </mat-list>
+  </mat-list> -->
+  <mat-form-field style="width: 100%;">
+
+
+    <input matInput formControlName="valor" (keyup)="onKeyUp($event)">
+    <button mat-icon-button color="primary" (click)="onUpdateItem()" matSuffix type="button" *ngIf="editado">
+      <mat-icon style="font-size: 1.3rem;">done</mat-icon>
+    </button>
+    <button mat-icon-button (click)="onRemoveItem()" matPrefix type="button">
+      <mat-icon style="font-size: 1.3rem;">close</mat-icon>
+    </button>
+    <!-- <mat-icon matSuffix style="color: red;" >close</mat-icon> -->
+  </mat-form-field>
 </div>

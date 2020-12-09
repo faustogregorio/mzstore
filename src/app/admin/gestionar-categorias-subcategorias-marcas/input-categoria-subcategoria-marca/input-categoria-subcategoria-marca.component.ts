@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ElementRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -8,27 +8,49 @@ import { FormGroup } from '@angular/forms';
 })
 export class InputCategoriaSubcategoriaMarcaComponent implements OnInit {
 
-  @Input() formGroupControl?: FormGroup;
-  @Input() index?: number;
-  @Output() removeItem = new EventEmitter<number>();
+  editado = false;
+  modificado = false;
 
-  constructor() {
+  @Input() formGroupControl!: FormGroup;
+  @Input() index!: number;
+  @Output() removeItem = new EventEmitter<{ index: number, element: ElementRef }>();
+  @Output() updateItem = new EventEmitter<{ index: number, id: number, valor: string }>();
+  constructor(
+    private elementRef: ElementRef
+  ) {
+
   }
 
   ngOnInit(): void {
-    console.log(this.formGroupControl, this.index);
+    this.formGroupControl.get('valor')?.valueChanges.subscribe(
+      (valor: string) => {
+        if (this.modificado) {
+          this.modificado = false;
+        } else {
+          this.editado = true;
+
+        }
+      });
   }
 
   onRemoveItem(): void {
-    this.removeItem.emit(this.index);
+    this.removeItem.emit({ index: this.index, element: this.elementRef });
   }
 
-  get id(): number {
-    return this.formGroupControl?.get('id')?.value;
+  onUpdateItem(): void {
+    this.updateItem.emit({
+      index: this.index,
+      id: this.formGroupControl.value.id,
+      valor: this.formGroupControl.value.valor
+    });
+    this.editado = false;
+    this.modificado = true;
   }
 
-  get valor(): string {
-    return this.formGroupControl?.get('valor')?.value;
+  onKeyUp($event: any): void {
+    if ($event.keyCode === 13 && this.editado) {
+      this.onUpdateItem();
+    }
   }
 
 }

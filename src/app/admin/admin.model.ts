@@ -1,5 +1,9 @@
-import { SafeHtml } from '@angular/platform-browser';
 
+export interface GenericServerResponse {
+  success: boolean;
+  message: string;
+  id?: number;
+}
 export interface ResponseArticulo {
   success: boolean;
   articulo: Articulo;
