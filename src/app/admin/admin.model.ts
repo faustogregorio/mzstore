@@ -8,14 +8,23 @@ export interface ResponseArticulo {
   success: boolean;
   articulo: Articulo;
 }
+export interface ResponseArticulos {
+  success: boolean;
+  articulos: Articulo[];
+}
 
 export interface Articulo {
   id_articulo: number;
   articulo: string;
   descripcion: string;
-  precio: string;
+  precio: number;
   stock: number;
+  categoria: string;
+  subcategoria: string;
   marca: string;
+  fecha_creacion: Date;
+  imagen: string;
+  descuento: number;
 }
 
 export interface ResponseSaveArticulo {

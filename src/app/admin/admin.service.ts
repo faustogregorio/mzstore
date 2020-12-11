@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 import { Categoria, Marca, ResponseCategoria, ResponseMarca, ResponseSubcategoria, Subcategoria } from '../buscar/buscar.model';
-import { GenericServerResponse, ResponseArticulo, ResponseSaveArticulo } from './admin.model';
+import { GenericServerResponse, ResponseArticulos, /* ResponseArticulo, */ ResponseSaveArticulo } from './admin.model';
 
 @Injectable({
   providedIn: 'root'
@@ -58,9 +58,13 @@ export class AdminService {
     return this.http.delete<GenericServerResponse>(`${this.domain}marca/marcaEliminar.php?id_marca=${idMarca}`, this.getHttpOptions());
   }
 
-  getArticulo(idArticulo: number): Observable<ResponseArticulo> {
-    return this.http.get<ResponseArticulo>(`${this.domain}articulo/articulo.php?id_articulo=${idArticulo}`);
+  getArticulos(): Observable<ResponseArticulos> {
+    return this.http.get<ResponseArticulos>(`${this.domain}articulo/articulos.php`);
   }
+  /* getArticulo(idArticulo: number): Observable<ResponseArticulo> {
+    return this.http.get<ResponseArticulo>(`${this.domain}articulo/articulo.php?id_articulo=${idArticulo}`);
+  } */
+
 
   saveArticulo(formData: FormData): Observable<ResponseSaveArticulo> {
     const httpOptions = {

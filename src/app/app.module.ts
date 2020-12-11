@@ -24,6 +24,7 @@ import { MatCardModule } from '@angular/material/card';
 import { FooterComponent } from './components/footer/footer.component';
 import { SharedModule } from './shared/shared.module';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { PipesModule } from './pipes/pipes.module';
 
 
 @NgModule({
@@ -51,7 +52,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatSidenavModule,
     MatListModule,
     MatCardModule,
-    MatExpansionModule
+    MatExpansionModule,
+    PipesModule
   ],
   providers: [],
   bootstrap: [AppComponent]

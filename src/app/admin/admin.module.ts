@@ -26,6 +26,10 @@ import { InputCategoriaSubcategoriaMarcaComponent } from './gestionar-categorias
 import { MatListModule } from '@angular/material/list';
 import { MatRippleModule } from '@angular/material/core';
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import {MatTableModule} from '@angular/material/table';
+import {MatSortModule} from '@angular/material/sort';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import { PipesModule } from '../pipes/pipes.module';
 
 @NgModule({
   declarations: [
@@ -57,7 +61,11 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     MatBottomSheetModule,
     MatListModule,
     MatRippleModule,
-    DragDropModule
+    DragDropModule,
+    MatTableModule,
+    MatSortModule,
+    MatPaginatorModule,
+    PipesModule
   ]
 })
 export class AdminModule { }
