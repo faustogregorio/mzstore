@@ -1,0 +1,310 @@
+<div style="max-width: 650px" [formGroup]="articuloForm">
+  <div style="width: 100%" [ngSwitch]="data.opcion">
+    <div
+      [innerHtml]="articulo.descripcion | safeHtml"
+      *ngSwitchCase="'descripcion'"
+    ></div>
+    <div
+      style="width: 100%"
+      *ngSwitchCase="'imagenes'"
+      fxLayout="row wrap"
+      fxLayoutAlign="space-around"
+    >
+      <img
+        style="margin: 5px"
+        [src]="imgUrl + imagen.imagen"
+        [alt]="articulo.articulo"
+        height="170px"
+        width="auto"
+        *ngFor="let imagen of articulo.imagenes"
+      />
+    </div>
+    <div style="min-height: 120px" *ngSwitchCase="'edit-articulo'">
+      <mat-form-field appearance="fill" style="width: 100%">
+        <mat-label>Modificar nombre del artículo</mat-label>
+        <input
+          matInput
+          formControlName="articulo"
+          (keyup)="onKeyUp($event, 'articulo')"
+        />
+        <mat-hint>Nombre del artículo</mat-hint>
+        <mat-error *ngIf="verificarError('articulo', 'required')"
+          >Nombre del artículo vacío</mat-error
+        >
+        <button
+          mat-icon-button
+          color="accent"
+          matSuffix
+          (click)="onUpdate('articulo')"
+          [disabled]="
+            articuloForm.controls['articulo'].pristine ||
+            articuloForm.controls['articulo'].invalid
+          "
+        >
+          <mat-icon>done</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+    <div style="min-height: 120px" *ngSwitchCase="'edit-descripcion'">
+      <angular-editor
+        formControlName="descripcion"
+        [config]="editorConfig"
+      ></angular-editor>
+      <mat-error *ngIf="verificarError('descripcion', 'required')"
+        >Descripción vacío</mat-error
+      >
+      <p style="text-align: center">
+        <button
+          mat-button
+          color="primary"
+          (click)="onUpdate('descripcion')"
+          [disabled]="
+            articuloForm.controls['descripcion'].pristine ||
+            articuloForm.controls['descripcion'].invalid
+          "
+        >
+          Modificar Descripción
+        </button>
+      </p>
+
+      <div style="min-height: 310px; width: 100%">
+        <mat-accordion>
+          <mat-expansion-panel class="mat-elevation-z0">
+            <mat-expansion-panel-header>
+              <mat-panel-title> Vista Previa </mat-panel-title>
+              <mat-panel-description> </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div [innerHtml]="articuloForm.value.descripcion | safeHtml"></div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+    </div>
+    <div style="min-height: 120px" *ngSwitchCase="'edit-precio'">
+      <mat-form-field appearance="fill" fxFlex="100%">
+        <mat-label>Modificar Precio</mat-label>
+        <input
+          matInput
+          type="text"
+          formControlName="precio"
+          (keyup)="onKeyUp($event, 'precio')"
+          class="right-align"
+        />
+        <span matPrefix>$&nbsp;</span>
+        <span matSuffix fxLayout="row" fxLayoutAlign="start center"
+          ><span>.00 MX</span>
+          <button
+            mat-icon-button
+            color="accent"
+            (click)="onUpdate('precio')"
+            [disabled]="
+              articuloForm.controls['precio'].pristine ||
+              articuloForm.controls['precio'].invalid
+            "
+          >
+            <mat-icon>done</mat-icon>
+          </button></span
+        >
+        <mat-hint>Precio del artículo</mat-hint>
+        <mat-error *ngIf="verificarError('precio', 'required')"
+          >Precio vacío</mat-error
+        >
+        <mat-error *ngIf="verificarError('precio', 'pattern')"
+          >Solo números</mat-error
+        >
+      </mat-form-field>
+    </div>
+    <div style="min-height: 120px" *ngSwitchCase="'edit-stock'">
+      <mat-form-field appearance="fill" fxFlex="100%">
+        <mat-label>Modificar Cantidad Disponibles</mat-label>
+        <input
+          matInput
+          type="text"
+          formControlName="stock"
+          (keyup)="onKeyUp($event, 'stock')"
+          class="right-align"
+        />
+        <span matSuffix fxLayout="row" fxLayoutAlign="start center"
+          ><span>&nbsp;Artículos</span>
+          <button
+            mat-icon-button
+            color="accent"
+            (click)="onUpdate('stock')"
+            [disabled]="
+              articuloForm.controls['stock'].pristine ||
+              articuloForm.controls['stock'].invalid
+            "
+          >
+            <mat-icon>done</mat-icon>
+          </button></span
+        >
+        <mat-hint>Cantidad de artículos disponibles</mat-hint>
+        <mat-error *ngIf="verificarError('stock', 'required')"
+          >Precio vacío</mat-error
+        >
+        <mat-error *ngIf="verificarError('stock', 'pattern')"
+          >Solo números</mat-error
+        >
+      </mat-form-field>
+    </div>
+    <div
+      style="min-height: 120px; width: 100%"
+      fxLayout="row"
+      fxLayoutGap="5px"
+      *ngSwitchCase="'edit-categoria'"
+    >
+      <mat-form-field appearance="fill" fxFlex="1 1 auto">
+        <mat-label>Modificar categoría</mat-label>
+        <mat-select formControlName="id_categoria">
+          <mat-option
+            *ngFor="let categoriaObject of categorias"
+            [value]="categoriaObject.id_categoria"
+            >{{ categoriaObject.categoria }}</mat-option
+          >
+          <mat-option [value]="0" class="mat-body-strong" style="color: #3f51b5"
+            >Agregar/Editar/Eliminar</mat-option
+          >
+        </mat-select>
+
+        <mat-hint>Seleccione categoría del artículo</mat-hint>
+      </mat-form-field>
+      <button
+        style="top: 20px"
+        mat-icon-button
+        color="accent"
+        (click)="onUpdate('id_categoria')"
+        [disabled]="
+          categoria.id_categoria === articuloForm.value.id_categoria ||
+          articuloForm.value.id_categoria === 0 ||
+          articuloForm.controls['id_categoria'].invalid
+        "
+      >
+        <mat-icon>done</mat-icon>
+      </button>
+    </div>
+    <div
+      style="min-height: 120px; width: 100%"
+      fxLayout="row"
+      fxLayoutGap="5px"
+      *ngSwitchCase="'edit-subcategoria'"
+    >
+      <mat-form-field appearance="fill" fxFlex="1 1 auto">
+        <mat-label>Modificar subcategoría</mat-label>
+        <mat-select formControlName="id_subcategoria">
+          <mat-option
+            *ngFor="let subcategoriaObject of subcategorias"
+            [value]="subcategoriaObject.id_subcategoria"
+            >{{ subcategoriaObject.subcategoria }}</mat-option
+          >
+          <mat-option [value]="0" class="mat-body-strong" style="color: #3f51b5"
+            >Agregar/Editar/Eliminar</mat-option
+          >
+        </mat-select>
+
+        <mat-hint>Seleccione subcategoría del artículo</mat-hint>
+      </mat-form-field>
+      <button
+        style="top: 20px"
+        mat-icon-button
+        color="accent"
+        (click)="onUpdate('id_subcategoria')"
+        [disabled]="
+          subcategoria.id_subcategoria === articuloForm.value.id_subcategoria ||
+          articuloForm.value.id_subcategoria === 0 ||
+          articuloForm.controls['id_subcategoria'].invalid
+        "
+      >
+        <mat-icon>done</mat-icon>
+      </button>
+    </div>
+    <div
+      style="min-height: 120px; width: 100%"
+      fxLayout="row"
+      fxLayoutGap="5px"
+      *ngSwitchCase="'edit-marca'"
+    >
+      <mat-form-field appearance="fill" fxFlex="1 1 auto">
+        <mat-label>Modificar marca</mat-label>
+        <mat-select formControlName="id_marca">
+          <mat-option
+            *ngFor="let marcaObject of marcas"
+            [value]="marcaObject.id_marca"
+            >{{ marcaObject.marca }}</mat-option
+          >
+          <mat-option [value]="0" class="mat-body-strong" style="color: #3f51b5"
+            >Agregar/Editar/Eliminar</mat-option
+          >
+        </mat-select>
+
+        <mat-hint>Seleccione marca del artículo</mat-hint>
+      </mat-form-field>
+      <button
+        style="top: 20px"
+        mat-icon-button
+        color="accent"
+        (click)="onUpdate('id_marca')"
+        [disabled]="
+          marca.id_marca === articuloForm.value.id_marca ||
+          articuloForm.value.id_marca === 0 ||
+          articuloForm.controls['id_marca'].invalid
+        "
+      >
+        <mat-icon>done</mat-icon>
+      </button>
+    </div>
+    <div *ngSwitchCase="'edit-imagenes'">
+      <p>edit imagenes</p>
+    </div>
+    <div style="min-height: 120px" *ngSwitchCase="'edit-descuento'">
+      <mat-form-field appearance="fill" style="width: 100%">
+        <mat-label>Modificar Descuento</mat-label>
+        <input
+          matInput
+          type="text"
+          formControlName="descuento"
+          (keyup)="onKeyUp($event, 'descuento')"
+          class="right-align"
+        />
+        <span matSuffix fxLayout="row" fxLayoutAlign="start center"
+          ><span>%</span>
+          <button
+            mat-icon-button
+            color="accent"
+            (click)="onUpdate('descuento')"
+            [disabled]="articuloForm.pristine || articuloForm.invalid"
+          >
+            <mat-icon>done</mat-icon>
+          </button></span
+        >
+        <mat-hint>Porcentaje de descuento para el artículo</mat-hint>
+        <mat-error *ngIf="verificarError('descuento', 'required')"
+          >Descuento vacío</mat-error
+        >
+        <mat-error *ngIf="verificarError('descuento', 'pattern')"
+          >Solo números</mat-error
+        >
+        <mat-error *ngIf="verificarError('descuento', 'max')"
+          >Descuento mayor a 100%</mat-error
+        >
+      </mat-form-field>
+      <div style="width: 100%">
+        <mat-list>
+          <mat-list-item>
+            <div mat-line class="mat-small">Precio original</div>
+            <div mat-line>{{ articulo.precio | formatoMoneda }}</div>
+          </mat-list-item>
+          <mat-list-item>
+            <div mat-line>Descuento ({{ articuloForm.value.descuento }}%)</div>
+            <div mat-line>{{ calcularDescuento() | formatoMoneda }}</div>
+          </mat-list-item>
+          <mat-list-item>
+            <div mat-line>Precio con descuento</div>
+            <div mat-line>
+              {{ articulo.precio - calcularDescuento() | formatoMoneda }}
+            </div>
+          </mat-list-item>
+        </mat-list>
+      </div>
+    </div>
+    <p class="mat-h3" *ngSwitchDefault>Error 404!</p>
+  </div>
+</div>

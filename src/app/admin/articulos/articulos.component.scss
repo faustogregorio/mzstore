@@ -1,3 +1,4 @@
+
 table {
   width: 100%;
 }
@@ -7,11 +8,12 @@ table {
   width: 100%;
 }
 
-/* td, th {
-  width: 25%;
+tr.mat-header-row {
+  background-color: #3f51b5;
 }
- */
-
+th.mat-header-cell {
+  color: whitesmoke;
+}
 tr.example-detail-row {
   height: 0;
 }
@@ -30,16 +32,12 @@ tr.example-element-row:not(.example-expanded-row):active {
 
 .example-element-detail {
   overflow: hidden;
-  display: flex;
+  width: 100%;
 }
 
-.example-element-diagram {
-  min-width: 80px;
-  border: 2px solid black;
-  padding: 8px;
-  font-weight: lighter;
-  margin: 8px 0;
-  height: 104px;
+.img-container {
+  height: 200px;
+  width: 100%;
 }
 
 .example-element-symbol {
@@ -48,10 +46,11 @@ tr.example-element-row:not(.example-expanded-row):active {
   line-height: normal;
 }
 
-.example-element-description {
-  padding: 16px;
+.bottom-buttons {
+  width: 100%;
+  height: 50px;
 }
 
-.example-element-description-attribution {
+/* .example-element-description-attribution {
   opacity: 0.5;
-}
+} */

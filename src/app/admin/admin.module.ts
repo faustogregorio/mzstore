@@ -25,11 +25,15 @@ import { GestionarCategoriasSubcategoriasMarcasComponent } from './gestionar-cat
 import { InputCategoriaSubcategoriaMarcaComponent } from './gestionar-categorias-subcategorias-marcas/input-categoria-subcategoria-marca/input-categoria-subcategoria-marca.component';
 import { MatListModule } from '@angular/material/list';
 import { MatRippleModule } from '@angular/material/core';
-import {DragDropModule} from '@angular/cdk/drag-drop';
-import {MatTableModule} from '@angular/material/table';
-import {MatSortModule} from '@angular/material/sort';
-import {MatPaginatorModule} from '@angular/material/paginator';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { PipesModule } from '../pipes/pipes.module';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatMenuModule } from '@angular/material/menu';
+import { DefaultBottomSheetComponent } from './default-bottom-sheet/default-bottom-sheet.component';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -40,7 +44,8 @@ import { PipesModule } from '../pipes/pipes.module';
     UsuariosComponent,
     SafeHtmlPipe,
     GestionarCategoriasSubcategoriasMarcasComponent,
-    InputCategoriaSubcategoriaMarcaComponent
+    InputCategoriaSubcategoriaMarcaComponent,
+    DefaultBottomSheetComponent
   ],
   imports: [
     CommonModule,
@@ -65,7 +70,10 @@ import { PipesModule } from '../pipes/pipes.module';
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
-    PipesModule
+    PipesModule,
+    MatDividerModule,
+    MatMenuModule,
+    MatExpansionModule
   ]
 })
 export class AdminModule { }

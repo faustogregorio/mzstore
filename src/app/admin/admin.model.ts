@@ -14,9 +14,10 @@ export interface ResponseArticulos {
 }
 
 export interface Articulo {
+  index?: number;
   id_articulo: number;
   articulo: string;
-  descripcion: string;
+  descripcion?: string;
   precio: number;
   stock: number;
   categoria: string;
@@ -25,6 +26,12 @@ export interface Articulo {
   fecha_creacion: Date;
   imagen: string;
   descuento: number;
+  imagenes?: Imagen[];
+}
+
+export interface Imagen {
+  id_imagen: number;
+  imagen: string;
 }
 
 export interface ResponseSaveArticulo {

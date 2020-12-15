@@ -1,26 +1,13 @@
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { AdminService } from './../admin.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Articulo, ResponseArticulos } from '../admin.model';
-
-export interface UserData {
-  id: string;
-  name: string;
-  progress: string;
-  color: string;
-}
-
-/** Constants used to fill up our data base. */
-const COLORS: string[] = [
-  'maroon', 'red', 'orange', 'yellow', 'olive', 'green', 'purple', 'fuchsia', 'lime', 'teal',
-  'aqua', 'blue', 'navy', 'black', 'gray'];
-
-const NAMES: string[] = [
-  'Maia', 'Asher', 'Olivia', 'Atticus', 'Amelia', 'Jack', 'Charlotte', 'Theodore', 'Isla', 'Oliver',
-  'Isabella', 'Jasper', 'Cora', 'Levi', 'Violet', 'Arthur', 'Mia', 'Thomas', 'Elizabeth'];
+import { environment } from 'src/environments/environment.prod';
+import { DefaultBottomSheetComponent } from '../default-bottom-sheet/default-bottom-sheet.component';
 
 @Component({
   selector: 'app-articulos',
@@ -28,29 +15,27 @@ const NAMES: string[] = [
   styleUrls: ['./articulos.component.scss'],
   animations: [
     trigger('detailExpand', [
-      state('collapsed', style({height: '0px', minHeight: '0'})),
-      state('expanded', style({height: '*'})),
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
   ],
 })
-export class ArticulosComponent implements OnInit {
-
-  displayedColumns: string[] = ['articulo', 'precio', 'stock', 'marca', 'descuento'];
+export class ArticulosComponent implements OnInit, AfterViewInit {
+  imgDomain = environment.urlImagenes;
+  selectedIdArticulo = 0;
+  selectedIndexArticulo = 0;
+  displayedColumns: string[] = ['articulo', 'precio', 'descuento', 'stock'];
   dataSource: MatTableDataSource<Articulo>;
   expandedElement?: Articulo | null;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
-    private adminService: AdminService
+    private adminService: AdminService,
+    private bottomSheet: MatBottomSheet
   ) {
-    // Create 100 users
-    /* const users = Array.from({length: 100}, (_, k) => createNewUser(k + 1)); */
-
-    // Assign the data to the data source for the table to render
-    /* this.dataSource = new MatTableDataSource(users); */
-    this.dataSource = new MatTableDataSource();
+    this.dataSource = new MatTableDataSource<Articulo>();
     this.adminService.getArticulos().subscribe(
       (response: ResponseArticulos) => {
         console.log(response);
@@ -59,12 +44,19 @@ export class ArticulosComponent implements OnInit {
         console.log(error);
       }
     );
+
   }
   ngOnInit(): void {
 
   }
 
   ngAfterViewInit() {
+    this.paginator._intl.itemsPerPageLabel = 'Mostrar';
+    this.paginator._intl.lastPageLabel = 'Ultimo';
+    this.paginator._intl.nextPageLabel = 'Siguiente';
+    this.paginator._intl.previousPageLabel = 'Atrás';
+    this.paginator._intl.firstPageLabel = 'Primero';
+
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
@@ -77,18 +69,58 @@ export class ArticulosComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
-}
+  updateSelectedArticuloId(idArticulo: number, index: number): void {
+    this.selectedIdArticulo = idArticulo;
+    this.selectedIndexArticulo = index;
+    console.log(this.selectedIdArticulo);
+  }
 
-/** Builds and returns a new User. */
-function createNewUser(id: number): UserData {
-  const name = NAMES[Math.round(Math.random() * (NAMES.length - 1))] + ' ' +
-      NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) + '.';
+  openBottomSheet(opcion: string, id: number): void {
+    const bottomSheetRef = this.bottomSheet.open(DefaultBottomSheetComponent, {
+      data: { opcion, id_articulo: id },
+      autoFocus: true
 
-  return {
-    id: id.toString(),
-    name: name,
-    progress: Math.round(Math.random() * 100).toString(),
-    color: COLORS[Math.round(Math.random() * (COLORS.length - 1))]
-  };
+    });
 
+    bottomSheetRef.afterDismissed().subscribe(
+      result => {
+        console.log(' Result: ', result);
+        if (result) {
+          this.updateArticulo(result, opcion);
+        }
+      }
+    );
+  }
+  updateArticulo(result: any, opcion: string): void {
+    switch (opcion) {
+      case 'edit-articulo':
+        this.dataSource.data[this.selectedIndexArticulo].articulo = result;
+        break;
+      case 'edit-precio':
+        this.dataSource.data[this.selectedIndexArticulo].precio = result;
+        break;
+      case 'edit-stock':
+        this.dataSource.data[this.selectedIndexArticulo].stock = result;
+        break;
+      case 'edit-categoria':
+        this.dataSource.data[this.selectedIndexArticulo].categoria = result;
+        break;
+      case 'edit-subcategoria':
+        this.dataSource.data[this.selectedIndexArticulo].subcategoria = result;
+        break;
+      case 'edit-marca':
+        this.dataSource.data[this.selectedIndexArticulo].marca = result;
+        break;
+      case 'edit-imagenes':
+
+        break;
+      case 'edit-descuento':
+        this.dataSource.data[this.selectedIndexArticulo].descuento = result;
+        break;
+
+
+      default:
+        break;
+    }
+  }
 }

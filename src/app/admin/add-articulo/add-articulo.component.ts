@@ -83,7 +83,7 @@ export class AddArticuloComponent implements OnInit {
     toolbarPosition: 'bottom',
     toolbarHiddenButtons: [
       ['heading','fontName'],
-      ['insertImage', 'insertVideo', 'fontSize']
+      ['insertImage', 'insertVideo']
     ]
   };
 

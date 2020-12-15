@@ -77,10 +77,18 @@
                 style="z-index: 99"
               >
               </angular-editor>
-              <!-- <div style="width: 100%;">
-                <div [innerHtml]="descripcion | safeHtml"></div>
+              <div style="width: 100%;">
+                <mat-accordion>
+                  <mat-expansion-panel class="mat-elevation-z0">
+                    <mat-expansion-panel-header>
+                      <mat-panel-title> Vista Previa </mat-panel-title>
+                      <mat-panel-description> </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <div [innerHtml]="descripcion | safeHtml"></div>
+                  </mat-expansion-panel>
+                </mat-accordion>
 
-              </div> -->
+              </div>
             </div>
           </div>
         </form>
@@ -153,7 +161,7 @@
             fxLayoutGap="24px"
           >
             <mat-form-field appearance="fill" fxFlex="24%">
-              <mat-label>Categoria</mat-label>
+              <mat-label>Categoría</mat-label>
               <mat-select formControlName="id_categoria">
                 <mat-option
                   *ngFor="let categoria of categorias"
@@ -168,14 +176,10 @@
                 >
               </mat-select>
               <mat-hint>Categoría a la que pertenece</mat-hint>
-              <!-- <mat-error *ngIf="categoriaForm.hasError('required')">You must make a selection</mat-error>
-              <mat-error *ngIf="categoriaForm.hasError('pattern') && !selected.hasError('required')">
-                Your selection is invalid
-              </mat-error> -->
             </mat-form-field>
 
             <mat-form-field appearance="fill" fxFlex="24%">
-              <mat-label>Subcategoria</mat-label>
+              <mat-label>Subcategoría</mat-label>
               <mat-select formControlName="id_subcategoria">
                 <mat-option
                   *ngFor="let subcategoria of subcategorias"
