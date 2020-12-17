@@ -270,7 +270,7 @@
             mat-icon-button
             color="accent"
             (click)="onUpdate('descuento')"
-            [disabled]="articuloForm.pristine || articuloForm.invalid"
+            [disabled]="articuloForm.controls['descuento'].pristine || articuloForm.controls['descuento'].invalid"
           >
             <mat-icon>done</mat-icon>
           </button></span
