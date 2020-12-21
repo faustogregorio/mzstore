@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AESEncryptDecryptService } from '../services/aes-encrypt-decrypt.service';
+import { CryptoService } from '../services/crypto.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -9,13 +9,13 @@ export class HomeComponent implements OnInit {
   numero = '1';
 
   constructor(
-    private aesEncryptDescryptService: AESEncryptDecryptService
+    private cryptoService: CryptoService
   ) {
   }
 
   ngOnInit(): void {
-    console.log('DESENCRYPTED: ', this.aesEncryptDescryptService.encode(JSON.stringify(this.numero)));
-    console.log('DESDECRYPTED: ', JSON.parse(this.aesEncryptDescryptService.decode(this.aesEncryptDescryptService.encode(JSON.stringify(this.numero)))));
+    console.log('DESENCRYPTED: ', this.cryptoService.encode(JSON.stringify(this.numero)));
+    console.log('DESDECRYPTED: ', JSON.parse(this.cryptoService.decode(this.cryptoService.encode(JSON.stringify(this.numero)))));
   }
 
 
