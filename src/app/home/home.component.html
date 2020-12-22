@@ -1,1 +1,36 @@
-<p>home</p>
+<div
+  style="
+    width: 100%;
+    min-height: calc(
+      100vh - var(--footer-div-height) - var(--toolbar-div-height)
+    );
+  "
+  fxLayoutAlign="center"
+>
+  <div style="margin-top: 20px" fxFlex="1300px">
+    <carousel
+      [lightDOM]="true"
+      [autoplay]="true"
+      [transitionDuration]="1500"
+      [autoplayInterval]="3500"
+      [loop]="true"
+      [transitionTimingFunction]="'ease-in-out'"
+      [objectFit]="'cover'"
+      [cellWidth]="317.5"
+      [height]="500"
+      [images]="imagenes"
+      (click)="handleCarouselEvents($event)"
+      [arrows]="false"
+    >
+      <!-- <div *ngFor="let imagen of imagenes" class="carousel-cell" >
+        <img [src]="imagen.path" />
+        <p style="position: absolute;">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente vel
+          magni minus asperiores consectetur ad aliquam in aliquid deserunt
+          culpa, sint architecto provident obcaecati sequi consequatur,
+          explicabo soluta eveniet. Consequatur.
+        </p>
+      </div> -->
+    </carousel>
+  </div>
+</div>

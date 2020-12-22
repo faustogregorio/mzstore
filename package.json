@@ -24,6 +24,7 @@
     "@angular/router": "^11.0.4",
     "@auth0/angular-jwt": "^5.0.2",
     "@kolkov/angular-editor": "^1.1.4",
+    "angular-responsive-carousel": "^2.0.2",
     "crypto-js": "^4.0.0",
     "rxjs": "~6.6.3",
     "tslib": "^2.0.0",
