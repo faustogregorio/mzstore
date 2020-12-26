@@ -8,29 +8,36 @@
   fxLayoutAlign="center"
 >
   <div style="margin-top: 20px" fxFlex="1300px">
-    <carousel
+<!--     <carousel
+
       [lightDOM]="true"
-      [autoplay]="true"
-      [transitionDuration]="1500"
-      [autoplayInterval]="3500"
+      [autoplay]="autoplay"
+      [transitionDuration]="1000"
+      [autoplayInterval]="0"
       [loop]="true"
       [transitionTimingFunction]="'ease-in-out'"
       [objectFit]="'cover'"
       [cellWidth]="317.5"
       [height]="500"
       [images]="imagenes"
-      (click)="handleCarouselEvents($event)"
       [arrows]="false"
     >
-      <!-- <div *ngFor="let imagen of imagenes" class="carousel-cell" >
-        <img [src]="imagen.path" />
-        <p style="position: absolute;">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente vel
-          magni minus asperiores consectetur ad aliquam in aliquid deserunt
-          culpa, sint architecto provident obcaecati sequi consequatur,
-          explicabo soluta eveniet. Consequatur.
-        </p>
-      </div> -->
-    </carousel>
+    </carousel> -->
+    <app-carousel
+    #carousel
+      [images]="imagenes"
+      [height]="650"
+      [cellsToShow]="cambiar()"
+      [loop]="true"
+      [autoplay]="autoplay"
+      [transitionDuration]="4000"
+      [autoplayInterval]="0"
+      [transitionTimingFunction]="'ease-in-out'"
+      [arrows]="false"
+      (imagen)="onClickCell($event)"
+    >
+    </app-carousel>
+
   </div>
+  <!-- <button (click)="acCell()" type="button">cambiar</button> -->
 </div>

@@ -7,11 +7,13 @@ import { MatExpansionModule } from '@angular/material/expansion';
 
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatCardModule } from '@angular/material/card';
+import { CarouselComponent } from './carousel/carousel.component';
 
 
 @NgModule({
   declarations: [
     CategoriesComponent,
+    CarouselComponent,
   ],
   imports: [
     CommonModule,
@@ -23,7 +25,8 @@ import { MatCardModule } from '@angular/material/card';
   ],
   exports: [
     CommonModule,
-    CategoriesComponent
+    CategoriesComponent,
+    CarouselComponent
   ]
 })
 export class SharedModule { }

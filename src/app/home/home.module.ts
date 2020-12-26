@@ -11,7 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import {IvyCarouselModule} from 'angular-responsive-carousel';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -26,7 +26,7 @@ import {IvyCarouselModule} from 'angular-responsive-carousel';
     MatButtonModule,
     MatMenuModule,
     MatPaginatorModule,
-    IvyCarouselModule
+    SharedModule
   ]
 })
 export class HomeModule { }
