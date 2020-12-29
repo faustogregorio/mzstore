@@ -4,16 +4,16 @@ export class Container {
     /* The index of the new position relative to
      * the active index, for example -1 or +1
      */
-    newPositionIndex = 0;
-    isPositionCorrection!: boolean;
-    initialPositionX = 0;
-    initialElementPositionX = 0;
-    isLocked = true;
+    newPositionIndex: number = 0;
+    isPositionCorrection?: boolean;
+    initialPositionX: number = 0;
+    initialElementPositionX: number = 0;
+    isLocked: boolean = true;
     pullLimit = 100;
     startTime: any;
     startX: any;
     moveX: any;
-    isSwipeInProgress!: boolean;
+    isSwipeInProgress?: boolean;
 
     get visibleWidth() {
         return this.utils.visibleWidth;
@@ -137,7 +137,7 @@ export class Container {
     }
 
     move() {
-        let positionX = this.getMovePositionX();
+        let positionX: any = this.getMovePositionX();
         const isPulled = this.detectPulled();
         const direction = this.getDirection();
 
@@ -194,14 +194,14 @@ export class Container {
         }
     }
 
-    slowdownOnPull(_positionX: any): any {
+    slowdownOnPull(_positionX: any) {
         let distance = Math.abs(this.getDistance());
-        const endPosition = this.getEndPosition();
-        const isPulled = this.detectPulled();
+        const endPosition: any = this.getEndPosition();
+        const isPulled: any = this.detectPulled();
         const decelerationRatio = 3 + isPulled.overflowX / 50;
         let positionX;
 
-        if (isPulled?.edge === 'left') {
+        if (isPulled.edge === 'left') {
 
             if (this.initialElementPositionX < 0) {
                 distance = distance - Math.abs(this.initialElementPositionX);
@@ -219,7 +219,7 @@ export class Container {
             }
         }
 
-        if (isPulled?.edge === 'right') {
+        if (isPulled.edge === 'right') {
             const rubberPositionX = endPosition + (((this.initialElementPositionX - distance) - endPosition) / decelerationRatio);
             const containerWidth = this.getWidth();
 
@@ -340,7 +340,7 @@ export class Container {
     }
 
     getDirection(): any {
-        const direction = Math.sign(this.startX - this.moveX);
+        const direction: any = Math.sign(this.startX - this.moveX);
 
         if (direction === -1) {
             return 'right';

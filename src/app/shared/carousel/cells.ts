@@ -3,7 +3,7 @@ import {Properties as CarouselProperties} from './interfaces';
 export class ImageUtils {
     cellStack: any;
     imageStack: any;
-    element: any;
+    element;
 
     constructor(element: any) {
         this.element = element;
@@ -29,10 +29,10 @@ export class ImageUtils {
 }
 
 export class Cells {
-    cells!: HTMLCollection;
-    element!: HTMLElement;
+    cells?: HTMLCollection;
+    element?: HTMLElement;
     visibleWidth: any;
-    counter = 0;
+    counter: number = 0;
     imageUtils;
 
     get images() {
@@ -40,7 +40,7 @@ export class Cells {
     }
 
     get cellLength() {
-        return this.cells.length;
+        return this.cells?.length;
     }
 
     get fullCellWidth() {
@@ -79,10 +79,10 @@ export class Cells {
     }
 
     lineUp() {
-        const cells = this.element.children;
+        const cells: any = this.element?.children;
         this.imageUtils.cellStack = [];
 
-        for (var i = 0; i < cells.length; i++) {
+        for (let i = 0; i < cells.length; i++) {
             let cell = cells[i];
             let positionX = this.getCellPositionInContainer(i);
             (cell as HTMLElement).style.transform = 'translateX(' + positionX + 'px)';
@@ -95,11 +95,11 @@ export class Cells {
                     img: this.getImage(i)['image']
                 });
             }
-        }
+        };
     }
 
     ifSequenceOfCellsIsChanged() {
-        const cells: any = this.element.children;
+        const cells: any = this.element?.children;
         return cells[0]['style'].transform !== 'translateX(0px)';
     }
 
@@ -115,7 +115,7 @@ export class Cells {
             return cellIndexInDOMTree;
         }
 
-        let cellLength = this.cellLengthInLightDOMMode;
+        let cellLength: any = this.cellLengthInLightDOMMode;
         let counter = this.counter - this.carouselProperties.overflowCellsLimit;
 
         if (counter > cellLength) {

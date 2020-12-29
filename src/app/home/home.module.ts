@@ -12,6 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { SharedModule } from '../shared/shared.module';
+import {MatRippleModule} from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { SharedModule } from '../shared/shared.module';
     MatButtonModule,
     MatMenuModule,
     MatPaginatorModule,
-    SharedModule
+    SharedModule,
+    MatRippleModule
   ]
 })
 export class HomeModule { }

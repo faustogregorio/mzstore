@@ -1,36 +1,118 @@
-<div class="carousel-counter" *ngIf="isCounter">{{counter}}</div>
+<div class="carousel-counter" *ngIf="isCounter">{{ counter }}</div>
 
 <div class="carousel-container" [class.carousel-moving]="isMoving">
-	<div class="carousel-cells" #cells (transitionend)="handleTransitionendCellContainer($event)">
-		<ng-content></ng-content>
-
-		<ng-template ngFor let-image [ngForOf]="images" let-i="index">
-			<div class="carousel-cell"
-				[style.width]="getCellWidth()+'px'"
-				[style.border-radius]="borderRadius+'px'"
+  <div
+    class="carousel-cells"
+    #cells
+    (transitionend)="handleTransitionendCellContainer($event)"
+  >
+    <ng-content></ng-content>
+    <!-- (click)="onClickCell(getImage(i))" -->
+    <ng-template ngFor let-image [ngForOf]="images" let-i="index">
+      <div
+        class="carousel-cell"
+        [style.width]="getCellWidth() + 'px'"
+        [style.border-radius]="borderRadius + 'px'"
         *ngIf="i < cellLimit"
-        (click)="onClickCell(getImage(i))">
-				<!-- Image -->
-				<img
-					*ngIf="getImage(i) && getImage(i)['image']"
-					[src]="getImage(i)['image']['path']"
-					[style.object-fit]="objectFit"
-					draggable="false" />
+        style="
+          display: flex;
+          flex-direction: column;
+          justify-content: space-around;
+        "
+      >
+        <div
+          style="height: 280px; cursor: pointer"
+          (click)="onClickCell(getImage(i))"
+        >
+          <img
+            *ngIf="getImage(i) && getImage(i)['image']"
+            [src]="getImage(i)['image']['path']"
+            [style.object-fit]="objectFit"
+            draggable="false"
+          />
+        </div>
+        <p
+          class="mat-body-strong"
+          style="
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: normal;
+            -webkit-line-clamp: 3;
+            cursor: pointer;
+          "
+          (click)="onClickCell(getImage(i))"
+          matTooltip="XIAOMI REDMI NOTE 9 BLANCO (POLAR WHITE) XIAOMI REDMI NOTE 9 BLANCO (POLAR WHITE) XIAOMI REDMI NOTE 9 BLANCO (POLAR WHITE)"
+          matTooltipShowDelay="1500"
+        >
+          XIAOMI REDMI NOTE 9 BLANCO (POLAR WHITE) XIAOMI REDMI NOTE 9 BLANCO
+          (POLAR WHITE) XIAOMI REDMI NOTE 9 BLANCO (POLAR WHITE)
+        </p>
+        <div
+          style="
+            height: 40px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+          "
+        >
+          <!-- <span class="mat-h2">MX$5,418.00</span> -->
+          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
+            <span style="font-size: 1.3rem; color: red">-30%</span>
+            <div fxLayout="column">
+              <span style="font-weight: 500; font-size: 1.1rem"
+                >MX$3,418.00</span
+              >
+              <span style="text-decoration: line-through" class="mat-small"
+                >MX$5,418.00</span
+              >
+            </div>
+          </div>
+          <button
+            mat-icon-button
+            color="primary"
+            type="button"
+            matTooltip="Agregar al carrito de compras"
+          >
+            <mat-icon>add_shopping_cart</mat-icon>
+          </button>
+        </div>
+      </div>
+    </ng-template>
+  </div>
 
-			</div>
-		</ng-template>
-	</div>
-
-	<div class="carousel-dots" *ngIf="dots">
-		<div class="carousel-dot" [class.carousel-dot-active]="i === activeDotIndex" *ngFor="let dot of dotsArr; index as i"></div>
-	</div>
+  <div class="carousel-dots" *ngIf="dots">
+    <div
+      class="carousel-dot"
+      [class.carousel-dot-active]="i === activeDotIndex"
+      *ngFor="let dot of dotsArr; index as i"
+    ></div>
+  </div>
 </div>
 
-<div class="carousel-arrows"
-	[class.carousel-arrows-outside]="arrowsOutside"
-	[class.carousel-dark-arrows]="arrowsTheme === 'dark'"
-	*ngIf="isArrows">
-
-	<div class="carousel-arrow carousel-arrow-prev" [class.carousel-arrow-disabled]="isPrevArrowDisabled()" (click)="prev()"></div>
-	<div class="carousel-arrow carousel-arrow-next" [class.carousel-arrow-disabled]="isNextArrowDisabled()" (click)="next()"></div>
+<div
+  class="carousel-arrows"
+  [class.carousel-arrows-outside]="arrowsOutside"
+  [class.carousel-dark-arrows]="arrowsTheme === 'dark'"
+  *ngIf="isArrows"
+>
+  <div
+    class="carousel-arrow carousel-arrow-prev material-icons"
+    [class.carousel-arrow-disabled]="isPrevArrowDisabled()"
+    (click)="prev()"
+    matRipple
+    matRippleColor="rgba(255,255,255, 0.2)"
+  >
+    chevron_left
+  </div>
+  <div
+    class="carousel-arrow carousel-arrow-next material-icons"
+    [class.carousel-arrow-disabled]="isNextArrowDisabled()"
+    (click)="next()"
+    matRipple
+    matRippleColor="rgba(255,255,255, 0.2)"
+  >
+    chevron_right
+  </div>
 </div>

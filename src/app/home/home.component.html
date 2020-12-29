@@ -7,8 +7,8 @@
   "
   fxLayoutAlign="center"
 >
-  <div style="margin-top: 20px" fxFlex="1300px">
-<!--     <carousel
+  <div fxFlex="1300px" style="margin-top: 20px;">
+    <!--     <carousel
 
       [lightDOM]="true"
       [autoplay]="autoplay"
@@ -23,21 +23,37 @@
       [arrows]="false"
     >
     </carousel> -->
+
     <app-carousel
-    #carousel
+      #carousel
       [images]="imagenes"
-      [height]="650"
-      [cellsToShow]="cambiar()"
+      [height]="400"
+      objectFit="contain"
+      [cellsToShow]="5"
       [loop]="true"
-      [autoplay]="autoplay"
-      [transitionDuration]="4000"
-      [autoplayInterval]="0"
+      [autoplay]="true"
+      [transitionDuration]="2000"
+      [autoplayInterval]="1000"
+      [margin]="20"
       [transitionTimingFunction]="'ease-in-out'"
-      [arrows]="false"
+      [arrows]="true"
+      [cellsToScroll]="3"
+      [overflowCellsLimit]="3"
+      [dots]="false"
+      [borderRadius]="10"
+      [arrowsTheme]="'light'"
       (imagen)="onClickCell($event)"
     >
     </app-carousel>
-
+<!--     <div>
+      <img
+        src="https://mzstore.mx/modules/ps_imageslider/images/7cdb02766c6e0bca5c8cf7bc6d754bdd43b0570a_lona.png"
+        alt=""
+        width="100%"
+        style="min-height: 200px;"
+        loading="lazy"
+      />
+    </div> -->
   </div>
   <!-- <button (click)="acCell()" type="button">cambiar</button> -->
 </div>
