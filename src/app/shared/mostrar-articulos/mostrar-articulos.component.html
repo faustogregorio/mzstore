@@ -1,0 +1,76 @@
+<mat-grid-list
+style="margin-top: 20px; background-color: white"
+fxFlex="100%"
+cols="3"
+gutterSize="60px"
+rowHeight="400px"
+>
+<mat-grid-tile
+  *ngFor="let articulo of articulos"
+>
+  <div fxFlex="100%" fxLayout="column">
+    <div
+      style="height: 290px; cursor: pointer"
+      (click)="onClickArticulo(articulo)"
+    >
+      <img
+        [src]="articulo.path"
+        style="width: 100%; height: 290px; object-fit: contain"
+      />
+    </div>
+    <p
+      class="mat-body-strong"
+      style="
+        margin: 10px;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: normal;
+        -webkit-line-clamp: 2;
+        cursor: pointer;
+      "
+      (click)="onClickArticulo(articulo)"
+      matTooltip="XIAOMI REDMI NOTE 9 BLANCO (POLAR WHITE) XIAOMXIAOMI REDMI NOTE 9 BLANCO (POLAR WHITE) XIAOM"
+      matTooltipShowDelay="1500"
+    >
+    XIAOMI REDMI NOTE 9 BLANCO (POLAR WHITE) XIAOMXIAOMI REDMI NOTE 9 BLANCO (POLAR WHITE) XIAOM
+    </p>
+    <div
+      style="
+        height: 40px;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+      "
+    >
+      <span style="margin-left: 10px" class="mat-h2">MX$5,418.00</span>
+      <!-- <div
+        fxLayout="row"
+        style="margin-left: 10px"
+        fxLayoutAlign="start center"
+        fxLayoutGap="5px"
+      >
+        <span style="font-size: 1.3rem; color: red">-30%</span>
+        <div fxLayout="column">
+          <span style="font-weight: 500; font-size: 1.1rem"
+            >MX$3,418.00</span
+          >
+          <span style="text-decoration: line-through" class="mat-small"
+            >MX$5,418.00</span
+          >
+        </div>
+      </div> -->
+      <button
+        style="margin-right: 10px"
+        mat-icon-button
+        color="primary"
+        type="button"
+        matTooltip="Agregar este producto al carrito de compras"
+      >
+        <mat-icon>add_shopping_cart</mat-icon>
+      </button>
+    </div>
+  </div>
+</mat-grid-tile>
+</mat-grid-list>

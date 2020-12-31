@@ -11,11 +11,14 @@ import { MatCardModule } from '@angular/material/card';
 import { CarouselComponent } from './carousel/carousel.component';
 import {MatRippleModule} from '@angular/material/core';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import { MostrarArticulosComponent } from './mostrar-articulos/mostrar-articulos.component';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 @NgModule({
   declarations: [
     CategoriesComponent,
     CarouselComponent,
+    MostrarArticulosComponent,
   ],
   imports: [
     CommonModule,
@@ -26,12 +29,14 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     MatCardModule,
     MatRippleModule,
     FlexLayoutModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatGridListModule
   ],
   exports: [
     CommonModule,
     CategoriesComponent,
-    CarouselComponent
+    CarouselComponent,
+    MostrarArticulosComponent
   ]
 })
 export class SharedModule { }

@@ -7,7 +7,7 @@
   "
   fxLayoutAlign="center"
 >
-  <div fxFlex="1300px" style="margin-top: 20px;">
+  <div fxFlex="1300px" fxLayout="row wrap" fxLayoutAlign="start start">
     <!--     <carousel
 
       [lightDOM]="true"
@@ -23,17 +23,23 @@
       [arrows]="false"
     >
     </carousel> -->
-
+    <div fxFlex="100%" style="margin-top: 20px">
+      <div id="pointer" fxFlex="250px" fxLayoutAlign="center center">
+        <span style="font-weight: 500; font-size: 1.2rem; color: whitesmoke"
+          >DESTACADOS</span
+        >
+      </div>
+    </div>
     <app-carousel
       #carousel
       [images]="imagenes"
-      [height]="400"
+      [height]="500"
       objectFit="contain"
-      [cellsToShow]="5"
+      [cellsToShow]="3"
       [loop]="true"
       [autoplay]="true"
-      [transitionDuration]="2000"
-      [autoplayInterval]="1000"
+      [transitionDuration]="1500"
+      [autoplayInterval]="7000"
       [margin]="20"
       [transitionTimingFunction]="'ease-in-out'"
       [arrows]="true"
@@ -43,9 +49,11 @@
       [borderRadius]="10"
       [arrowsTheme]="'light'"
       (imagen)="onClickCell($event)"
+      style="background-color: white; margin-top: 20px"
+      fxFlex="100%"
     >
     </app-carousel>
-<!--     <div>
+    <!--     <div>
       <img
         src="https://mzstore.mx/modules/ps_imageslider/images/7cdb02766c6e0bca5c8cf7bc6d754bdd43b0570a_lona.png"
         alt=""
@@ -54,6 +62,27 @@
         loading="lazy"
       />
     </div> -->
+    <div fxFlex="100%" style="margin-top: 60px">
+      <div id="pointer" fxFlex="250px" fxLayoutAlign="center center">
+        <span style="font-weight: 500; font-size: 1.2rem; color: whitesmoke"
+          >NUEVO</span
+        >
+      </div>
+    </div>
+
+    <app-mostrar-articulos [articulos]="imagenes" style="width: 100%;"></app-mostrar-articulos>
+
+
+    <div fxFlex="100%" style="margin-top: 60px">
+      <div id="pointer" fxFlex="250px" fxLayoutAlign="center center">
+        <span style="font-weight: 500; font-size: 1.2rem; color: whitesmoke"
+          >OFERTAS</span
+        >
+      </div>
+    </div>
+    <app-mostrar-articulos [articulos]="imagenes" style="width: 100%;"></app-mostrar-articulos>
+
   </div>
+
   <!-- <button (click)="acCell()" type="button">cambiar</button> -->
 </div>
