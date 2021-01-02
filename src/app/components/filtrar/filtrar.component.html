@@ -1,9 +1,10 @@
 
-<div style="height: 54px;margin-bottom: 24px;background-color: whitesmoke;" fxLayoutAlign="end center">
+<div style="width: 100%;height: 54px;margin-bottom: 24px;background-color: whitesmoke;" fxLayout="row" fxLayoutAlign="end center">
   <button mat-stroked-button style="margin-right: 24px;" [matMenuTriggerFor]="menu">Ordenar por: <span class="mat-small">{{filtro}}</span></button>
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="filtrar(0)">{{filtros[0]}}</button>
-    <button mat-menu-item (click)="filtrar(1)">{{filtros[1]}}</button>
-    <button mat-menu-item (click)="filtrar(2)">{{filtros[2]}}</button>
-  </mat-menu>
+
 </div>
+<mat-menu #menu="matMenu">
+  <button mat-menu-item (click)="filtrar(0)">{{filtros[0]}}</button>
+  <button mat-menu-item (click)="filtrar(1)">{{filtros[1]}}</button>
+  <button mat-menu-item (click)="filtrar(2)">{{filtros[2]}}</button>
+</mat-menu>

@@ -5,7 +5,6 @@ import { HomeComponent } from './home.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: ':buscar', loadChildren: () => import('../buscar/buscar.module').then(m => m.BuscarModule) }
 ];
 
 @NgModule({

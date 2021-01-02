@@ -91,17 +91,17 @@
                     <div style="width: 100%;">
                       <mat-divider style="width: 100%;"></mat-divider>
 
-                      <div class="bottom-buttons" fxLayoutAlign="end center">
-                        <button mat-icon-button color="warn">
+                      <div class="bottom-buttons" fxLayoutAlign="end center" fxLayoutGap="10px">
+                        <button mat-mini-fab color="warn">
                           <mat-icon>delete</mat-icon>
                         </button>
-                        <button mat-icon-button color="primary" (click)="openBottomSheet('descripcion', element.id_articulo)">
+                        <button mat-mini-fab color="primary" (click)="openBottomSheet('descripcion', element.id_articulo)">
                           <mat-icon>notes</mat-icon>
                         </button>
-                        <button mat-icon-button color="primary" (click)="openBottomSheet('imagenes', element.id_articulo)">
+                        <button mat-mini-fab color="primary" (click)="openBottomSheet('imagenes', element.id_articulo)">
                           <mat-icon>collections</mat-icon>
                         </button>
-                        <button mat-icon-button color="accent" [matMenuTriggerFor]="menu" (click)="updateSelectedArticuloId(element.id_articulo, element.index)">
+                        <button mat-mini-fab color="accent" [matMenuTriggerFor]="menu" (click)="updateSelectedArticuloId(element.id_articulo, element.index)">
                           <mat-icon>more_vert</mat-icon>
                         </button>
                       </div>

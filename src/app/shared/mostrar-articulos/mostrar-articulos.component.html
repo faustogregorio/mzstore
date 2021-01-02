@@ -1,76 +1,176 @@
 <mat-grid-list
-style="margin-top: 20px; background-color: white"
-fxFlex="100%"
-cols="3"
-gutterSize="60px"
-rowHeight="400px"
+  style="margin-top: 20px; background-color: white"
+  fxFlex="100%"
+  cols="3"
+  gutterSize="100px"
+  rowHeight="400px"
 >
-<mat-grid-tile
-  *ngFor="let articulo of articulos"
->
-  <div fxFlex="100%" fxLayout="column">
-    <div
-      style="height: 290px; cursor: pointer"
-      (click)="onClickArticulo(articulo)"
-    >
-      <img
-        [src]="articulo.path"
-        style="width: 100%; height: 290px; object-fit: contain"
-      />
-    </div>
-    <p
-      class="mat-body-strong"
-      style="
-        margin: 10px;
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: normal;
-        -webkit-line-clamp: 2;
-        cursor: pointer;
-      "
-      (click)="onClickArticulo(articulo)"
-      matTooltip="XIAOMI REDMI NOTE 9 BLANCO (POLAR WHITE) XIAOMXIAOMI REDMI NOTE 9 BLANCO (POLAR WHITE) XIAOM"
-      matTooltipShowDelay="1500"
-    >
-    XIAOMI REDMI NOTE 9 BLANCO (POLAR WHITE) XIAOMXIAOMI REDMI NOTE 9 BLANCO (POLAR WHITE) XIAOM
-    </p>
-    <div
-      style="
-        height: 40px;
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-      "
-    >
-      <span style="margin-left: 10px" class="mat-h2">MX$5,418.00</span>
+  <mat-grid-tile *ngFor="let articulo of articulos">
+    <div fxFlex="100%" fxLayout="column">
       <!-- <div
-        fxLayout="row"
-        style="margin-left: 10px"
-        fxLayoutAlign="start center"
-        fxLayoutGap="5px"
+        style="
+          position: absolute;
+          height: 50px;
+          width: 50px;
+          clip-path:polygon(13% 13%, 30% 13%, 37% 0%,   50% 8%,  62% 0%,   70% 13%,87% 13%, 87% 30%, 100% 37%, 92% 50%, 100% 62%, 87% 70%, 87% 87%, 70% 87%, 62% 100%, 50% 92%, 37% 100%, 30% 87%,13% 87%, 13% 70%, 0% 62%,   8% 50%, 0% 37%,   13% 30%);
+          background-color: #0277BD;
+        "
+        fxLayoutAlign="center center"
       >
-        <span style="font-size: 1.3rem; color: red">-30%</span>
-        <div fxLayout="column">
-          <span style="font-weight: 500; font-size: 1.1rem"
-            >MX$3,418.00</span
-          >
-          <span style="text-decoration: line-through" class="mat-small"
-            >MX$5,418.00</span
-          >
-        </div>
+        <p style="color: whitesmoke; margin: 0; font-weight: 500;font-size: 0.75rem;">Nuevo</p>
       </div> -->
-      <button
-        style="margin-right: 10px"
-        mat-icon-button
-        color="primary"
-        type="button"
-        matTooltip="Agregar este producto al carrito de compras"
+
+      <!-- <div
+        style="
+          position: absolute;
+          height: 25px;
+          width: 50px;
+          background-color: #C21912;
+        "
+        fxLayoutAlign="center center"
       >
-        <mat-icon>add_shopping_cart</mat-icon>
-      </button>
+        <p style="color: whitesmoke; margin: 0; font-weight: 500;font-size: 0.75rem;">Agotado</p>
+      </div> -->
+      <div
+        style="height: 290px; cursor: pointer; position: relative"
+        (click)="onClickArticulo(articulo)"
+      >
+        <!-- <div
+          style="
+            position: absolute;
+            height: 50px;
+            width: 50px;
+            bottom: 0;
+            right: 0;
+            clip-path: polygon(
+              0% 0%,
+              100% 0%,
+              100% 75%,
+              75% 75%,
+              75% 100%,
+              50% 75%,
+              0% 75%
+            );
+            border-radius: 5px;
+            background-color: #c21912;
+          "
+          fxLayoutAlign="center center"
+        >
+          <p
+            style="
+              color: whitesmoke;
+              margin: 0;
+              font-weight: 500;
+              font-size: 0.75rem;
+            "
+          >
+            Oferta
+          </p>
+        </div> -->
+        <img
+          [src]="articulo.path"
+          style="width: 100%; height: 290px; object-fit: contain"
+        />
+      </div>
+      <div fxLayout="row">
+        <!-- <div
+          style="background-color: #f44336; border-radius: 5px"
+          fxLayoutAlign="center center"
+        >
+          <p
+            style="
+              padding: 5px;
+              margin: 0;
+              font-weight: 500;
+              font-size: 0.75rem;
+            "
+          >
+            Agotado
+          </p>
+        </div> -->
+        <!-- <div
+          style="background-color: #2196F3; border-radius: 5px"
+          fxLayoutAlign="center center"
+        >
+          <p
+            style="
+              padding: 5px;
+              margin: 0;
+              font-weight: 500;
+              font-size: 0.75rem;
+            "
+          >
+            Nuevo
+          </p>
+        </div> -->
+        <div
+          style="background-color: #FFC107; border-radius: 5px;margin-left: 10px;"
+          fxLayoutAlign="center center"
+        >
+          <p
+            style="
+              padding: 5px;
+              margin: 0;
+              font-weight: 500;
+              font-size: 0.75rem;
+            "
+          >
+            Oferta
+          </p>
+        </div>
+        <p
+          class="mat-body-strong"
+          style="
+          margin: 0px 10px 0px 10px;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: normal;
+            -webkit-line-clamp: 2;
+            cursor: pointer;
+          "
+          (click)="onClickArticulo(articulo)"
+          matTooltip="XIAOMI REDMI NOTE 9 BLANCO (POLAR WHITE) XIAOMXIAOMI REDMI NOTE 9 BLANCO (POLAR WHITE) XIAOM"
+          matTooltipShowDelay="600"
+        >
+          XIAOMI REDMI NOTE 9 BLANCO (POLAR WHITE) XIAOMXIAOMI REDMI NOTE 9
+          BLANCO (POLAR WHITE) XIAOM
+        </p>
+      </div>
+      <div
+        style="
+          height: 40px;
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+        "
+      >
+        <!-- <span style="margin-left: 10px" class="mat-h2">MX$5,418.00</span> -->
+        <div
+          fxLayout="row"
+          style="margin-left: 10px"
+          fxLayoutAlign="start center"
+          fxLayoutGap="5px"
+        >
+          <span style="font-size: 1.3rem; color: #F57F17">-30%</span>
+          <div fxLayout="column">
+            <span style="font-weight: 500; font-size: 1.1rem">MX$3,418.00</span>
+            <span style="text-decoration: line-through" class="mat-small"
+              >MX$5,418.00</span
+            >
+          </div>
+        </div>
+        <button
+          style="margin-right: 10px"
+          mat-icon-button
+          color="primary"
+          type="button"
+          matTooltip="Agregar este producto al carrito de compras"
+        >
+          <mat-icon>add_shopping_cart</mat-icon>
+        </button>
+      </div>
     </div>
-  </div>
-</mat-grid-tile>
+  </mat-grid-tile>
 </mat-grid-list>

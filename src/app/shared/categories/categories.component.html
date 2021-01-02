@@ -3,8 +3,9 @@
     <p class="mat-h2">Categorias</p>
 
     <mat-card-content>
-      <mat-accordion>
+      <mat-accordion >
         <mat-expansion-panel
+        [expanded]="idCategoria === categoria.id_categoria"
         (opened)="getArticulosPorCategoria(categoria.id_categoria)"
         (closed)="reset()"
           *ngFor="let categoria of categorias"

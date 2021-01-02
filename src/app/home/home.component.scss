@@ -1,6 +1,7 @@
-
-#pointer {
+.etiqueta {
   height: 40px;
   clip-path: polygon(92% 0%, 100% 50%, 92% 100%, 0% 100%, 20px 50%, 0% 0%);
-  background-color: #0277BD;
+  /* clip-path: polygon(100% 0, calc(100% - 20px) 50%, 100% 100%, 0% 100%, 20px 50%, 0% 0%); */
+  background-color: #212121;
+  color: whitesmoke;
 }

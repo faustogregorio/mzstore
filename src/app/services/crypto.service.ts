@@ -23,6 +23,6 @@ export class CryptoService {
   }
 
   decode(encodedValue: string): string {
-    return CryptoJS.enc.Utf8.stringify(CryptoJS.enc.Base64.parse(encodedValue));
+      return CryptoJS.enc.Utf8.stringify(CryptoJS.enc.Base64.parse(encodedValue));
   }
 }

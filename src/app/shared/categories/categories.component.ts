@@ -1,5 +1,5 @@
 import { Categoria, ResponseBuscarArticulo, ResponseCategoria, ResponseMarca, ResponseSubcategoria, Subcategoria, BuscarArticulo } from './../../buscar/buscar.model';
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Marca } from 'src/app/buscar/buscar.model';
 import { BuscarService } from 'src/app/buscar/buscar.service';
 import { MatAccordion } from '@angular/material/expansion';
@@ -16,6 +16,7 @@ export interface Task {
 })
 export class CategoriesComponent implements OnInit {
 
+  @Input() idCategoria = 0;
   marcas: Marca[] = [];
   categorias: Categoria[] = [];
   subcategorias: Subcategoria[] = [];
@@ -30,7 +31,14 @@ export class CategoriesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log('id_categoira: ', this.idCategoria);
+   /*  this.checkCategoriaIdExist(); */
   }
+  /* checkCategoriaIdExist(): void {
+    if (this.idCategoria !== 0) {
+      this.getArticulosPorCategoria(this.idCategoria);
+    }
+  } */
   getMarcasFromArticulos(articulos: BuscarArticulo[]): void {
     const idMarcas: number[] = [];
     this.marcas = articulos.filter(
@@ -58,7 +66,7 @@ export class CategoriesComponent implements OnInit {
   getArticulosPorCategoria(idCategoria: number): void {
     this.buscarService.getArticulosPorCategoria(idCategoria).subscribe(
       (response: ResponseBuscarArticulo) => {
-        console.log(response);
+        console.log('ArticuloPORCATEGORIA: ', response);
         this.articulos = response.articulos;
         this.buscarService.updateArticulos(response.articulos);
         this.getSubcategoriasFromArticulos();

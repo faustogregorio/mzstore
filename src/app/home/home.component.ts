@@ -1,5 +1,8 @@
 
-import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { Categoria } from '../buscar/buscar.model';
+import { BuscarService } from '../buscar/buscar.service';
 
 import { CryptoService } from '../services/crypto.service';
 @Component({
@@ -8,11 +11,12 @@ import { CryptoService } from '../services/crypto.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  numero = '1';
+  encode = {id: 0, val: ''};
   imagenes = [
+    { id: 0, path: 'https://m.media-amazon.com/images/I/51QZuRpM08L.jpg' },
     { id: 1, path: 'https://m.media-amazon.com/images/I/61aj2CfNW1L.jpg' },
     { id: 2, path: 'https://m.media-amazon.com/images/I/51fN8rWFLXL.jpg' },
-    { id: 3, path: 'https://images-na.ssl-images-amazon.com/images/I/81jiUqRKBcL.jpg'},
+    { id: 3, path: 'https://images-na.ssl-images-amazon.com/images/I/81jiUqRKBcL.jpg' },
     { id: 3, path: 'https://m.media-amazon.com/images/I/71Zh6vtYQBL.jpg' },
     { id: 4, path: 'https://m.media-amazon.com/images/I/51WMia+vWYL.jpg' },
     { id: 5, path: 'https://m.media-amazon.com/images/I/812GECA1hGL.jpg' },
@@ -28,10 +32,27 @@ export class HomeComponent implements OnInit, OnDestroy {
   autoplay = true;
   @ViewChild('carousel') carousel: any;
   cellToShow = 4;
+  categorias: Categoria[] = [];
   constructor(
-    private cryptoService: CryptoService
+    private cryptojs: CryptoService,
+    private buscarService: BuscarService,
+    private router: Router
   ) {
+    this.getCategorias();
 
+  }
+  getCategorias(): void {
+    this.buscarService.getCategorias().subscribe(
+      response => {
+        this.categorias = response.categorias;
+      }
+    );
+  }
+  onCategoriaClicked(idCategoria: number): void {
+    console.log(idCategoria);
+    this.encode.id = idCategoria;
+    const encoded = this.cryptojs.encode(JSON.stringify(this.encode));
+    this.router.navigate([`/buscar/${encoded}`]);
 
   }
   handleCarouselEvents($event: any): void {
@@ -39,8 +60,12 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log('DESENCRYPTED: ', this.cryptoService.encode(JSON.stringify(this.numero)));
-    console.log('DESDECRYPTED: ', JSON.parse(this.cryptoService.decode(this.cryptoService.encode(JSON.stringify(this.numero)))));
+    /*  console.log('DESENCRYPTED: ', this.cryptoService.AESencrypt(this.numero));
+     console.log('DESDECRYPTED: ', this.cryptoService.AESdecrypt(this.cryptoService.AESencrypt(this.numero))); */
+
+/*      console.log('DESENCRYPTED2: ', this.cryptoService.encode(JSON.stringify(this.numero)));
+    console.log('DESDECRYPTED2: ', JSON.parse(this.cryptoService.decode(this.cryptoService.encode(JSON.stringify(this.numero)))));
+   */
   }
   ngOnDestroy(): void {
     /* this.myCarousel.stop(); */

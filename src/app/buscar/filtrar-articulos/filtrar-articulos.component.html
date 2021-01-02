@@ -1,0 +1,39 @@
+<div style="width: 100%;min-height: calc(100vh - var(--footer-div-height) - var(--toolbar-div-height));" fxLayoutAlign="center">
+  <div fxFlex="1300px" fxLayout="row" fxLayoutGap="24px">
+    <app-categories [idCategoria]="decoded.id"></app-categories>
+    <div fxFlex="1 1 auto" fxLayout="row wrap" fxLayoutAlign="start start">
+      <app-filtrar fxFlex="100%" (filtrarPor)="onFiltrarPor($event)"></app-filtrar>
+      <div fxFlex="100%" *ngIf="corruptEncoded">
+        <p class="mat-h2" style="text-align: center;">Ningún resultado</p>
+        <img src="assets/img/empty.svg" alt="" width="100%" height="500px" style="object-fit: contain;">
+
+      </div>
+      <mat-grid-list fxFlex="100%" cols="4" rowHeight="500px" gutterSize="20px" *ngIf="!corruptEncoded">
+        <mat-grid-tile *ngFor="let articulo of articulos">
+          <div style="width: 100%;">
+            <mat-grid-list cols="1" rowHeight="1:1" gutterSize="0px">
+              <mat-grid-tile rowspan="1">
+                <img
+                [src]="urlImagenes + articulo.imagen"
+                alt=""
+                width="auto"
+                height="100%"
+              />
+              </mat-grid-tile>
+            </mat-grid-list>
+            <mat-grid-list cols="1" rowHeight="5:3" gutterSize="0px">
+              <mat-grid-tile>
+                <p style="text-align: center;">
+                  {{ articulo.articulo}}
+                </p>
+              </mat-grid-tile>
+            </mat-grid-list>
+            <mat-grid-list cols="1" rowHeight="53px" gutterSize="0px">
+              <mat-grid-tile style="background-color: pink;">${{ articulo.precio }}</mat-grid-tile>
+            </mat-grid-list>
+          </div>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </div>
+  </div>
+</div>
