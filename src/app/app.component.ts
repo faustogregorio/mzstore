@@ -5,6 +5,9 @@ import { AuthService } from './auth/auth.service';
 import { CheckAuth, TokenData } from './auth/user.model';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { Categoria } from './buscar/buscar.model';
+import { BuscarService } from './buscar/buscar.service';
+import { CryptoService } from './services/crypto.service';
 
 @Component({
   selector: 'app-root',
@@ -22,11 +25,12 @@ export class AppComponent implements OnInit, OnDestroy {
   @ViewChild('snav2') userSidenav?: MatSidenav;
   @ViewChild('snav2') userSidenavElementRef?: ElementRef;
 
-  panelOpenState = false;
-
+  categorias: Categoria[] = [];
   constructor(
     private authService: AuthService,
-    private router: Router
+    private buscarService: BuscarService,
+    private router: Router,
+    private cryptojs: CryptoService
   ) {
     this.datosToken = {
       aud: '',
@@ -49,6 +53,7 @@ export class AppComponent implements OnInit, OnDestroy {
         this.datosToken = this.authService.getTokenData;
       }
     );
+    this.getCategorias();
   }
 
   ngOnInit(): void {
@@ -103,6 +108,27 @@ export class AppComponent implements OnInit, OnDestroy {
   onSelectedOption(): void {
     this.menuSidenav?.close();
     this.userSidenav?.close();
+  }
+
+  onCategoriaClicked(idCategoria: number): void {
+    const encode = {id: idCategoria, val: ''};
+    const encoded = this.getEncoded(encode);
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.navigateByUrl(`/buscar/${encoded}`);
+    this.menuSidenav?.close();
+
+  }
+
+  getEncoded(encode: {id: number, val: string}): string {
+    return this.cryptojs.encode(JSON.stringify(encode));
+  }
+
+  getCategorias(): void {
+    this.buscarService.getCategorias().subscribe(
+      response => {
+        this.categorias = response.categorias;
+      }
+    );
   }
 
   ngOnDestroy(): void {

@@ -21,13 +21,72 @@ export class FiltrarArticulosComponent implements OnInit, OnDestroy {
   articulosChanged$!: Subscription;
   articulos: BuscarArticulo[] = [];
   filtrar = 0;
+
+
+
+  array: any = [];
+  sum = 100;
+  throttle = 100;
+  scrollDistance = 1;
+  direction = '';
+  modalOpen = false;
+
   constructor(
     private buscarService: BuscarService,
     private route: ActivatedRoute,
     private crytojs: CryptoService
   ) {
     this.initArticulosChanged();
+
+    this.appendItems(0, this.sum);
   }
+
+  addItems(startIndex: number, endIndex: number, method: string): void {
+    for (let i = 0; i < this.sum; ++i) {
+      this.array[method]([i, ' ', this.generateWord()].join(''));
+    }
+  }
+
+  appendItems(startIndex: number, endIndex: number): void {
+    this.addItems(startIndex, endIndex, 'push');
+  }
+
+  prependItems(startIndex: number, endIndex: number): void {
+    this.addItems(startIndex, endIndex, 'unshift');
+  }
+
+  onScrollDown(): void {
+    console.log('scrolled down!!');
+
+    // add another 20 items
+    const start = this.sum;
+    this.sum += 20;
+    if (this.sum > 200) {
+      return;
+    }
+    this.appendItems(start, this.sum);
+
+    this.direction = 'down';
+  }
+  generateWord(): string {
+    return 'hola';
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   ngOnInit(): void {
     this.encoded = this.route.snapshot.params.buscar;
@@ -43,6 +102,9 @@ export class FiltrarArticulosComponent implements OnInit, OnDestroy {
     this.paginator._intl.nextPageLabel = 'Siguiente página';
     this.paginator._intl.previousPageLabel = 'Página anterior'; */
 
+  }
+  onScroll(): void {
+    console.log('scrolled!!');
   }
   checkDecodedStringWasNotCorrupted(encoded: string): boolean {
     try {

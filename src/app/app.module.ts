@@ -26,7 +26,6 @@ import { SharedModule } from './shared/shared.module';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { PipesModule } from './pipes/pipes.module';
 
-
 @NgModule({
   declarations: [
     AppComponent,

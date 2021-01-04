@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { BuscarRoutingModule } from './buscar-routing.module';
 import { BuscarComponent } from './buscar.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -15,6 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { FiltrarArticulosComponent } from './filtrar-articulos/filtrar-articulos.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @NgModule({
   declarations: [
@@ -34,7 +34,8 @@ import { FiltrarArticulosComponent } from './filtrar-articulos/filtrar-articulos
     MatIconModule,
     MatButtonModule,
     MatMenuModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    InfiniteScrollModule
   ]
 })
 export class BuscarModule { }

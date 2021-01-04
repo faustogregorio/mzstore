@@ -1,6 +1,3 @@
-<!-- <app-toolbar></app-toolbar>
-<router-outlet></router-outlet>
-<app-footer></app-footer> -->
 
 <div class="container">
   <app-toolbar
@@ -21,73 +18,19 @@
       fixedTopGap="56"
       autoFocus="false"
     >
-    <p class="mat-h2" align="center">Categoria</p>
-    <mat-accordion>
-      <mat-expansion-panel
-        (opened)="panelOpenState = true"
-        (closed)="panelOpenState = false"
-      >
-        <mat-expansion-panel-header>
-          <mat-panel-title> Celulares y telefonía </mat-panel-title>
-        </mat-expansion-panel-header>
-        <p>I'm visible because I am open</p>
-      </mat-expansion-panel>
-
-      <mat-expansion-panel
-        (opened)="panelOpenState = true"
-        (closed)="panelOpenState = false"
-      >
-        <mat-expansion-panel-header>
-          <mat-panel-title> Ropa, Calzado y Accesorios </mat-panel-title>
-        </mat-expansion-panel-header>
-        <p>I'm visible because I am open</p>
-      </mat-expansion-panel>
-      <mat-expansion-panel
-        (opened)="panelOpenState = true"
-        (closed)="panelOpenState = false"
-      >
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Películas, Series de TV y Música
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <p>I'm visible because I am open</p>
-      </mat-expansion-panel>
-      <mat-expansion-panel
-        (opened)="panelOpenState = true"
-        (closed)="panelOpenState = false"
-      >
-        <mat-expansion-panel-header>
-          <mat-panel-title> Electrónica y Tecnología </mat-panel-title>
-        </mat-expansion-panel-header>
-        <p>I'm visible because I am open</p>
-      </mat-expansion-panel>
-      <mat-expansion-panel
-        (opened)="panelOpenState = true"
-        (closed)="panelOpenState = false"
-      >
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Salud, Belleza y Cuidado personal
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <p>I'm visible because I am open</p>
-      </mat-expansion-panel>
-      <mat-expansion-panel
-        (opened)="panelOpenState = true"
-        (closed)="panelOpenState = false"
-      >
-        <mat-expansion-panel-header>
-          <mat-panel-title> Animales y Mascotas </mat-panel-title>
-        </mat-expansion-panel-header>
-        <p>I'm visible because I am open</p>
-      </mat-expansion-panel>
-    </mat-accordion>
-    <p class="mat-small" align="right" style="padding: 15px;"> ©2020-2020 MZstore </p>
-      <!-- <mat-nav-list>
-        <a mat-list-item routerLink="." *ngFor="let nav of fillerNav">{{nav}}</a>
-      </mat-nav-list> -->
-      <!-- <app-categories (selectedOption)="onSelectedOption()"></app-categories> -->
+      <p class="mat-h1" style="margin: 24px 0px 0px 24px">Categorías</p>
+      <mat-nav-list style="max-width: 320px">
+        <mat-list-item
+          *ngFor="let categoria of categorias"
+          (click)="onCategoriaClicked(categoria.id_categoria)"
+        >
+          <mat-icon matListIcon>view_module</mat-icon>
+          <span matLine>{{ categoria.categoria }}</span>
+        </mat-list-item>
+      </mat-nav-list>
+      <p class="mat-small" align="right" style="padding: 15px">
+        ©2020-2020 MZstore
+      </p>
     </mat-sidenav>
     <mat-sidenav
       #snav2
@@ -97,7 +40,11 @@
       fixedTopGap="56"
       autoFocus="false"
     >
-      <mat-card style="width: 300px;" class="card mat-elevation-z0" *ngIf="isAuthenticated">
+      <mat-card
+        style="width: 300px"
+        class="card mat-elevation-z0"
+        *ngIf="isAuthenticated"
+      >
         <mat-card-header>
           <div mat-card-avatar>
             <mat-icon style="font-size: 3rem" [style.color]="colorIcono"
@@ -115,7 +62,7 @@
               (click)="redirectTo('/admin/articulos')"
               *ngIf="esAdmin"
             >
-              <mat-icon matListIcon>list</mat-icon>
+              <mat-icon matListIcon>view_list</mat-icon>
               <span matLine>ARTÍCULOS</span>
             </mat-list-item>
             <mat-list-item (click)="redirectTo('/usuario/datos')">
@@ -123,7 +70,7 @@
               <span matLine>DATOS PERSONALES</span>
             </mat-list-item>
             <mat-list-item (click)="redirectTo('/usuario/pedidos')">
-              <mat-icon matListIcon>list</mat-icon>
+              <mat-icon matListIcon>view_list</mat-icon>
               <span class="mat-h4" matLine>MIS PEDIDOS</span>
             </mat-list-item>
             <mat-list-item
@@ -138,7 +85,7 @@
               (click)="redirectTo('/admin/pedidos')"
               *ngIf="esAdmin"
             >
-              <mat-icon matListIcon>list</mat-icon>
+              <mat-icon matListIcon>view_list</mat-icon>
               <span class="mat-h4" matLine>TODOS LOS PEDIDOS</span>
             </mat-list-item>
             <mat-list-item
@@ -161,6 +108,7 @@
       style="width: 100%; min-height: calc(100vh - 54px)"
       fxLayout="column"
       fxLayoutAlign="space-between"
+      class="main-container"
     >
       <router-outlet></router-outlet>
       <app-footer></app-footer>

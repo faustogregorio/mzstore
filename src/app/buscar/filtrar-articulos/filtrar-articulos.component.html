@@ -1,14 +1,44 @@
-<div style="width: 100%;min-height: calc(100vh - var(--footer-div-height) - var(--toolbar-div-height));" fxLayoutAlign="center">
+<div
+  style="
+    width: 100%;
+    min-height: calc(
+      100vh - var(--footer-div-height) - var(--toolbar-div-height)
+    );
+  "
+  fxLayoutAlign="center"
+>
   <div fxFlex="1300px" fxLayout="row" fxLayoutGap="24px">
     <app-categories [idCategoria]="decoded.id"></app-categories>
     <div fxFlex="1 1 auto" fxLayout="row wrap" fxLayoutAlign="start start">
-      <app-filtrar fxFlex="100%" (filtrarPor)="onFiltrarPor($event)"></app-filtrar>
+      <app-filtrar
+        fxFlex="100%"
+        (filtrarPor)="onFiltrarPor($event)"
+      ></app-filtrar>
       <div fxFlex="100%" *ngIf="corruptEncoded">
-        <p class="mat-h2" style="text-align: center;">Ningún resultado</p>
-        <img src="assets/img/empty.svg" alt="" width="100%" height="500px" style="object-fit: contain;">
-
+        <p class="mat-h2" style="text-align: center">Ningún resultado</p>
+        <img
+          src="assets/img/empty.svg"
+          alt=""
+          width="100%"
+          height="500px"
+          style="object-fit: contain"
+        />
       </div>
-      <mat-grid-list fxFlex="100%" cols="4" rowHeight="500px" gutterSize="20px" *ngIf="!corruptEncoded">
+      <div
+      fxFlex="100%"
+      class="search-results"
+      infiniteScroll
+      [infiniteScrollDistance]="scrollDistance"
+      [infiniteScrollThrottle]="throttle"
+      [infiniteScrollContainer]="'.main-container'"
+      (scrolled)="onScrollDown()"
+      [fromRoot]="true"
+    >
+      <p *ngFor="let i of array">
+        {{ i }}
+      </p>
+    </div>
+      <!-- <mat-grid-list fxFlex="100%" cols="4" rowHeight="500px" gutterSize="20px" *ngIf="!corruptEncoded">
         <mat-grid-tile *ngFor="let articulo of articulos">
           <div style="width: 100%;">
             <mat-grid-list cols="1" rowHeight="1:1" gutterSize="0px">
@@ -33,7 +63,8 @@
             </mat-grid-list>
           </div>
         </mat-grid-tile>
-      </mat-grid-list>
+      </mat-grid-list> -->
     </div>
   </div>
 </div>
+
