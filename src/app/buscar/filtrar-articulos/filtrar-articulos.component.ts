@@ -103,9 +103,6 @@ export class FiltrarArticulosComponent implements OnInit, OnDestroy {
     this.paginator._intl.previousPageLabel = 'Página anterior'; */
 
   }
-  onScroll(): void {
-    console.log('scrolled!!');
-  }
   checkDecodedStringWasNotCorrupted(encoded: string): boolean {
     try {
       this.decoded = JSON.parse(this.crytojs.decode(encoded));
