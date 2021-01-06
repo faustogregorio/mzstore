@@ -24,7 +24,7 @@
           style="object-fit: contain"
         />
       </div>
-      <div
+      <!--       <div
       fxFlex="100%"
       class="search-results"
       infiniteScroll
@@ -37,34 +37,177 @@
       <p *ngFor="let i of array">
         {{ i }}
       </p>
-    </div>
-      <!-- <mat-grid-list fxFlex="100%" cols="4" rowHeight="500px" gutterSize="20px" *ngIf="!corruptEncoded">
-        <mat-grid-tile *ngFor="let articulo of articulos">
-          <div style="width: 100%;">
-            <mat-grid-list cols="1" rowHeight="1:1" gutterSize="0px">
-              <mat-grid-tile rowspan="1">
-                <img
-                [src]="urlImagenes + articulo.imagen"
-                alt=""
-                width="auto"
-                height="100%"
+    </div> -->
+      <mat-grid-list
+        fxFlex="100%"
+        style="background-color: white;margin-bottom: 100px;"
+        infiniteScroll
+        [infiniteScrollDistance]="scrollDistance"
+        [infiniteScrollThrottle]="throttle"
+        [infiniteScrollContainer]="'.main-container'"
+        (scrolled)="onScrollDown()"
+        [fromRoot]="true"
+        cols="2"
+        rowHeight="500px"
+        gutterSize="100px"
+        *ngIf="!corruptEncoded"
+      >
+        <!-- <mat-grid-tile *ngFor="let i of parcialArticulos">{{ i.articulo }}</mat-grid-tile> -->
+        <mat-grid-tile *ngFor="let articulo of parcialArticulos">
+          <div fxFlex="100%" fxLayout="column">
+            <div
+              style="height: 390px; cursor: pointer; position: relative"
+              (click)="onClickArticulo(articulo)"
+            >
+              <!-- <div
+              style="
+                position: absolute;
+                height: 50px;
+                width: 50px;
+                bottom: 0;
+                right: 0;
+                clip-path: polygon(
+                  0% 0%,
+                  100% 0%,
+                  100% 75%,
+                  75% 75%,
+                  75% 100%,
+                  50% 75%,
+                  0% 75%
+                );
+                border-radius: 5px;
+                background-color: #c21912;
+              "
+              fxLayoutAlign="center center"
+            >
+              <p
+                style="
+                  color: whitesmoke;
+                  margin: 0;
+                  font-weight: 500;
+                  font-size: 0.75rem;
+                "
+              >
+                Oferta
+              </p>
+            </div> -->
+              <img
+                [src]="urlImagenes+articulo.imagen"
+                style="width: 100%; height: 390px; object-fit: contain"
               />
-              </mat-grid-tile>
-            </mat-grid-list>
-            <mat-grid-list cols="1" rowHeight="5:3" gutterSize="0px">
-              <mat-grid-tile>
-                <p style="text-align: center;">
-                  {{ articulo.articulo}}
+            </div>
+            <div fxLayout="row">
+              <!-- <div
+              style="background-color: #f44336; border-radius: 5px"
+              fxLayoutAlign="center center"
+            >
+              <p
+                style="
+                  padding: 5px;
+                  margin: 0;
+                  font-weight: 500;
+                  font-size: 0.75rem;
+                "
+              >
+                Agotado
+              </p>
+            </div> -->
+              <!-- <div
+              style="background-color: #2196F3; border-radius: 5px"
+              fxLayoutAlign="center center"
+            >
+              <p
+                style="
+                  padding: 5px;
+                  margin: 0;
+                  font-weight: 500;
+                  font-size: 0.75rem;
+                "
+              >
+                Nuevo
+              </p>
+            </div> -->
+              <!-- <div
+                style="
+                  background-color: #ffc107;
+                  border-radius: 5px;
+                  margin-left: 10px;
+                "
+                fxLayoutAlign="center center"
+              >
+                <p
+                  style="
+                    padding: 5px;
+                    margin: 0;
+                    font-weight: 500;
+                    font-size: 0.75rem;
+                  "
+                >
+                  Oferta
                 </p>
-              </mat-grid-tile>
-            </mat-grid-list>
-            <mat-grid-list cols="1" rowHeight="53px" gutterSize="0px">
-              <mat-grid-tile style="background-color: pink;">${{ articulo.precio }}</mat-grid-tile>
-            </mat-grid-list>
+              </div> -->
+              <p
+                class="mat-body-strong"
+                style="
+                  margin: 10px;
+                  display: -webkit-box;
+                  -webkit-box-orient: vertical;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  white-space: normal;
+                  -webkit-line-clamp: 2;
+                  cursor: pointer;
+                "
+                (click)="onClickArticulo(articulo)"
+                [matTooltip]="articulo.articulo"
+                matTooltipShowDelay="600"
+              >
+                {{ articulo.articulo}}
+              </p>
+            </div>
+            <div
+              style="
+                height: 40px;
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+              "
+            >
+              <span style="margin-left: 10px" class="mat-h2">{{ articulo.precio | formatoMoneda}}</span>
+              <!-- <div
+                fxLayout="row"
+                style="margin-left: 10px"
+                fxLayoutAlign="start center"
+                fxLayoutGap="5px"
+              >
+                <span style="font-size: 1.3rem; color: #f57f17">-30%</span>
+                <div fxLayout="column">
+                  <span style="font-weight: 500; font-size: 1.1rem"
+                    >MX$3,418.00</span
+                  >
+                  <span style="text-decoration: line-through" class="mat-small"
+                    >{{ articulo.precio | formatoMoneda}}</span
+                  >
+                </div>
+              </div> -->
+              <button
+                style="margin-right: 10px"
+                mat-icon-button
+                color="primary"
+                type="button"
+                matTooltip="Agregar este producto al carrito de compras"
+              >
+                <mat-icon>add_shopping_cart</mat-icon>
+              </button>
+            </div>
           </div>
         </mat-grid-tile>
-      </mat-grid-list> -->
+      </mat-grid-list>
     </div>
   </div>
 </div>
+
+
+
+
 

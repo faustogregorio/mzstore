@@ -15,6 +15,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { FiltrarArticulosComponent } from './filtrar-articulos/filtrar-articulos.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import { PipesModule } from '../pipes/pipes.module';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,9 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     MatButtonModule,
     MatMenuModule,
     MatPaginatorModule,
-    InfiniteScrollModule
+    InfiniteScrollModule,
+    MatTooltipModule,
+    PipesModule
   ]
 })
 export class BuscarModule { }

@@ -16,7 +16,7 @@ export class FiltrarArticulosComponent implements OnInit, OnDestroy {
   // marcas: Marca[] = [];
   encoded = '';
   corruptEncoded = false;
-  decoded: {id: number, val: string} = {id: 0, val: ''};
+  decoded: { id: number, val: string } = { id: 0, val: '' };
   urlImagenes = environment.urlImagenes;
   articulosChanged$!: Subscription;
   articulos: BuscarArticulo[] = [];
@@ -24,12 +24,12 @@ export class FiltrarArticulosComponent implements OnInit, OnDestroy {
 
 
 
-  array: any = [];
-  sum = 100;
-  throttle = 100;
+  /* infinite scroll */
+  sum = 10;
+  throttle = 10;
   scrollDistance = 1;
-  direction = '';
-  modalOpen = false;
+  totalArticulos: BuscarArticulo[] = [];
+  parcialArticulos: BuscarArticulo[] = [];
 
   constructor(
     private buscarService: BuscarService,
@@ -41,86 +41,46 @@ export class FiltrarArticulosComponent implements OnInit, OnDestroy {
     this.appendItems(0, this.sum);
   }
 
-  addItems(startIndex: number, endIndex: number, method: string): void {
-    for (let i = 0; i < this.sum; ++i) {
-      this.array[method]([i, ' ', this.generateWord()].join(''));
-    }
+  addItems(startIndex: number, endIndex: number): void {
+    this.parcialArticulos = this.parcialArticulos.concat(this.totalArticulos.slice(startIndex, endIndex));
   }
 
   appendItems(startIndex: number, endIndex: number): void {
-    this.addItems(startIndex, endIndex, 'push');
-  }
-
-  prependItems(startIndex: number, endIndex: number): void {
-    this.addItems(startIndex, endIndex, 'unshift');
+    this.addItems(startIndex, endIndex);
   }
 
   onScrollDown(): void {
     console.log('scrolled down!!');
-
-    // add another 20 items
-    const start = this.sum;
-    this.sum += 20;
-    if (this.sum > 200) {
+    if (this.sum >= this.totalArticulos.length) {
       return;
     }
+    const start = this.sum;
+    this.sum += 10;
     this.appendItems(start, this.sum);
-
-    this.direction = 'down';
   }
   generateWord(): string {
     return 'hola';
   }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   ngOnInit(): void {
     this.encoded = this.route.snapshot.params.buscar;
-    console.log('code: ', this.encoded);
     this.corruptEncoded = this.checkDecodedStringWasNotCorrupted(this.encoded);
-
-
-    console.log(this.corruptEncoded);
-    console.log(this.decoded);
-
-
-    /* this.paginator._intl.itemsPerPageLabel = 'Resultados por página';
-    this.paginator._intl.nextPageLabel = 'Siguiente página';
-    this.paginator._intl.previousPageLabel = 'Página anterior'; */
-
   }
-  checkDecodedStringWasNotCorrupted(encoded: string): boolean {
-    try {
-      this.decoded = JSON.parse(this.crytojs.decode(encoded));
-      return false;
-    } catch (error) {
-      return true;
-    }
-  }
+
   initArticulosChanged(): void {
     this.articulosChanged$ = this.buscarService.articulosChanged.subscribe(
       (articulos: BuscarArticulo[]) => {
         console.log('BUscar: ', articulos);
         this.corruptEncoded = articulos.length === 0 ? true : false;
+        /* this.totalArticulos = articulos; */
         if (this.filtrar !== 0) {
-          this.articulos = this.filtrar === 1 ? articulos.sort(this.filtrarArticulos('precio')) : articulos.sort(this.filtrarArticulos('precio', 'desc'));
+          this.totalArticulos = this.filtrar === 1 ? articulos.sort(this.filtrarArticulos('precio')) : articulos.sort(this.filtrarArticulos('precio', 'desc'));
         } else {
-          this.articulos = articulos;
+          this.totalArticulos = articulos;
         }
+        this.parcialArticulos = this.totalArticulos.slice(0, 10);
+        this.sum = 10;
       }
     );
   }
@@ -133,18 +93,23 @@ export class FiltrarArticulosComponent implements OnInit, OnDestroy {
     console.log('Buscar: ', filtrar);
     switch (filtrar) {
       case 0:
-        this.articulos.sort(this.filtrarArticulos('id_articulo', 'desc'));
+        this.totalArticulos.sort(this.filtrarArticulos('id_articulo', 'desc'));
         break;
       case 1:
-        this.articulos.sort(this.filtrarArticulos('precio'));
+        this.totalArticulos.sort(this.filtrarArticulos('precio'));
         break;
       case 2:
-        this.articulos.sort(this.filtrarArticulos('precio', 'desc'));
+        this.totalArticulos.sort(this.filtrarArticulos('precio', 'desc'));
         break;
       default:
         break;
     }
     this.filtrar = filtrar;
+    this.parcialArticulos = this.totalArticulos.slice(0, 10);
+    this.sum = 10;
+  }
+  onClickArticulo(articulo: BuscarArticulo): void {
+    console.log(articulo);
   }
 
   filtrarArticulos(key: string, order = 'asc'): any {
@@ -157,6 +122,15 @@ export class FiltrarArticulosComponent implements OnInit, OnDestroy {
         (order === 'desc') ? (resultado * -1) : resultado
       );
     };
+  }
+
+  checkDecodedStringWasNotCorrupted(encoded: string): boolean {
+    try {
+      this.decoded = JSON.parse(this.crytojs.decode(encoded));
+      return false;
+    } catch (error) {
+      return true;
+    }
   }
 
   ngOnDestroy(): void {
