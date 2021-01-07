@@ -47,3 +47,17 @@ a {
   text-decoration: none;
   color: rgb(var(--toolbar-text-color));
 }
+
+.dialog {
+
+  max-width: 100vw;
+  min-width: 100vw;
+  min-height: calc(100vh);
+
+}
+.dialog .mat-dialog-container {
+  border-radius: 0px;
+}
+.dialog-backdrop {
+  background-color: transparent;
+}

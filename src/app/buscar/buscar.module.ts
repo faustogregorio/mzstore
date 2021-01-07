@@ -17,6 +17,7 @@ import { FiltrarArticulosComponent } from './filtrar-articulos/filtrar-articulos
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { PipesModule } from '../pipes/pipes.module';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { PipesModule } from '../pipes/pipes.module';
     MatPaginatorModule,
     InfiniteScrollModule,
     MatTooltipModule,
-    PipesModule
+    PipesModule,
+    MatDialogModule
   ]
 })
 export class BuscarModule { }

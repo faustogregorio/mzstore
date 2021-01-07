@@ -1,5 +1,6 @@
 
 import { Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Categoria } from '../buscar/buscar.model';
 import { BuscarService } from '../buscar/buscar.service';
@@ -36,7 +37,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor(
     private cryptojs: CryptoService,
     private buscarService: BuscarService,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) {
     this.getCategorias();
 
@@ -60,15 +62,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    /*  console.log('DESENCRYPTED: ', this.cryptoService.AESencrypt(this.numero));
-     console.log('DESDECRYPTED: ', this.cryptoService.AESdecrypt(this.cryptoService.AESencrypt(this.numero))); */
-
-/*      console.log('DESENCRYPTED2: ', this.cryptoService.encode(JSON.stringify(this.numero)));
-    console.log('DESDECRYPTED2: ', JSON.parse(this.cryptoService.decode(this.cryptoService.encode(JSON.stringify(this.numero)))));
-   */
   }
   ngOnDestroy(): void {
-    /* this.myCarousel.stop(); */
   }
 
   @HostListener('window:blur', ['$event'])

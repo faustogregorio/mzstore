@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { ArticuloComponent } from 'src/app/articulo/articulo.component';
 
 @Component({
   selector: 'app-mostrar-articulos',
@@ -7,13 +9,20 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class MostrarArticulosComponent implements OnInit {
   @Input() articulos: any;
-  constructor() { }
+  constructor(
+    private dialog: MatDialog
+  ) { }
 
   ngOnInit(): void {
   }
 
   onClickArticulo(articulo: any): void {
-    console.log(articulo)
+    console.log(articulo);
+    const dialogRef = this.dialog.open(ArticuloComponent, {
+      data: articulo.id_articulo,
+      panelClass: 'dialog',
+      autoFocus: false,
+    });
   }
 
 }

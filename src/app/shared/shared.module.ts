@@ -13,6 +13,7 @@ import {MatRippleModule} from '@angular/material/core';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { MostrarArticulosComponent } from './mostrar-articulos/mostrar-articulos.component';
 import { MatGridListModule } from '@angular/material/grid-list';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { MatGridListModule } from '@angular/material/grid-list';
     CommonModule,
     CategoriesComponent,
     CarouselComponent,
-    MostrarArticulosComponent
+    MostrarArticulosComponent,
+    MatDialogModule
   ]
 })
 export class SharedModule { }

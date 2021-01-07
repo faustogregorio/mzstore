@@ -1,10 +1,12 @@
 import { CryptoService } from './../../services/crypto.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 import { BuscarArticulo } from '../buscar.model';
 import { BuscarService } from '../buscar.service';
+import { MatDialog, DialogPosition } from '@angular/material/dialog';
+import { ArticuloComponent } from 'src/app/articulo/articulo.component';
 
 @Component({
   selector: 'app-filtrar-articulos',
@@ -34,7 +36,9 @@ export class FiltrarArticulosComponent implements OnInit, OnDestroy {
   constructor(
     private buscarService: BuscarService,
     private route: ActivatedRoute,
-    private crytojs: CryptoService
+    private cryptojs: CryptoService,
+    private router: Router,
+    private dialog: MatDialog
   ) {
     this.initArticulosChanged();
 
@@ -108,8 +112,15 @@ export class FiltrarArticulosComponent implements OnInit, OnDestroy {
     this.parcialArticulos = this.totalArticulos.slice(0, 10);
     this.sum = 10;
   }
+
   onClickArticulo(articulo: BuscarArticulo): void {
     console.log(articulo);
+    /* this.router.navigate([`articulo/${this.cryptojs.encode(`${articulo.id_articulo}`)}`]); */
+    const dialogRef = this.dialog.open(ArticuloComponent, {
+      data: articulo.id_articulo,
+      panelClass: 'dialog',
+      autoFocus: false,
+    });
   }
 
   filtrarArticulos(key: string, order = 'asc'): any {
@@ -126,7 +137,7 @@ export class FiltrarArticulosComponent implements OnInit, OnDestroy {
 
   checkDecodedStringWasNotCorrupted(encoded: string): boolean {
     try {
-      this.decoded = JSON.parse(this.crytojs.decode(encoded));
+      this.decoded = JSON.parse(this.cryptojs.decode(encoded));
       return false;
     } catch (error) {
       return true;
