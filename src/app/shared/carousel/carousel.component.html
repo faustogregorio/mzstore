@@ -7,8 +7,23 @@
     (transitionend)="handleTransitionendCellContainer($event)"
   >
     <ng-content></ng-content>
-    <!-- (click)="onClickCell(getImage(i))" -->
-    <ng-template ngFor let-image [ngForOf]="images" let-i="index">
+    <ng-template ngFor let-image [ngForOf]="images" let-i="index" *ngIf="!esArticulo">
+			<div class="carousel-cell"
+				[style.width]="getCellWidth()+'px'"
+        [style.border-radius]="borderRadius+'px'"
+				*ngIf="i < cellLimit">
+				<!-- Image -->
+				<img
+					*ngIf="getImage(i) && getImage(i)['image']"
+					[src]="getImage(i)['image']['path']"
+          [style.object-fit]="objectFit"
+          [style.cursor]="'pointer'"
+          (click)="onClickCell(getImage(i))"
+					draggable="false" />
+
+			</div>
+		</ng-template>
+    <ng-template ngFor let-image [ngForOf]="images" let-i="index" *ngIf="esArticulo">
       <div
         class="carousel-cell"
         [style.width]="getCellWidth() + 'px'"

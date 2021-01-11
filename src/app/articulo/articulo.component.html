@@ -1,2 +1,285 @@
-<p>articulo works!</p>
-<button (click)="back()">back</button>
+<!-- <p>articulo works!</p>
+
+ -->
+
+<div style="width: 100%" fxLayout="row" fxLayoutGap="16px">
+  <div fxFlex="1 1 auto" style="height: 100vh" fxLayout="column">
+    <div class="imagen" fxFlex="1 1 auto">
+      <!-- <div
+        style="
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          filter: blur(15px);
+          opacity: 0.15;
+          z-index: 0;
+        "
+      >
+        <img
+          src="https://images-na.ssl-images-amazon.com/images/I/51125CkTncL._AC_SL1500_.jpg"
+          style="width: 100%; height: 100%; object-fit: cover;"
+          alt=""
+        />
+      </div> -->
+      <div
+        style="
+          position: absolute;
+          margin-top: 8px;
+          margin-left: 16px;
+          z-index: 99;
+        "
+        fxLayoutAlign="center center"
+        fxLayoutGap="8px"
+      >
+        <button mat-mini-fab type="button" (click)="back()">
+          <mat-icon>close</mat-icon>
+        </button>
+        <img src="assets/img/logo.png" alt="" height="40px" />
+      </div>
+      <div
+        class="arrow"
+        style="left: 16px"
+        matRipple
+        [matRippleCentered]="true"
+        [matRippleColor]="'rgba(22,24,35,0.64);'"
+      >
+        <div style="width: 100%; height: 100%" fxLayoutAlign="center center">
+          <mat-icon>arrow_left</mat-icon>
+        </div>
+      </div>
+      <div
+        class="arrow"
+        style="right: 16px"
+        matRipple
+        [matRippleCentered]="true"
+        [matRippleColor]="'rgba(22,24,35,0.64);'"
+      >
+        <div style="width: 100%; height: 100%" fxLayoutAlign="center center">
+          <mat-icon>arrow_right</mat-icon>
+        </div>
+      </div>
+      <div style="height: 100%; width: 100%; position: absolute; z-index: 9">
+        <img
+          [src]="imagenUrl"
+          style="width: 100%; height: 100%; object-fit: contain"
+          alt=""
+        />
+      </div>
+    </div>
+    <div
+      style="position: relative; width: 100%; background-color: greenyellow"
+      fxFlex="100px"
+    >
+      <app-carousel
+        #carousel
+        [esArticulo]="false"
+        [images]="imagenes"
+        [height]="100"
+        [cellWidth]="60"
+        objectFit="cover"
+        [loop]="false"
+        [autoplay]="false"
+        [transitionDuration]="400"
+        [margin]="40"
+        [transitionTimingFunction]="'ease'"
+        [arrows]="true"
+        [cellsToScroll]="3"
+        [overflowCellsLimit]="3"
+        [dots]="false"
+        [borderRadius]="10"
+        [arrowsTheme]="'light'"
+        (imagen)="onClickCell($event)"
+        style="
+          width: 100%;
+          background-color: white;
+          position: absolute;
+          padding: 10px 0px;
+          border-top: 1px solid whitesmoke;
+        "
+      >
+      </app-carousel>
+    </div>
+  </div>
+  <div
+    fxFlex="512px"
+    style="max-height: 100vh"
+    fxLayout="row wrap"
+    fxLayoutAlign="start start"
+  >
+    <div fxFlex="100%" style="height: 150px;margin-right: 16px;" fxLayout="column">
+      <div
+        fxFlex="65px"
+        style="margin-top: 16px; width: 100%;"
+        fxLayout="row"
+        fxLayoutAlign="start center"
+        fxLayoutGap="16px"
+      >
+        <span
+          fxFlex="1 1 auto"
+          style="
+            margin: 0;
+            padding: 0;
+            font-weight: 500;
+            font-size: 1.01rem;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: normal;
+            -webkit-line-clamp: 3;
+            cursor: pointer;
+          "
+          matTooltip="XIAOMI REDMI NOTE 9 BLANCO (POLAR WHITE) XIAOMI REDMI NOTE 9 BLANCO (POLAR WHITE) XIAOMI REDMI NOTE 9 BLANCO (POLAR WHITE)"
+          matTooltipShowDelay="1000"
+        >
+        XIAOMI REDMI NOTE 9 BLANCO (POLAR WHITE)
+        </span>
+        <!-- <div>
+          <button mat-stroked-button type="button" color="primary">COMPRAR</button>
+        </div> -->
+      </div>
+      <div
+        style="
+          width: 100%;
+        "
+        fxLayoutAlign="space-between center"
+        fxLayoutGap="16px"
+      >
+        <span style="font-weight: 400;font-size: 1rem;">MX$5,418.00</span>
+        <!-- <div
+          fxLayout="row"
+          fxLayoutAlign="start center"
+          fxLayoutGap="5px"
+        >
+          <span style="font-size: 1.3rem; color: #F57F17">-30%</span>
+          <div fxLayout="column">
+            <span style="font-weight: 500; font-size: 1.1rem">MX$3,418.00</span>
+            <span style="text-decoration: line-through" class="mat-small"
+              >MX$5,418.00</span
+            >
+          </div>
+        </div> -->
+        <button mat-stroked-button type="button" color="primary">COMPRAR</button>
+        <!-- <button
+          style="margin-right: 10px"
+          mat-icon-button
+          color="primary"
+          type="button"
+          matTooltip="Agregar este producto al carrito de compras"
+        >
+          <mat-icon>add_shopping_cart</mat-icon>
+        </button> -->
+      </div>
+      <span style="font-weight: 500;font-size: 0.75rem;">Marca: IPHONE</span>
+    </div>
+    <div fxFlex="100%" style="height: calc(100vh - 100px)">
+      <mat-tab-group
+        mat-align-tabs="start"
+        style="max-height: calc(100vh - 100px); overflow-y: auto"
+      >
+        <mat-tab label="Descripción"
+          ><p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate
+            exercitationem ex nostrum, reiciendis tempora iusto aliquid
+            perferendis aspernatur veritatis sapiente molestias consequuntur
+            culpa, eum qui, nemo est sequi vitae mollitia.
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate
+            exercitationem ex nostrum, reiciendis tempora iusto aliquid
+            perferendis aspernatur veritatis sapiente molestias consequuntur
+            culpa, eum qui, nemo est sequi vitae mollitia.
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate
+            exercitationem ex nostrum, reiciendis tempora iusto aliquid
+            perferendis aspernatur veritatis sapiente molestias consequuntur
+            culpa, eum qui, nemo est sequi vitae mollitia.
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate
+            exercitationem ex nostrum, reiciendis tempora iusto aliquid
+            perferendis aspernatur veritatis sapiente molestias consequuntur
+            culpa, eum qui, nemo est sequi vitae mollitia.
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate
+            exercitationem ex nostrum, reiciendis tempora iusto aliquid
+            perferendis aspernatur veritatis sapiente molestias consequuntur
+            culpa, eum qui, nemo est sequi vitae mollitia.
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate
+            exercitationem ex nostrum, reiciendis tempora iusto aliquid
+            perferendis aspernatur veritatis sapiente molestias consequuntur
+            culpa, eum qui, nemo est sequi vitae mollitia.
+          </p>
+
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate
+            exercitationem ex nostrum, reiciendis tempora iusto aliquid
+            perferendis aspernatur veritatis sapiente molestias consequuntur
+            culpa, eum qui, nemo est sequi vitae mollitia.
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate
+            exercitationem ex nostrum, reiciendis tempora iusto aliquid
+            perferendis aspernatur veritatis sapiente molestias consequuntur
+            culpa, eum qui, nemo est sequi vitae mollitia.
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate
+            exercitationem ex nostrum, reiciendis tempora iusto aliquid
+            perferendis aspernatur veritatis sapiente molestias consequuntur
+            culpa, eum qui, nemo est sequi vitae mollitia.
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate
+            exercitationem ex nostrum, reiciendis tempora iusto aliquid
+            perferendis aspernatur veritatis sapiente molestias consequuntur
+            culpa, eum qui, nemo est sequi vitae mollitia.
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate
+            exercitationem ex nostrum, reiciendis tempora iusto aliquid
+            perferendis aspernatur veritatis sapiente molestias consequuntur
+            culpa, eum qui, nemo est sequi vitae mollitia.
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate
+            exercitationem ex nostrum, reiciendis tempora iusto aliquid
+            perferendis aspernatur veritatis sapiente molestias consequuntur
+            culpa, eum qui, nemo est sequi vitae mollitia.
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate
+            exercitationem ex nostrum, reiciendis tempora iusto aliquid
+            perferendis aspernatur veritatis sapiente molestias consequuntur
+            culpa, eum qui, nemo est sequi vitae mollitia.
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate
+            exercitationem ex nostrum, reiciendis tempora iusto aliquid
+            perferendis aspernatur veritatis sapiente molestias consequuntur
+            culpa, eum qui, nemo est sequi vitae mollitia.
+          </p>
+
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate
+            exercitationem ex nostrum, reiciendis tempora iusto aliquid
+            perferendis aspernatur veritatis sapiente molestias consequuntur
+            culpa, eum qui, nemo est sequi vitae mollitia.
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate
+            exercitationem ex nostrum, reiciendis tempora iusto aliquid
+            perferendis aspernatur veritatis sapiente molestias consequuntur
+            culpa, eum qui, nemo est sequi vitae mollitia.
+          </p></mat-tab
+        >
+        <!-- <mat-tab label="Second">Content 2</mat-tab>
+      <mat-tab label="Third">Content 3</mat-tab> -->
+      </mat-tab-group>
+    </div>
+  </div>
+</div>

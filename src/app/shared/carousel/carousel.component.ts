@@ -108,8 +108,10 @@ export class CarouselComponent implements OnDestroy, OnInit, OnChanges, AfterVie
   }
 
   @Output() events: EventEmitter<any> = new EventEmitter<any>();
+  /*  */
   @Output() imagen: EventEmitter<any> = new EventEmitter<any>();
-
+  @Input() esArticulo = false;
+/*  */
 
   @Input() id?: number;
   @Input() height = 200;
