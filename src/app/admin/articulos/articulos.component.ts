@@ -75,7 +75,8 @@ export class ArticulosComponent implements OnInit, AfterViewInit {
     console.log(this.selectedIdArticulo);
   }
 
-  openBottomSheet(opcion: string, id: number): void {
+  openBottomSheet(opcion: string, id: number, index: number): void {
+    this.updateSelectedArticuloId(id, index);
     const bottomSheetRef = this.bottomSheet.open(DefaultBottomSheetComponent, {
       data: { opcion, id_articulo: id },
       autoFocus: true
