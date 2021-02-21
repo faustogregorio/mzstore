@@ -67,6 +67,9 @@ export class AdminService {
   updateArticulo(idArticulo: number, update: string, data: string | number | object | Imagen[]): Observable<GenericServerResponse> {
     return this.http.patch<GenericServerResponse>(`${this.domain}articulo/articuloModificar.php?id_articulo=${idArticulo}&update=${update}`, { data }, this.getHttpOptions());
   }
+  deleteArticulo(idArticulo: number): Observable<GenericServerResponse> {
+    return this.http.delete<GenericServerResponse>(`${this.domain}articulo/articuloEliminar.php?id_articulo=${idArticulo}`, this.getHttpOptions());
+  }
 
 
   saveArticulo(formData: FormData): Observable<ResponseSaveArticulo> {

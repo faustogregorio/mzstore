@@ -1,13 +1,14 @@
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { AdminService } from './../admin.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, ViewChildren } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { Articulo, ResponseArticulos } from '../admin.model';
 import { environment } from 'src/environments/environment.prod';
 import { DefaultBottomSheetComponent } from '../default-bottom-sheet/default-bottom-sheet.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-articulos',
@@ -30,10 +31,10 @@ export class ArticulosComponent implements OnInit, AfterViewInit {
   expandedElement?: Articulo | null;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-
   constructor(
     private adminService: AdminService,
-    private bottomSheet: MatBottomSheet
+    private bottomSheet: MatBottomSheet,
+    private snackBar: MatSnackBar
   ) {
     this.dataSource = new MatTableDataSource<Articulo>();
     this.adminService.getArticulos().subscribe(
@@ -123,5 +124,31 @@ export class ArticulosComponent implements OnInit, AfterViewInit {
       default:
         break;
     }
+  }
+
+  deleteArticulo(idArticulo: number, index: number): void {
+    this.updateSelectedArticuloId(idArticulo, index);
+    this.confirmDelete('¿Está seguro que quiere eliminar el artículo?');
+  }
+
+  openSnackBar(message: string, action = 'ACEPTAR'): void {
+    this.snackBar.open(message, action, { duration: 5000 });
+  }
+
+  confirmDelete(message: string, action = 'SÍ, ¡ELIMÍNALO!'): void {
+    const snackBarRef = this.snackBar.open(message, action, { duration: 5000 });
+
+    snackBarRef.onAction().subscribe(() => {
+      this.adminService.deleteArticulo(this.selectedIdArticulo).subscribe(
+        response => {
+          this.openSnackBar(response.message);
+          this.dataSource.data.splice(this.selectedIndexArticulo, 1);
+          this.dataSource.data = this.dataSource.data;
+        }, error => {
+          console.log(error);
+          this.openSnackBar(error.message, 'ERROR!');
+        }
+      );
+    });
   }
 }
