@@ -39,6 +39,20 @@ export interface ResponseSaveArticulo {
   message: string;
 }
 
+export interface ResponseUsuarios {
+  success: boolean;
+  usuarios: Usuario[];
+}
+
+export interface Usuario {
+  id_usuario: number;
+  nombre_completo: string;
+  telefono: string;
+  email: string;
+  fecha_creacion: Date;
+  pedidos_realizados: number;
+}
+
 
 
 /* export interface SaveArticulo {

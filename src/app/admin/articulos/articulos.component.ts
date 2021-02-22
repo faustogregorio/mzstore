@@ -146,7 +146,7 @@ export class ArticulosComponent implements OnInit, AfterViewInit {
           this.dataSource.data = this.dataSource.data;
         }, error => {
           console.log(error);
-          this.openSnackBar(error.message, 'ERROR!');
+          this.openSnackBar(error.error ? error.error.message : '!Error desconocido!');
         }
       );
     });

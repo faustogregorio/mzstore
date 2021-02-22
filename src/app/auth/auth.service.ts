@@ -22,7 +22,7 @@ export class AuthService {
   ) { }
 
   registrarUsuario(user: User): Observable<RegistrarRespuesta> {
-    return this.http.post<RegistrarRespuesta>(`${environment.api}user/create.php`, user).pipe(
+    return this.http.post<RegistrarRespuesta>(`${environment.api}usuario/usuarioCrear.php`, user).pipe(
       catchError(this.handleError)
     );
   }
@@ -34,7 +34,7 @@ export class AuthService {
         Authorization: localStorage.getItem('Authorization') || ''
       })
     };
-    return this.http.post<LoginRespuesta>(`${environment.api}user/login.php`, { email, password }, httpOptions)
+    return this.http.post<LoginRespuesta>(`${environment.api}usuario/login.php`, { email, password }, httpOptions)
       .pipe(
         catchError(this.handleError)
       );

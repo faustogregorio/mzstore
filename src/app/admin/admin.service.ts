@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 import { Categoria, Marca, ResponseCategoria, ResponseMarca, ResponseSubcategoria, Subcategoria } from '../buscar/buscar.model';
-import { GenericServerResponse, Imagen, ResponseArticulo, ResponseArticulos, /* ResponseArticulo, */ ResponseSaveArticulo } from './admin.model';
+import { GenericServerResponse, Imagen, ResponseArticulo, ResponseArticulos, /* ResponseArticulo, */ ResponseSaveArticulo, ResponseUsuarios } from './admin.model';
 
 @Injectable({
   providedIn: 'root'
@@ -65,10 +65,18 @@ export class AdminService {
     return this.http.get<ResponseArticulo>(`${this.domain}articulo/articulo.php?id_articulo=${idArticulo}`);
   }
   updateArticulo(idArticulo: number, update: string, data: string | number | object | Imagen[]): Observable<GenericServerResponse> {
-    return this.http.patch<GenericServerResponse>(`${this.domain}articulo/articuloModificar.php?id_articulo=${idArticulo}&update=${update}`, { data }, this.getHttpOptions());
+    return this.http.patch<GenericServerResponse>(
+      `${this.domain}articulo/articuloModificar.php?id_articulo=${idArticulo}&update=${update}`, { data },
+       this.getHttpOptions());
   }
   deleteArticulo(idArticulo: number): Observable<GenericServerResponse> {
-    return this.http.delete<GenericServerResponse>(`${this.domain}articulo/articuloEliminar.php?id_articulo=${idArticulo}`, this.getHttpOptions());
+    return this.http.delete<GenericServerResponse>(
+      `${this.domain}articulo/articuloEliminar.php?id_articulo=${idArticulo}`,
+       this.getHttpOptions());
+  }
+
+  getUsuarios(): Observable<ResponseUsuarios> {
+    return this.http.get<ResponseUsuarios>(`${this.domain}usuario/usuarios.php`, this.getHttpOptions());
   }
 
 
