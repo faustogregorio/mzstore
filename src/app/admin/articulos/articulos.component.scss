@@ -36,9 +36,9 @@ tr.example-element-row:not(.example-expanded-row):active {
 }
 
 .img-container {
-  height: 380px;
+  height: 420px;
   width: 100%;
-  overflow-y: auto;
+  overflow: auto;
 }
 
 .example-element-symbol {

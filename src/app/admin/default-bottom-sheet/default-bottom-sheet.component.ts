@@ -85,6 +85,7 @@ export class DefaultBottomSheetComponent implements OnInit, OnDestroy {
   imgUrl = environment.urlImagenes;
   articulo: Articulo = {
     id_articulo: 0,
+    sku: '',
     articulo: '',
     descripcion: '',
     precio: 0,
@@ -114,6 +115,7 @@ export class DefaultBottomSheetComponent implements OnInit, OnDestroy {
   ) {
     this.getArticulo();
     this.articuloForm = this.formBuilder.group({
+      sku: ['', [Validators.required, Validators.pattern('^[A-Za-z0-9_-]+$')]],
       articulo: [this.articulo.articulo, [Validators.required]],
       descripcion: [this.articulo.descripcion, [Validators.required]],
       precio: [this.articulo.precio, [Validators.required, Validators.pattern('[0-9]+')]],
@@ -159,7 +161,7 @@ export class DefaultBottomSheetComponent implements OnInit, OnDestroy {
       response => {
         this.categorias = response.categorias;
         this.categoria = this.categorias.find((categoria) => {
-          if (categoria.categoria === this.articulo.categoria) return true;
+          if (categoria.categoria === this.articulo.categoria) {return true; }
           return;
         }) || this.categoria;
         this.articuloForm.patchValue({ id_categoria: this.categoria.id_categoria });
@@ -173,7 +175,7 @@ export class DefaultBottomSheetComponent implements OnInit, OnDestroy {
       response => {
         this.subcategorias = response.subcategorias;
         this.subcategoria = this.subcategorias.find(subcategoria => {
-          if (subcategoria.subcategoria === this.articulo.subcategoria) return true;
+          if (subcategoria.subcategoria === this.articulo.subcategoria) {return true; }
           return false;
         }) || this.subcategoria;
         this.articuloForm.patchValue({ id_subcategoria: this.subcategoria.id_subcategoria });
@@ -187,7 +189,7 @@ export class DefaultBottomSheetComponent implements OnInit, OnDestroy {
       response => {
         this.marcas = response.marcas;
         this.marca = this.marcas.find(marca => {
-          if (marca.marca === this.articulo.marca) return true;
+          if (marca.marca === this.articulo.marca) {return true; }
           return false;
         }) || this.marca;
         this.articuloForm.patchValue({ id_marca: this.marca.id_marca });
@@ -202,6 +204,7 @@ export class DefaultBottomSheetComponent implements OnInit, OnDestroy {
         console.log(response);
         this.articulo = response.articulo;
         this.articuloForm.patchValue({
+          sku: this.articulo.sku,
           articulo: this.articulo.articulo,
           descripcion: this.articulo.descripcion,
           precio: this.articulo.precio,
@@ -227,8 +230,10 @@ export class DefaultBottomSheetComponent implements OnInit, OnDestroy {
 
   onUpdate(update: string): void {
     console.log(update);
-    if (this.articuloForm.controls[update].pristine || this.articuloForm.controls[update].invalid) return;
+    if (this.articuloForm.controls[update].pristine
+      || this.articuloForm.controls[update].invalid) { return; }
     switch (update) {
+      case 'sku':
       case 'articulo':
       case 'descripcion':
       case 'precio':
@@ -263,19 +268,19 @@ export class DefaultBottomSheetComponent implements OnInit, OnDestroy {
       this.bottomSheetRef.dismiss();
     } else if (update === 'id_categoria') {
       this.categoria = this.categorias.find((categoria) => {
-        if (categoria.id_categoria === this.articuloForm.value.id_categoria) return true;
+        if (categoria.id_categoria === this.articuloForm.value.id_categoria) { return true; }
         return;
       }) || this.categoria;
       this.bottomSheetRef.dismiss(this.categoria.categoria);
     } else if (update === 'id_subcategoria') {
       this.subcategoria = this.subcategorias.find((subcategoria) => {
-        if (subcategoria.id_subcategoria === this.articuloForm.value.id_subcategoria) return true;
+        if (subcategoria.id_subcategoria === this.articuloForm.value.id_subcategoria) { return true; }
         return;
       }) || this.subcategoria;
       this.bottomSheetRef.dismiss(this.subcategoria.subcategoria);
     } else if (update === 'id_marca') {
       this.marca = this.marcas.find((marca) => {
-        if (marca.id_marca === this.articuloForm.value.id_marca) return true;
+        if (marca.id_marca === this.articuloForm.value.id_marca) { return true; }
         return;
       }) || this.marca;
       this.bottomSheetRef.dismiss(this.marca.marca);
@@ -285,7 +290,11 @@ export class DefaultBottomSheetComponent implements OnInit, OnDestroy {
   }
 
   updateDescuento(update: string): void {
-    this.adminService.updateArticulo(this.data.id_articulo, update, { descuento: this.articuloForm.get(update)?.value, update: this.articulo.descuento === null ? false : true }).subscribe(
+    this.adminService.updateArticulo(
+      this.data.id_articulo,
+      update,
+      { descuento: this.articuloForm.get(update)?.value, update: this.articulo.descuento === null ? false : true }
+      ).subscribe(
       response => {
         this.openSnackBar(response.message);
         this.bottomSheetRef.dismiss(this.articuloForm.get(update)?.value);

@@ -8,9 +8,9 @@
   fxLayoutAlign="center"
 >
   <div style="margin-top: 20px" fxFlex="1300px">
-    <span class="mat-h1">Articulos</span>
-    <mat-form-field appearance="fill">
-      <mat-label>Buscar</mat-label>
+    <h1 class="mat-display-1" style="font-weight: 600; margin: 0px 0px 20px 0px;">ARTÍCULOS</h1>
+    <mat-form-field appearance="fill" floatLabel="always">
+      <mat-label>Buscar Artículo</mat-label>
       <input
         matInput
         (keyup)="applyFilter($event)"
@@ -46,7 +46,7 @@
         <ng-container matColumnDef="descuento">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Descuento</th>
           <td mat-cell *matCellDef="let row">
-            {{ row.descuento ? row.descuento + "%" : "" }}
+            {{ row.descuento ? row.descuento + "%" : "0%" }}
           </td>
         </ng-container>
 
@@ -66,13 +66,38 @@
             >
               <div style="width: 100%" fxLayout="row">
                 <div class="img-container" fxLayout="row" fxLayoutGap="10px">
-                  <img
+                    <img
                     [src]="imgDomain + element.imagen"
                     alt=""
                     height="100%"
                   />
-                  <div fxFlex="1 1 auto" style="height: 100%" fxLayout="column">
+                  <div fxFlex="1 1 auto" style="height: 100%;" fxLayout="column">
                     <div style="width: 100%" fxFlex="1 1 auto">
+                      <div
+                        fxLayout="row wrap"
+                        fxFlexAlign="center center"
+                        fxLayoutGap="8px"
+                      >
+                        <button
+                          mat-mini-fab
+                          color="accent"
+                          (click)="
+                            openBottomSheet(
+                              'edit-sku',
+                              element.id_articulo,
+                              dataSource.filteredData.indexOf(element)
+                            )
+                          "
+                        >
+                          <mat-icon>edit</mat-icon>
+                        </button>
+                        <p class="mat-body" style="padding-top: 5px">
+                          SKU:
+                          <span class="mat-body-strong">{{
+                            element.sku
+                          }}</span>
+                        </p>
+                      </div>
                       <div
                         fxLayout="row wrap"
                         fxFlexAlign="center center"

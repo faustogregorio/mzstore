@@ -8,7 +8,7 @@
   fxLayoutAlign="center"
 >
   <div style="margin-top: 20px" fxFlex="1300px">
-    <h1 class="mat-h1" style="font-weight: 600;">USUARIOS</h1>
+    <h1 class="mat-display-1" style="font-weight: 600; margin: 0px 0px 20px 0px;">USUARIOS</h1>
     <mat-form-field appearance="fill" floatLabel="always">
       <mat-label>Buscar</mat-label>
       <input
@@ -21,10 +21,13 @@
 
     <div style="margin-top: 9px">
       <table mat-table [dataSource]="dataSource" multiTemplateDataRows matSort>
-
-        <ng-container matColumnDef="nombre">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre Completo</th>
-          <td mat-cell *matCellDef="let row">{{ row.nombre_completo | uppercase }}</td>
+        <ng-container matColumnDef="nombre_completo">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            Nombre Completo
+          </th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.nombre_completo | uppercase }}
+          </td>
         </ng-container>
 
         <ng-container matColumnDef="telefono">
@@ -34,11 +37,13 @@
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="pedidos">
+        <ng-container matColumnDef="pedidos_realizados">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>
             Pedidos Realizados
           </th>
-          <td mat-cell *matCellDef="let row">{{ row.pedidos_realizados }}</td>
+          <td mat-cell *matCellDef="let row">
+            {{ row.pedidos_realizados ? row.pedidos_realizados : 0 }}
+          </td>
         </ng-container>
 
         <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
@@ -62,9 +67,15 @@
                     alt=""
                     height="100%"
                   /> -->
-                  <div style="width: 200px;height: 100%;background-color: whitesmoke;" fxLayoutAlign="center center">
+                  <div
+                    style="
+                      width: 200px;
+                      height: 100%;
+                      background-color: whitesmoke;
+                    "
+                    fxLayoutAlign="center center"
+                  >
                     <p class="mat-small">Foto de perfil</p>
-
                   </div>
                   <div fxFlex="1 1 auto" style="height: 100%" fxLayout="column">
                     <div style="width: 100%" fxFlex="1 1 auto">
@@ -73,19 +84,6 @@
                         fxFlexAlign="center center"
                         fxLayoutGap="8px"
                       >
-                        <!-- <button
-                          mat-mini-fab
-                          color="accent"
-                          (click)="
-                            openBottomSheet(
-                              'edit-articulo',
-                              element.id_articulo,
-                              dataSource.filteredData.indexOf(element)
-                            )
-                          "
-                        >
-                          <mat-icon>edit</mat-icon>
-                        </button> -->
                         <p class="mat-body" style="padding-top: 5px">
                           NOMBRE:
                           <span class="mat-body-strong">{{
@@ -98,19 +96,6 @@
                         fxFlexAlign="center center"
                         fxLayoutGap="8px"
                       >
-                        <!-- <button
-                          mat-mini-fab
-                          color="accent"
-                          (click)="
-                            openBottomSheet(
-                              'edit-precio',
-                              element.id_articulo,
-                              dataSource.filteredData.indexOf(element)
-                            )
-                          "
-                        >
-                          <mat-icon>edit</mat-icon>
-                        </button> -->
                         <p class="mat-body" style="padding-top: 5px">
                           TELÉFONO:
                           <span class="mat-body-strong">{{
@@ -123,19 +108,6 @@
                         fxFlexAlign="center center"
                         fxLayoutGap="8px"
                       >
-                        <!-- <button
-                          mat-mini-fab
-                          color="accent"
-                          (click)="
-                            openBottomSheet(
-                              'edit-stock',
-                              element.id_articulo,
-                              dataSource.filteredData.indexOf(element)
-                            )
-                          "
-                        >
-                          <mat-icon>edit</mat-icon>
-                        </button> -->
                         <p class="mat-body" style="padding-top: 5px">
                           EMAIL:
                           <span class="mat-body-strong">{{
@@ -148,105 +120,20 @@
                         fxFlexAlign="center center"
                         fxLayoutGap="8px"
                       >
-                        <!-- <button
-                          mat-mini-fab
-                          color="accent"
-                          (click)="
-                            openBottomSheet(
-                              'edit-descuento',
-                              element.id_articulo,
-                              dataSource.filteredData.indexOf(element)
-                            )
-                          "
-                        >
-                          <mat-icon>edit</mat-icon>
-                        </button> -->
                         <p class="mat-body" style="padding-top: 5px">
                           PEDIDOS REALIZADOS:
                           <span class="mat-body-strong">{{
-                            element.pedidos_realizados ? element.pedidos_realizados : 0
+                            element.pedidos_realizados
+                              ? element.pedidos_realizados
+                              : 0
                           }}</span>
                         </p>
                       </div>
-                      <!-- <div
-                        fxLayout="row wrap"
-                        fxFlexAlign="center center"
-                        fxLayoutGap="8px"
-                      >
-                        <button
-                          mat-mini-fab
-                          color="accent"
-                          (click)="
-                            openBottomSheet(
-                              'edit-marca',
-                              element.id_articulo,
-                              dataSource.filteredData.indexOf(element)
-                            )
-                          "
-                        >
-                          <mat-icon>edit</mat-icon>
-                        </button>
-                        <p class="mat-body" style="padding-top: 5px">
-                          MARCA:
-                          <span class="mat-body-strong">{{
-                            element.marca
-                          }}</span>
-                        </p>
-                      </div> -->
-                      <!-- <div
-                        fxLayout="row wrap"
-                        fxFlexAlign="center center"
-                        fxLayoutGap="8px"
-                      >
-                        <button
-                          mat-mini-fab
-                          color="accent"
-                          (click)="
-                            openBottomSheet(
-                              'edit-categoria',
-                              element.id_articulo,
-                              dataSource.filteredData.indexOf(element)
-                            )
-                          "
-                        >
-                          <mat-icon>edit</mat-icon>
-                        </button>
-                        <p class="mat-body" style="padding-top: 5px">
-                          CATEGORÍA:
-                          <span class="mat-body-strong">{{
-                            element.categoria
-                          }}</span>
-                        </p>
-                      </div> -->
-                     <!--  <div
-                        fxLayout="row wrap"
-                        fxFlexAlign="center center"
-                        fxLayoutGap="8px"
-                      >
-                        <button
-                          mat-mini-fab
-                          color="accent"
-                          (click)="
-                            openBottomSheet(
-                              'edit-subcategoria',
-                              element.id_articulo,
-                              dataSource.filteredData.indexOf(element)
-                            )
-                          "
-                        >
-                          <mat-icon>edit</mat-icon>
-                        </button>
-                        <p class="mat-body" style="padding-top: 5px">
-                          SUBCATEGORÍA:
-                          <span class="mat-body-strong">{{
-                            element.subcategoria
-                          }}</span>
-                        </p>
-                      </div> -->
                     </div>
                     <div style="width: 100%">
                       <p class="mat-small" style="text-align: end">
-                        Registrado el {{ element.fecha_creacion | formatoFecha }}
+                        Registrado el
+                        {{ element.fecha_creacion | formatoFecha }}
                       </p>
                     </div>
                     <div style="width: 100%">
@@ -255,42 +142,25 @@
                       <div
                         class="bottom-buttons"
                         fxLayoutAlign="space-between center"
-
                       >
-
-                        <!-- <button
-                          mat-mini-fab
-                          color="primary"
-                          (click)="
-                            openBottomSheet(
-                              'descripcion',
-                              element.id_articulo,
-                              dataSource.filteredData.indexOf(element)
-                            )
-                          "
+                        <button
+                          mat-button
+                          color="accent"
+                          style="margin-left: 10px"
+                          [disabled]="!element.pedidos_realizados"
                         >
-                          <mat-icon>notes</mat-icon>
+                          Ver los pedidos realizados
                         </button>
                         <button
                           mat-mini-fab
-                          color="primary"
+                          color="warn"
                           (click)="
-                            openBottomSheet(
-                              'imagenes',
-                              element.id_articulo,
+                            deleteUsuario(
+                              element.id_usuario,
                               dataSource.filteredData.indexOf(element)
                             )
                           "
                         >
-                          <mat-icon>collections</mat-icon>
-                        </button> -->
-                        <button mat-button color="accent" style="margin-left: 10px;">Ver pedidos realizados</button>
-                        <button mat-mini-fab color="warn" (click)="
-                        deleteArticulo(
-                          element.id_articulo,
-                          dataSource.filteredData.indexOf(element)
-                        )
-                      ">
                           <mat-icon>delete</mat-icon>
                         </button>
                       </div>
@@ -311,7 +181,6 @@
           (click)="expandedElement = expandedElement === row ? null : row"
         ></tr>
         <tr
-
           mat-row
           *matRowDef="let row; columns: ['expandedDetail']"
           class="example-detail-row"
@@ -327,7 +196,7 @@
       <mat-paginator
         [pageSizeOptions]="[5, 10, 25, 50, 100]"
         showFirstLastButtons
-        pageSize="5"
+        pageSize="25"
       ></mat-paginator>
     </div>
   </div>

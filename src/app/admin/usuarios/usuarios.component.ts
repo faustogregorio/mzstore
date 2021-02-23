@@ -26,7 +26,7 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
   /* imgDomain = environment.urlImagenes; */
   selectedIdUsuario = 0;
   selectedIndexUsuario = 0;
-  displayedColumns: string[] = ['nombre', 'telefono', 'pedidos'];
+  displayedColumns: string[] = ['nombre_completo', 'telefono', 'pedidos_realizados'];
   dataSource: MatTableDataSource<Usuario>;
   expandedElement?: Usuario | null;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -47,15 +47,7 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
     );
 
   }
-  ngOnInit(): void {
-    /* this.adminService.getUsuarios().subscribe(
-      response => {
-        console.log(response);
-      }, error => {
-        console.log(error);
-      }
-    ); */
-  }
+  ngOnInit(): void { }
 
   ngAfterViewInit(): void {
     this.paginator._intl.itemsPerPageLabel = 'Mostrar';
@@ -132,9 +124,9 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
     } */
   }
 
-  deleteArticulo(idArticulo: number, index: number): void {
-    this.updateSelectedUsuarioId(idArticulo, index);
-    this.confirmDelete('¿Está seguro que quiere eliminar el artículo?');
+  deleteUsuario(idUsuario: number, index: number): void {
+    this.updateSelectedUsuarioId(idUsuario, index);
+    this.confirmDelete('¿Está seguro que quiere eliminar al usuario?');
   }
 
   openSnackBar(message: string, action = 'ACEPTAR'): void {
@@ -145,14 +137,14 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
     const snackBarRef = this.snackBar.open(message, action, { duration: 5000 });
 
     snackBarRef.onAction().subscribe(() => {
-      this.adminService.deleteArticulo(this.selectedIdUsuario).subscribe(
+      this.adminService.deleteUsuario(this.selectedIdUsuario).subscribe(
         response => {
           this.openSnackBar(response.message);
           this.dataSource.data.splice(this.selectedIndexUsuario, 1);
           this.dataSource.data = this.dataSource.data;
         }, error => {
           console.log(error);
-          this.openSnackBar(error.message, 'ERROR!');
+          this.openSnackBar(error.error ? error.error.message : '!Error desconocido!');
         }
       );
     });

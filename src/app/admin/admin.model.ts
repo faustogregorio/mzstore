@@ -14,8 +14,8 @@ export interface ResponseArticulos {
 }
 
 export interface Articulo {
-  index?: number;
   id_articulo: number;
+  sku: string;
   articulo: string;
   descripcion?: string;
   precio: number;

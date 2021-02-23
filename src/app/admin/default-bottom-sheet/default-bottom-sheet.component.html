@@ -19,6 +19,32 @@
         *ngFor="let imagen of articulo.imagenes"
       />
     </div>
+    <div style="min-height: 120px" *ngSwitchCase="'edit-sku'">
+      <mat-form-field appearance="fill" style="width: 100%">
+        <mat-label>Modificar SKU</mat-label>
+        <input
+          matInput
+          formControlName="sku"
+          (keyup)="onKeyUp($event, 'sku')"
+        />
+        <mat-hint>Número de referencia</mat-hint>
+        <mat-error *ngIf="verificarError('sku', 'required')"
+          >Número de referencia vacío</mat-error
+        >
+        <button
+          mat-icon-button
+          color="accent"
+          matSuffix
+          (click)="onUpdate('sku')"
+          [disabled]="
+            articuloForm.controls['sku'].pristine ||
+            articuloForm.controls['sku'].invalid
+          "
+        >
+          <mat-icon>done</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
     <div style="min-height: 120px" *ngSwitchCase="'edit-articulo'">
       <mat-form-field appearance="fill" style="width: 100%">
         <mat-label>Modificar nombre del artículo</mat-label>

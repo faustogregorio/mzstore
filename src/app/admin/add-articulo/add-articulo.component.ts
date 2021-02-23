@@ -105,6 +105,7 @@ export class AddArticuloComponent implements OnInit {
     private bottomSheet: MatBottomSheet
   ) {
     this.informacionBasicaForm = this.formBuilder.group({
+      sku: ['', [Validators.required, Validators.pattern('^[A-Za-z0-9_-]+$')]],
       articulo: ['', [Validators.required, Validators.pattern('^[^]+$')]],
       descripcion: ['', Validators.required],
       precio: ['', Validators.required],

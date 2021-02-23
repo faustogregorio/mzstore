@@ -62,7 +62,7 @@ export class ArticulosComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 
-  applyFilter(event: Event) {
+  applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
@@ -95,6 +95,9 @@ export class ArticulosComponent implements OnInit, AfterViewInit {
   }
   updateArticulo(result: any, opcion: string): void {
     switch (opcion) {
+      case 'edit-sku':
+        this.dataSource.data[this.selectedIndexArticulo].sku = result;
+        break;
       case 'edit-articulo':
         this.dataSource.data[this.selectedIndexArticulo].articulo = result;
         break;

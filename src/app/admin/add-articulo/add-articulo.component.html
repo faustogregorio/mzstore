@@ -9,11 +9,9 @@
 >
   <div fxFlex="1300px">
     <div style="width: 100%; margin: 24px 0px 24px 0px">
-      <span class="mat-h4"
-        >+Artículo<span style="font-weight: 500">{{
-          ": " + articulo
-        }}</span></span
-      >
+      <h1 class="mat-display-1" style="font-weight: 600; margin: 0px 0px 20px 0px;">NUEVO ARTÍCULO</h1><!-- <span class="mat-display-1" style="font-weight: 400">{{
+          " " + articulo
+        }} </span> -->
     </div>
 
     <mat-horizontal-stepper labelPosition="bottom" #stepper>
@@ -25,7 +23,22 @@
           <ng-template matStepLabel>Información Básica</ng-template>
           <div style="width: 100%" fxLayout="row" fxLayoutGap="24px">
             <div fxFlex="50%" fxLayout="row wrap" fxLayoutAlign="start start">
-              <mat-form-field appearance="fill" fxFlex="100%">
+              <div
+                fxFlex="100%"
+                fxLayout="row"
+                fxLayoutGap="24px"
+              >
+              <mat-form-field appearance="fill" fxFlex="30%">
+                <mat-label>SKU</mat-label>
+                <input
+                  matInput
+                  placeholder="SKU"
+                  formControlName="sku"
+                  class="right-align"
+                />
+                <mat-hint>Número de referencia</mat-hint>
+              </mat-form-field>
+              <mat-form-field appearance="fill" fxFlex="70%">
                 <mat-label>Artículo</mat-label>
                 <input
                   matInput
@@ -35,6 +48,8 @@
                 />
                 <mat-hint>Nombre del artículo</mat-hint>
               </mat-form-field>
+              </div>
+
               <div
                 style="margin: 24px 0px 24px 0px"
                 fxFlex="100%"
@@ -65,7 +80,7 @@
                     class="right-align"
                   />
                   <span matSuffix>&nbsp;Artículos</span>
-                  <mat-hint>Cantodad de artículos disponibles</mat-hint>
+                  <mat-hint>Cantidad de artículos disponibles</mat-hint>
                 </mat-form-field>
               </div>
             </div>
@@ -103,7 +118,7 @@
         errorMessage="Adjunta al menos una imagen"
       >
         <form [formGroup]="imagenPrincipalForm" style="min-height: 300px">
-          <ng-template matStepLabel>Imagenes</ng-template>
+          <ng-template matStepLabel>Imágenes</ng-template>
 
           <div
             style="width: 100%; margin-bottom: 24px"

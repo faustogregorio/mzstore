@@ -64,6 +64,14 @@ export class AdminService {
   getArticulo(idArticulo: number): Observable<ResponseArticulo> {
     return this.http.get<ResponseArticulo>(`${this.domain}articulo/articulo.php?id_articulo=${idArticulo}`);
   }
+  saveArticulo(formData: FormData): Observable<ResponseSaveArticulo> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        Authorization: localStorage.getItem('Authorization') || ''
+      })
+    };
+    return this.http.post<ResponseSaveArticulo>(`${this.domain}articulo/articuloCrear.php`, formData, httpOptions);
+  }
   updateArticulo(idArticulo: number, update: string, data: string | number | object | Imagen[]): Observable<GenericServerResponse> {
     return this.http.patch<GenericServerResponse>(
       `${this.domain}articulo/articuloModificar.php?id_articulo=${idArticulo}&update=${update}`, { data },
@@ -78,16 +86,14 @@ export class AdminService {
   getUsuarios(): Observable<ResponseUsuarios> {
     return this.http.get<ResponseUsuarios>(`${this.domain}usuario/usuarios.php`, this.getHttpOptions());
   }
-
-
-  saveArticulo(formData: FormData): Observable<ResponseSaveArticulo> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        Authorization: localStorage.getItem('Authorization') || ''
-      })
-    };
-    return this.http.post<ResponseSaveArticulo>(`${this.domain}articulo/articuloCrear.php`, formData, httpOptions);
+  deleteUsuario(idUsuario: number): Observable<GenericServerResponse> {
+    return this.http.delete<GenericServerResponse>(
+      `${this.domain}usuario/usuarioEliminar.php?id_usuario=${idUsuario}`,
+       this.getHttpOptions());
   }
+
+
+
 
   getHttpOptions(): { headers: HttpHeaders } {
     return {
