@@ -52,6 +52,34 @@ export interface Usuario {
   fecha_creacion: Date;
   pedidos_realizados: number;
 }
+export interface ResponseUsuarioPedidos {
+  success: boolean;
+  pedidos: UsuarioPedido[];
+
+}
+export interface UsuarioPedido {
+  id_usuario: number;
+  nombre_completo: string;
+  telefono: string;
+  email: string;
+  id_pedido: number;
+  fecha_pedido: Date;
+  pedido_estado: string;
+  estado_color: string;
+
+}
+export interface ResponseUsuarioPedidoArticulos {
+  success: boolean;
+  articulos: UsuarioPedidoArticulo[];
+}
+export interface UsuarioPedidoArticulo {
+  id_articulo: number;
+  articulo: string;
+  cantidad: number;
+  precio_unitario: number;
+  descuento: number;
+  imagen: string;
+}
 
 
 

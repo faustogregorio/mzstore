@@ -26,7 +26,7 @@ export class ArticulosComponent implements OnInit, AfterViewInit {
   imgDomain = environment.urlImagenes;
   selectedIdArticulo = 0;
   selectedIndexArticulo = 0;
-  displayedColumns: string[] = ['articulo', 'precio', 'descuento', 'stock'];
+  displayedColumns: string[] = ['sku', 'articulo', 'precio', 'descuento', 'stock'];
   dataSource: MatTableDataSource<Articulo>;
   expandedElement?: Articulo | null;
   @ViewChild(MatPaginator) paginator!: MatPaginator;

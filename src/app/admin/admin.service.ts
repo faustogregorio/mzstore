@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 import { Categoria, Marca, ResponseCategoria, ResponseMarca, ResponseSubcategoria, Subcategoria } from '../buscar/buscar.model';
-import { GenericServerResponse, Imagen, ResponseArticulo, ResponseArticulos, /* ResponseArticulo, */ ResponseSaveArticulo, ResponseUsuarios } from './admin.model';
+import { GenericServerResponse, Imagen, ResponseArticulo, ResponseArticulos, ResponseSaveArticulo, ResponseUsuarios, ResponseUsuarioPedidos, ResponseUsuarioPedidoArticulos } from './admin.model';
 
 @Injectable({
   providedIn: 'root'
@@ -90,6 +90,16 @@ export class AdminService {
     return this.http.delete<GenericServerResponse>(
       `${this.domain}usuario/usuarioEliminar.php?id_usuario=${idUsuario}`,
        this.getHttpOptions());
+  }
+  getUsuarioPedidos(idUsuario: number): Observable<ResponseUsuarioPedidos> {
+    return this.http.get<ResponseUsuarioPedidos>(
+      `${this.domain}/pedido/usuarioPedidos.php?id_usuario=${idUsuario}`,
+      this.getHttpOptions());
+  }
+  getArticulosUsuarioPedido(idPedido: number): Observable<ResponseUsuarioPedidoArticulos> {
+    return this.http.get<ResponseUsuarioPedidoArticulos>(
+      `${this.domain}/pedido/articulosUsuarioPedido.php?id_pedido=${idPedido}`,
+      this.getHttpOptions());
   }
 
 

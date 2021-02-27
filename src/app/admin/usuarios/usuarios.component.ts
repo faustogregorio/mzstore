@@ -1,6 +1,7 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { AfterContentInit, AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
@@ -9,6 +10,7 @@ import { environment } from 'src/environments/environment.prod';
 import { ResponseUsuarios, Usuario } from '../admin.model';
 import { AdminService } from '../admin.service';
 import { DefaultBottomSheetComponent } from '../default-bottom-sheet/default-bottom-sheet.component';
+import { UsuarioPedidosComponent } from './usuario-pedidos/usuario-pedidos.component';
 
 @Component({
   selector: 'app-usuarios',
@@ -34,7 +36,8 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
   constructor(
     private adminService: AdminService,
     private bottomSheet: MatBottomSheet,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog
   ) {
     this.dataSource = new MatTableDataSource<Usuario>();
     this.adminService.getUsuarios().subscribe(
@@ -147,6 +150,17 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
           this.openSnackBar(error.error ? error.error.message : '!Error desconocido!');
         }
       );
+    });
+  }
+
+  openDialog(idUsuario: number, nombreCompleto: string): void {
+    const NOMBRE = `${nombreCompleto.split(' ')[0]} ${nombreCompleto.split(' ')[1] ? nombreCompleto.split(' ')[1] : '' }`;
+    this.dialog.open(UsuarioPedidosComponent, {
+      data: {id_usuario: idUsuario, nombre: NOMBRE},
+      maxHeight: '100vh',
+      maxWidth: '100vw',
+      width: '1300px',
+      autoFocus: false
     });
   }
 }

@@ -148,6 +148,7 @@
                           color="accent"
                           style="margin-left: 10px"
                           [disabled]="!element.pedidos_realizados"
+                          (click)="openDialog(element.id_usuario, element.nombre_completo)"
                         >
                           Ver los pedidos realizados
                         </button>

@@ -34,6 +34,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatMenuModule } from '@angular/material/menu';
 import { DefaultBottomSheetComponent } from './default-bottom-sheet/default-bottom-sheet.component';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { UsuarioPedidosComponent } from './usuarios/usuario-pedidos/usuario-pedidos.component';
+import { UsuarioPedidoArticulosComponent } from './usuarios/usuario-pedidos/usuario-pedido-articulos/usuario-pedido-articulos.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,9 @@ import { MatExpansionModule } from '@angular/material/expansion';
     SafeHtmlPipe,
     GestionarCategoriasSubcategoriasMarcasComponent,
     InputCategoriaSubcategoriaMarcaComponent,
-    DefaultBottomSheetComponent
+    DefaultBottomSheetComponent,
+    UsuarioPedidosComponent,
+    UsuarioPedidoArticulosComponent
   ],
   imports: [
     CommonModule,
@@ -74,6 +78,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatDividerModule,
     MatMenuModule,
     MatExpansionModule
+  ], entryComponents: [
+    UsuarioPedidosComponent,
   ]
 })
 export class AdminModule { }

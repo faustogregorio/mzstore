@@ -1,0 +1,26 @@
+
+
+<div style="margin: 50px 10px 50px 10px ">
+  <h2 class="mat-h2" style="text-align: center;">PEDIDOS DE {{data.nombre | uppercase}}</h2>
+  <mat-accordion class="example-headers-align" multi>
+    <mat-expansion-panel
+    *ngFor="let pedido of pedidos;">
+      <mat-expansion-panel-header >
+        <mat-panel-title>
+          PEDIDO({{pedido.id_pedido | number}}):<span>{{pedido.pedido_estado | uppercase}}</span>
+        </mat-panel-title>
+        <mat-panel-description>
+          {{pedido.fecha_pedido | formatoFecha}}
+          <mat-icon [style.color]="'#'+pedido.estado_color">label</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <app-usuario-pedido-articulos [idPedido]="pedido.id_pedido"></app-usuario-pedido-articulos>
+
+    </mat-expansion-panel>
+  </mat-accordion>
+  <div fxLayoutAlign="end" style="margin-top: 30px;">
+    <button mat-stroked-button color="primary" (click)="closeDialog()">CERRAR</button>
+  </div>
+</div>
+
