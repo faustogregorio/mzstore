@@ -1,15 +1,12 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { AfterContentInit, AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { environment } from 'src/environments/environment.prod';
 import { ResponseUsuarios, Usuario } from '../admin.model';
 import { AdminService } from '../admin.service';
-import { DefaultBottomSheetComponent } from '../default-bottom-sheet/default-bottom-sheet.component';
 import { UsuarioPedidosComponent } from './usuario-pedidos/usuario-pedidos.component';
 
 @Component({
@@ -35,7 +32,6 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
   constructor(
     private adminService: AdminService,
-    private bottomSheet: MatBottomSheet,
     private snackBar: MatSnackBar,
     private dialog: MatDialog
   ) {
@@ -77,7 +73,7 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
     console.log(this.selectedIdUsuario);
   }
 
-  openBottomSheet(opcion: string, id: number, index: number): void {
+/*   openBottomSheet(opcion: string, id: number, index: number): void {
     this.updateSelectedUsuarioId(id, index);
     const bottomSheetRef = this.bottomSheet.open(DefaultBottomSheetComponent, {
       data: { opcion, id_usuario: id },
@@ -93,9 +89,9 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
         }
       }
     );
-  }
-  updateUsuario(result: any, opcion: string): void {
-    /* switch (opcion) {
+  } */
+ /*  updateUsuario(result: any, opcion: string): void {
+    switch (opcion) {
       case 'edit-articulo':
         this.dataSource.data[this.selectedIndexUsuario].articulo = result;
         break;
@@ -124,8 +120,8 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
 
       default:
         break;
-    } */
-  }
+    }
+  } */
 
   deleteUsuario(idUsuario: number, index: number): void {
     this.updateSelectedUsuarioId(idUsuario, index);

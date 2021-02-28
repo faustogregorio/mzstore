@@ -11,7 +11,7 @@ import { environment } from 'src/environments/environment.prod';
   styleUrls: ['./usuario-pedido-articulos.component.scss']
 })
 export class UsuarioPedidoArticulosComponent implements OnInit {
-  displayedColumns: string[] = ['articulo', 'cantidad', 'precio_unitario', 'descuento', 'total'];
+  displayedColumns: string[] = ['articulo', 'precio_unitario', 'cantidad', 'subtotal','descuento', 'total'];
   articulos: UsuarioPedidoArticulo[] = [];
 
   @Input() idPedido!: number;
