@@ -47,6 +47,11 @@ export class PedidosComponent implements OnInit, AfterViewInit {
     );
 
   }
+  prueba(row: any): void  {
+    this.expandedElement = this.expandedElement === row ? null : row;
+    if (!this.expandedElement) { return; }
+    console.log(row);
+  }
   ngOnInit(): void {
 
   }
