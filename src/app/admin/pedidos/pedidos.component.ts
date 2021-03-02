@@ -6,7 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { environment } from 'src/environments/environment.prod';
-import { Articulo, ResponseArticulos } from '../admin.model';
+import { Pedido, PedidoEstado, ResponsePedidos } from '../admin.model';
 import { AdminService } from '../admin.service';
 import { DefaultBottomSheetComponent } from '../default-bottom-sheet/default-bottom-sheet.component';
 
@@ -24,23 +24,35 @@ import { DefaultBottomSheetComponent } from '../default-bottom-sheet/default-bot
 })
 export class PedidosComponent implements OnInit, AfterViewInit {
   imgDomain = environment.urlImagenes;
-  selectedIdArticulo = 0;
-  selectedIndexArticulo = 0;
-  displayedColumns: string[] = ['sku', 'articulo', 'precio', 'descuento', 'stock'];
-  dataSource: MatTableDataSource<Articulo>;
-  expandedElement?: Articulo | null;
+  selectedIdPedido = 0;
+  selectedIndexPedido = 0;
+  displayedColumns: string[] = ['id_pedido', 'fecha_pedido', 'pedido_estado'];
+  dataSource: MatTableDataSource<Pedido>;
+  expandedElement?: Pedido | null;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+
+  estados!: PedidoEstado[];
+  show = false;
   constructor(
     private adminService: AdminService,
     private bottomSheet: MatBottomSheet,
     private snackBar: MatSnackBar
   ) {
-    this.dataSource = new MatTableDataSource<Articulo>();
-    this.adminService.getArticulos().subscribe(
-      (response: ResponseArticulos) => {
+    this.dataSource = new MatTableDataSource<Pedido>();
+    this.adminService.getPedidos().subscribe(
+      (response: ResponsePedidos) => {
         console.log(response);
-        this.dataSource.data = response.articulos;
+        this.dataSource.data = response.pedidos;
+        console.log('tipo: ', typeof([1, 2, 3]));
+      }, error => {
+        console.log(error);
+      }
+    );
+
+    this.adminService.getPedidoEstados().subscribe(
+      response => {
+        this.estados = response.estados;
       }, error => {
         console.log(error);
       }
@@ -51,10 +63,25 @@ export class PedidosComponent implements OnInit, AfterViewInit {
     this.expandedElement = this.expandedElement === row ? null : row;
     if (!this.expandedElement) { return; }
     console.log(row);
+    this.show = true;
   }
-  ngOnInit(): void {
-
+  updateDataPrueba(index: number, id: number, color: string, estado: string): void {
+    this.dataSource.data[index].id_pedido_estado = id;
+    this.dataSource.data[index].estado_color = color;
+    this.dataSource.data[index].pedido_estado = estado;
   }
+  setFontWeight(selectedIdPedidoEstado: number, idPedidoEstado: number): number {
+    return selectedIdPedidoEstado === idPedidoEstado ? 600 : 400;
+  }
+  setBackgroundColor(selectedIdPedidoEstado: number, idPedidoEstado: number, color: string): string {
+    return selectedIdPedidoEstado === idPedidoEstado ? color : '80,80,80';
+  }
+  setTextColor(colorRGB: string): string {
+    const RGB = colorRGB.split(',');
+    const SUMA = Math.round(((Number(RGB[0]) * 299) + (Number(RGB[1]) * 587) + (Number(RGB[2]) * 114)) / 1000);
+    return (SUMA > 128) ? 'black' : 'white';
+  }
+  ngOnInit(): void { }
 
   ngAfterViewInit(): void {
     this.paginator._intl.itemsPerPageLabel = 'Mostrar';
@@ -75,14 +102,14 @@ export class PedidosComponent implements OnInit, AfterViewInit {
       this.dataSource.paginator.firstPage();
     }
   }
-  updateSelectedArticuloId(idArticulo: number, index: number): void {
-    this.selectedIdArticulo = idArticulo;
-    this.selectedIndexArticulo = index;
-    console.log(this.selectedIdArticulo);
+  updateSelectedPedidoId(idAPedido: number, index: number): void {
+    this.selectedIdPedido = idAPedido;
+    this.selectedIndexPedido = index;
+    console.log(this.selectedIdPedido);
   }
 
-  openBottomSheet(opcion: string, id: number, index: number): void {
-    this.updateSelectedArticuloId(id, index);
+/*   openBottomSheet(opcion: string, id: number, index: number): void {
+    this.updateSelectedPedidoId(id, index);
     const bottomSheetRef = this.bottomSheet.open(DefaultBottomSheetComponent, {
       data: { opcion, id_articulo: id },
       autoFocus: true
@@ -97,8 +124,8 @@ export class PedidosComponent implements OnInit, AfterViewInit {
         }
       }
     );
-  }
-  updateArticulo(result: any, opcion: string): void {
+  } */
+/*   updateArticulo(result: any, opcion: string): void {
     switch (opcion) {
       case 'edit-sku':
         this.dataSource.data[this.selectedIndexArticulo].sku = result;
@@ -132,10 +159,10 @@ export class PedidosComponent implements OnInit, AfterViewInit {
       default:
         break;
     }
-  }
+  } */
 
   deleteArticulo(idArticulo: number, index: number): void {
-    this.updateSelectedArticuloId(idArticulo, index);
+    /* this.updateSelectedArticuloId(idArticulo, index); */
     this.confirmDelete('¿Está seguro que quiere eliminar el artículo?');
   }
 
@@ -147,10 +174,10 @@ export class PedidosComponent implements OnInit, AfterViewInit {
     const snackBarRef = this.snackBar.open(message, action, { duration: 5000 });
 
     snackBarRef.onAction().subscribe(() => {
-      this.adminService.deleteArticulo(this.selectedIdArticulo).subscribe(
+      this.adminService.deleteArticulo(this.selectedIdPedido).subscribe(
         response => {
           this.openSnackBar(response.message);
-          this.dataSource.data.splice(this.selectedIndexArticulo, 1);
+          this.dataSource.data.splice(this.selectedIndexPedido, 1);
           this.dataSource.data = this.dataSource.data;
         }, error => {
           console.log(error);

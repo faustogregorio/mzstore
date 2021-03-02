@@ -7,7 +7,7 @@
     *ngFor="let pedido of pedidos;">
       <mat-expansion-panel-header >
         <mat-panel-title>
-          PEDIDO({{pedido.id_pedido | number}}):<span>{{pedido.pedido_estado | uppercase}}</span>
+          PEDIDO{{pedido.id_pedido | number}}:<span>{{pedido.pedido_estado | uppercase}}</span>
         </mat-panel-title>
         <mat-panel-description>
           {{pedido.fecha_pedido | formatoFecha}}

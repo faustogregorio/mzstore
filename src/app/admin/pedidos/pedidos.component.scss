@@ -36,7 +36,7 @@ tr.example-element-row:not(.example-expanded-row):active {
 }
 
 .img-container {
-  height: 420px;
+  height: auto;
   width: 100%;
   overflow: auto;
 }
@@ -61,3 +61,10 @@ mat-icon {
   font-size: 1rem;
 }
 
+.circulo {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  border: 2px solid #333;
+  cursor: pointer;
+}

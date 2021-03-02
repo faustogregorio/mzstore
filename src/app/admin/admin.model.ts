@@ -52,6 +52,23 @@ export interface Usuario {
   fecha_creacion: Date;
   pedidos_realizados: number;
 }
+export interface ResponsePedidos {
+  success: boolean;
+  pedidos: Pedido[];
+
+}
+export interface Pedido {
+  id_usuario: number;
+  nombre_completo: string;
+  telefono: string;
+  email: string;
+  id_pedido: number;
+  fecha_pedido: Date;
+  id_pedido_estado: number;
+  pedido_estado: string;
+  estado_color: string;
+
+}
 export interface ResponseUsuarioPedidos {
   success: boolean;
   pedidos: UsuarioPedido[];
@@ -81,6 +98,15 @@ export interface UsuarioPedidoArticulo {
   imagen: string;
 }
 
+export interface ResponsePedidoEstados{
+  success: boolean;
+  estados: PedidoEstado[];
+}
+export interface PedidoEstado {
+  id_pedido_estado: number;
+  pedido_estado: string;
+  estado_color: string;
+}
 
 
 /* export interface SaveArticulo {

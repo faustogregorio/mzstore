@@ -1,16 +1,15 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 import { Categoria, Marca, ResponseCategoria, ResponseMarca, ResponseSubcategoria, Subcategoria } from '../buscar/buscar.model';
-import { GenericServerResponse, Imagen, ResponseArticulo, ResponseArticulos, ResponseSaveArticulo, ResponseUsuarios, ResponseUsuarioPedidos, ResponseUsuarioPedidoArticulos } from './admin.model';
+import { GenericServerResponse, Imagen, ResponseArticulo, ResponseArticulos, ResponseSaveArticulo, ResponseUsuarios, ResponseUsuarioPedidos, ResponseUsuarioPedidoArticulos, ResponsePedidos, ResponsePedidoEstados, PedidoEstado } from './admin.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminService {
   domain = environment.api;
-
 
   constructor(
     private http: HttpClient
@@ -100,6 +99,13 @@ export class AdminService {
     return this.http.get<ResponseUsuarioPedidoArticulos>(
       `${this.domain}/pedido/articulosUsuarioPedido.php?id_pedido=${idPedido}`,
       this.getHttpOptions());
+  }
+
+  getPedidos(): Observable<ResponsePedidos> {
+    return this.http.get<ResponsePedidos>(`${this.domain}pedido/pedidos.php`, this.getHttpOptions());
+  }
+  getPedidoEstados(): Observable<ResponsePedidoEstados> {
+    return this.http.get<ResponsePedidoEstados>(`${this.domain}pedido/pedidoEstados.php`, this.getHttpOptions());
   }
 
 
