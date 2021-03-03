@@ -145,14 +145,18 @@
                       >
                         <button
                           mat-button
-                          color="accent"
+                          color="primary"
                           style="margin-left: 10px"
                           [disabled]="!element.pedidos_realizados"
                           (click)="openDialog(element.id_usuario, element.nombre_completo)"
                         >
-                          Ver los pedidos realizados
+                          VER PEDIDOS REALIZADOS
                         </button>
-                        <button
+                        <div fxLayoutAlign="center center" fxLayoutGap="8px">
+                          <button mat-button color="accent"
+                          (click)="openDialogModificarPassword(element.id_usuario, element.nombre_completo)"
+                          >RESTABLECER CONTRASEÑA</button>
+                          <button
                           mat-mini-fab
                           color="warn"
                           (click)="
@@ -164,6 +168,8 @@
                         >
                           <mat-icon>delete</mat-icon>
                         </button>
+                        </div>
+
                       </div>
                     </div>
                   </div>
@@ -195,9 +201,9 @@
       </table>
 
       <mat-paginator
-        [pageSizeOptions]="[5, 10, 25, 50, 100]"
+        [pageSizeOptions]="[5, 10, 20, 30, 40]"
         showFirstLastButtons
-        pageSize="25"
+        pageSize="20"
       ></mat-paginator>
     </div>
   </div>

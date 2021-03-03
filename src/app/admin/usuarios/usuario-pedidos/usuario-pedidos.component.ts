@@ -37,5 +37,10 @@ export class UsuarioPedidosComponent implements OnInit {
   closeDialog(): void {
     this.dialogRef.close();
   }
+  setTextColor(colorRGB: string): string {
+    const RGB = colorRGB.split(',');
+    const SUMA = Math.round(((Number(RGB[0]) * 299) + (Number(RGB[1]) * 587) + (Number(RGB[2]) * 114)) / 1000);
+    return (SUMA > 128) ? 'black' : 'white';
+  }
 
 }

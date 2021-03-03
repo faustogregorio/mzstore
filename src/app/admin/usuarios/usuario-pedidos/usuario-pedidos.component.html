@@ -7,15 +7,17 @@
     *ngFor="let pedido of pedidos;">
       <mat-expansion-panel-header >
         <mat-panel-title>
-          PEDIDO{{pedido.id_pedido | number}}:<span>{{pedido.pedido_estado | uppercase}}</span>
+          PEDIDO{{pedido.id_pedido | number}}:<span style="font-weight: 500;">{{pedido.pedido_estado | uppercase}}</span>
         </mat-panel-title>
         <mat-panel-description>
           {{pedido.fecha_pedido | formatoFecha}}
-          <mat-icon [style.color]="'#'+pedido.estado_color">label</mat-icon>
+          <mat-icon [style.color]="'rgb('+pedido.estado_color+')'">label</mat-icon>
         </mat-panel-description>
       </mat-expansion-panel-header>
+      <div style="margin: 60px 0px;">
+        <app-usuario-pedido-articulos [idPedido]="pedido.id_pedido" [color]="pedido.estado_color" [textColor]="setTextColor(pedido.estado_color)"></app-usuario-pedido-articulos>
 
-      <app-usuario-pedido-articulos [idPedido]="pedido.id_pedido"></app-usuario-pedido-articulos>
+      </div>
 
     </mat-expansion-panel>
   </mat-accordion>

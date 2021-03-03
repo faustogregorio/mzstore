@@ -15,6 +15,8 @@ export class UsuarioPedidoArticulosComponent implements OnInit {
   articulos: UsuarioPedidoArticulo[] = [];
 
   @Input() idPedido!: number;
+  @Input() color!: string;
+  @Input() textColor!: string;
   urlImageStored = environment.urlImagenes;
   constructor(
     private adminService: AdminService
@@ -23,7 +25,6 @@ export class UsuarioPedidoArticulosComponent implements OnInit {
 
   ngOnInit(): void {
     this.getPedidoArticulos();
-    console.log('idpedido: ', this.idPedido);
   }
   /** Gets the total cost of all transactions. */
   /* getTotalCost() {
@@ -41,10 +42,8 @@ export class UsuarioPedidoArticulosComponent implements OnInit {
    }
 
   getPedidoArticulos(): void {
-    console.log(this.idPedido);
     this.adminService.getArticulosUsuarioPedido(this.idPedido).subscribe(
       response => {
-        console.log(response);
         this.articulos = response.articulos;
       }, error => {
         console.log(error);

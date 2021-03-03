@@ -74,12 +74,12 @@ export class AdminService {
   updateArticulo(idArticulo: number, update: string, data: string | number | object | Imagen[]): Observable<GenericServerResponse> {
     return this.http.patch<GenericServerResponse>(
       `${this.domain}articulo/articuloModificar.php?id_articulo=${idArticulo}&update=${update}`, { data },
-       this.getHttpOptions());
+      this.getHttpOptions());
   }
   deleteArticulo(idArticulo: number): Observable<GenericServerResponse> {
     return this.http.delete<GenericServerResponse>(
       `${this.domain}articulo/articuloEliminar.php?id_articulo=${idArticulo}`,
-       this.getHttpOptions());
+      this.getHttpOptions());
   }
 
   getUsuarios(): Observable<ResponseUsuarios> {
@@ -88,11 +88,17 @@ export class AdminService {
   deleteUsuario(idUsuario: number): Observable<GenericServerResponse> {
     return this.http.delete<GenericServerResponse>(
       `${this.domain}usuario/usuarioEliminar.php?id_usuario=${idUsuario}`,
-       this.getHttpOptions());
+      this.getHttpOptions());
   }
   getUsuarioPedidos(idUsuario: number): Observable<ResponseUsuarioPedidos> {
     return this.http.get<ResponseUsuarioPedidos>(
       `${this.domain}/pedido/usuarioPedidos.php?id_usuario=${idUsuario}`,
+      this.getHttpOptions());
+  }
+  updateUsuarioPassword(password: string, idUsuario: number): Observable<GenericServerResponse> {
+    return this.http.patch<GenericServerResponse>(
+      `${this.domain}usuario/usuarioPasswordModificar.php`,
+      { password, id_usuario: idUsuario },
       this.getHttpOptions());
   }
   getArticulosUsuarioPedido(idPedido: number): Observable<ResponseUsuarioPedidoArticulos> {
@@ -101,11 +107,18 @@ export class AdminService {
       this.getHttpOptions());
   }
 
+
   getPedidos(): Observable<ResponsePedidos> {
     return this.http.get<ResponsePedidos>(`${this.domain}pedido/pedidos.php`, this.getHttpOptions());
   }
   getPedidoEstados(): Observable<ResponsePedidoEstados> {
     return this.http.get<ResponsePedidoEstados>(`${this.domain}pedido/pedidoEstados.php`, this.getHttpOptions());
+  }
+  updatePedidoEstado(idPedido: number, idEstado: number): Observable<GenericServerResponse> {
+    return this.http.patch<GenericServerResponse>(
+      `${this.domain}pedido/pedidoEstadoModificar.php`,
+      { id_pedido_estado: idEstado, id_pedido: idPedido },
+      this.getHttpOptions());
   }
 
 

@@ -1,14 +1,13 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { environment } from 'src/environments/environment.prod';
-import { Pedido, PedidoEstado, ResponsePedidos } from '../admin.model';
+import { GenericServerResponse, Pedido, PedidoEstado, ResponsePedidos } from '../admin.model';
 import { AdminService } from '../admin.service';
-import { DefaultBottomSheetComponent } from '../default-bottom-sheet/default-bottom-sheet.component';
+import { ModificarPedidoEstadoComponent } from './modificar-pedido-estado/modificar-pedido-estado.component';
 
 @Component({
   selector: 'app-pedidos',
@@ -23,9 +22,6 @@ import { DefaultBottomSheetComponent } from '../default-bottom-sheet/default-bot
   ],
 })
 export class PedidosComponent implements OnInit, AfterViewInit {
-  imgDomain = environment.urlImagenes;
-  selectedIdPedido = 0;
-  selectedIndexPedido = 0;
   displayedColumns: string[] = ['id_pedido', 'fecha_pedido', 'pedido_estado'];
   dataSource: MatTableDataSource<Pedido>;
   expandedElement?: Pedido | null;
@@ -33,20 +29,17 @@ export class PedidosComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   estados!: PedidoEstado[];
-  show = false;
   constructor(
     private adminService: AdminService,
-    private bottomSheet: MatBottomSheet,
+    private dialog: MatDialog,
     private snackBar: MatSnackBar
   ) {
     this.dataSource = new MatTableDataSource<Pedido>();
     this.adminService.getPedidos().subscribe(
       (response: ResponsePedidos) => {
-        console.log(response);
         this.dataSource.data = response.pedidos;
-        console.log('tipo: ', typeof([1, 2, 3]));
       }, error => {
-        console.log(error);
+        this.openSnackBar(error.error ? error.error.message : 'Error desconocido!', 'ERROR');
       }
     );
 
@@ -54,33 +47,17 @@ export class PedidosComponent implements OnInit, AfterViewInit {
       response => {
         this.estados = response.estados;
       }, error => {
-        console.log(error);
+        this.openSnackBar(error.error ? error.error.message : 'Error desconocido!', 'ERROR');
       }
     );
 
   }
-  prueba(row: any): void  {
+  cuandoDeClickEnlaFila(row: Pedido): void {
     this.expandedElement = this.expandedElement === row ? null : row;
     if (!this.expandedElement) { return; }
-    console.log(row);
-    this.show = true;
+    /* console.log(row); */
   }
-  updateDataPrueba(index: number, id: number, color: string, estado: string): void {
-    this.dataSource.data[index].id_pedido_estado = id;
-    this.dataSource.data[index].estado_color = color;
-    this.dataSource.data[index].pedido_estado = estado;
-  }
-  setFontWeight(selectedIdPedidoEstado: number, idPedidoEstado: number): number {
-    return selectedIdPedidoEstado === idPedidoEstado ? 600 : 400;
-  }
-  setBackgroundColor(selectedIdPedidoEstado: number, idPedidoEstado: number, color: string): string {
-    return selectedIdPedidoEstado === idPedidoEstado ? color : '80,80,80';
-  }
-  setTextColor(colorRGB: string): string {
-    const RGB = colorRGB.split(',');
-    const SUMA = Math.round(((Number(RGB[0]) * 299) + (Number(RGB[1]) * 587) + (Number(RGB[2]) * 114)) / 1000);
-    return (SUMA > 128) ? 'black' : 'white';
-  }
+
   ngOnInit(): void { }
 
   ngAfterViewInit(): void {
@@ -102,88 +79,47 @@ export class PedidosComponent implements OnInit, AfterViewInit {
       this.dataSource.paginator.firstPage();
     }
   }
-  updateSelectedPedidoId(idAPedido: number, index: number): void {
-    this.selectedIdPedido = idAPedido;
-    this.selectedIndexPedido = index;
-    console.log(this.selectedIdPedido);
-  }
 
-/*   openBottomSheet(opcion: string, id: number, index: number): void {
-    this.updateSelectedPedidoId(id, index);
-    const bottomSheetRef = this.bottomSheet.open(DefaultBottomSheetComponent, {
-      data: { opcion, id_articulo: id },
-      autoFocus: true
-
+  openDialog(index: number, idPedido: number, idEstado: number, color: string, estado: string): void {
+    const dialogRef = this.dialog.open(ModificarPedidoEstadoComponent, {
+      data: { idPedido, idEstado },
+      autoFocus: false,
+      width: '300px'
     });
 
-    bottomSheetRef.afterDismissed().subscribe(
-      result => {
+    dialogRef.afterClosed().subscribe(
+      (result: GenericServerResponse) => {
         console.log(' Result: ', result);
         if (result) {
-          this.updateArticulo(result, opcion);
+          if (result.success) {
+            this.dataSource.data[index].id_pedido_estado = idEstado;
+            this.dataSource.data[index].estado_color = color;
+            this.dataSource.data[index].pedido_estado = estado;
+            this.openSnackBar(result.message, undefined, 3000);
+          } else {
+            this.openSnackBar(result.message, 'ERROR');
+          }
         }
       }
     );
-  } */
-/*   updateArticulo(result: any, opcion: string): void {
-    switch (opcion) {
-      case 'edit-sku':
-        this.dataSource.data[this.selectedIndexArticulo].sku = result;
-        break;
-      case 'edit-articulo':
-        this.dataSource.data[this.selectedIndexArticulo].articulo = result;
-        break;
-      case 'edit-precio':
-        this.dataSource.data[this.selectedIndexArticulo].precio = result;
-        break;
-      case 'edit-stock':
-        this.dataSource.data[this.selectedIndexArticulo].stock = result;
-        break;
-      case 'edit-categoria':
-        this.dataSource.data[this.selectedIndexArticulo].categoria = result;
-        break;
-      case 'edit-subcategoria':
-        this.dataSource.data[this.selectedIndexArticulo].subcategoria = result;
-        break;
-      case 'edit-marca':
-        this.dataSource.data[this.selectedIndexArticulo].marca = result;
-        break;
-      case 'edit-imagenes':
-
-        break;
-      case 'edit-descuento':
-        this.dataSource.data[this.selectedIndexArticulo].descuento = result;
-        break;
-
-
-      default:
-        break;
-    }
-  } */
-
-  deleteArticulo(idArticulo: number, index: number): void {
-    /* this.updateSelectedArticuloId(idArticulo, index); */
-    this.confirmDelete('¿Está seguro que quiere eliminar el artículo?');
   }
 
-  openSnackBar(message: string, action = 'ACEPTAR'): void {
-    this.snackBar.open(message, action, { duration: 5000 });
+  openSnackBar(message: string, action = 'ACEPTAR', duration = 5000): void {
+    this.snackBar.open(message, action, { duration });
   }
 
-  confirmDelete(message: string, action = 'SÍ, ¡ELIMÍNALO!'): void {
-    const snackBarRef = this.snackBar.open(message, action, { duration: 5000 });
-
-    snackBarRef.onAction().subscribe(() => {
-      this.adminService.deleteArticulo(this.selectedIdPedido).subscribe(
-        response => {
-          this.openSnackBar(response.message);
-          this.dataSource.data.splice(this.selectedIndexPedido, 1);
-          this.dataSource.data = this.dataSource.data;
-        }, error => {
-          console.log(error);
-          this.openSnackBar(error.error ? error.error.message : '!Error desconocido!');
-        }
-      );
-    });
+  setFontWeight(selectedIdPedidoEstado: number, idPedidoEstado: number): number {
+    return selectedIdPedidoEstado === idPedidoEstado ? 600 : 400;
   }
+
+  setBackgroundColor(selectedIdPedidoEstado: number, idPedidoEstado: number, color: string): string {
+    return selectedIdPedidoEstado === idPedidoEstado ? color : '230,230,230';
+  }
+
+  setTextColor(colorRGB: string): string {
+    const RGB = colorRGB.split(',');
+    const SUMA = Math.round(((Number(RGB[0]) * 299) + (Number(RGB[1]) * 587) + (Number(RGB[2]) * 114)) / 1000);
+    return (SUMA > 128) ? 'black' : 'white';
+  }
+
 }

@@ -5,8 +5,9 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ResponseUsuarios, Usuario } from '../admin.model';
+import { GenericServerResponse, ResponseUsuarios, Usuario } from '../admin.model';
 import { AdminService } from '../admin.service';
+import { ModificarPasswordComponent } from './modificar-password/modificar-password.component';
 import { UsuarioPedidosComponent } from './usuario-pedidos/usuario-pedidos.component';
 
 @Component({
@@ -33,7 +34,7 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
   constructor(
     private adminService: AdminService,
     private snackBar: MatSnackBar,
-    private dialog: MatDialog
+    private dialog: MatDialog,
   ) {
     this.dataSource = new MatTableDataSource<Usuario>();
     this.adminService.getUsuarios().subscribe(
@@ -73,63 +74,9 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
     console.log(this.selectedIdUsuario);
   }
 
-/*   openBottomSheet(opcion: string, id: number, index: number): void {
-    this.updateSelectedUsuarioId(id, index);
-    const bottomSheetRef = this.bottomSheet.open(DefaultBottomSheetComponent, {
-      data: { opcion, id_usuario: id },
-      autoFocus: true
-
-    });
-
-    bottomSheetRef.afterDismissed().subscribe(
-      result => {
-        console.log(' Result: ', result);
-        if (result) {
-          this.updateUsuario(result, opcion);
-        }
-      }
-    );
-  } */
- /*  updateUsuario(result: any, opcion: string): void {
-    switch (opcion) {
-      case 'edit-articulo':
-        this.dataSource.data[this.selectedIndexUsuario].articulo = result;
-        break;
-      case 'edit-precio':
-        this.dataSource.data[this.selectedIndexUsuario].precio = result;
-        break;
-      case 'edit-stock':
-        this.dataSource.data[this.selectedIndexUsuario].stock = result;
-        break;
-      case 'edit-categoria':
-        this.dataSource.data[this.selectedIndexUsuario].categoria = result;
-        break;
-      case 'edit-subcategoria':
-        this.dataSource.data[this.selectedIndexUsuario].subcategoria = result;
-        break;
-      case 'edit-marca':
-        this.dataSource.data[this.selectedIndexUsuario].marca = result;
-        break;
-      case 'edit-imagenes':
-
-        break;
-      case 'edit-descuento':
-        this.dataSource.data[this.selectedIndexUsuario].descuento = result;
-        break;
-
-
-      default:
-        break;
-    }
-  } */
-
   deleteUsuario(idUsuario: number, index: number): void {
     this.updateSelectedUsuarioId(idUsuario, index);
     this.confirmDelete('¿Está seguro que quiere eliminar al usuario?');
-  }
-
-  openSnackBar(message: string, action = 'ACEPTAR'): void {
-    this.snackBar.open(message, action, { duration: 5000 });
   }
 
   confirmDelete(message: string, action = 'SÍ, ¡ELIMÍNALO!'): void {
@@ -158,5 +105,30 @@ export class UsuariosComponent implements OnInit, AfterViewInit {
       width: '1300px',
       autoFocus: false
     });
+  }
+
+  openDialogModificarPassword(idUsuario: number, nombreCompleto: string): void {
+    const NOMBRE = `${nombreCompleto.split(' ')[0]} ${nombreCompleto.split(' ')[1] ? nombreCompleto.split(' ')[1] : '' }`;
+    const dialogRef = this.dialog.open(ModificarPasswordComponent, {
+      data: {idUsuario, nombreCompleto: NOMBRE},
+      width: '300px',
+      autoFocus: true
+    });
+
+    dialogRef.afterClosed().subscribe(
+      (result: GenericServerResponse) => {
+        if (result) {
+          if (result.success) {
+            this.openSnackBar(result.message, undefined, 3000);
+          } else {
+            this.openSnackBar(result.message, 'ERROR');
+          }
+        }
+      }
+    );
+  }
+
+  openSnackBar(message: string, action = 'ACEPTAR', duration = 5000): void {
+    this.snackBar.open(message, action, { duration });
   }
 }

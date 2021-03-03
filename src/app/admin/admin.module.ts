@@ -36,6 +36,8 @@ import { DefaultBottomSheetComponent } from './default-bottom-sheet/default-bott
 import { MatExpansionModule } from '@angular/material/expansion';
 import { UsuarioPedidosComponent } from './usuarios/usuario-pedidos/usuario-pedidos.component';
 import { UsuarioPedidoArticulosComponent } from './usuarios/usuario-pedidos/usuario-pedido-articulos/usuario-pedido-articulos.component';
+import { ModificarPedidoEstadoComponent } from './pedidos/modificar-pedido-estado/modificar-pedido-estado.component';
+import { ModificarPasswordComponent } from './usuarios/modificar-password/modificar-password.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +51,9 @@ import { UsuarioPedidoArticulosComponent } from './usuarios/usuario-pedidos/usua
     InputCategoriaSubcategoriaMarcaComponent,
     DefaultBottomSheetComponent,
     UsuarioPedidosComponent,
-    UsuarioPedidoArticulosComponent
+    UsuarioPedidoArticulosComponent,
+    ModificarPedidoEstadoComponent,
+    ModificarPasswordComponent
   ],
   imports: [
     CommonModule,
@@ -80,6 +84,7 @@ import { UsuarioPedidoArticulosComponent } from './usuarios/usuario-pedidos/usua
     MatExpansionModule
   ], entryComponents: [
     UsuarioPedidosComponent,
+    ModificarPedidoEstadoComponent
   ]
 })
 export class AdminModule { }

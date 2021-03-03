@@ -1,7 +1,7 @@
 <table mat-table [dataSource]="articulos" class="mat-elevation-z0">
 
   <ng-container matColumnDef="articulo">
-    <th mat-header-cell *matHeaderCellDef> Artículo </th>
+    <th mat-header-cell *matHeaderCellDef [style.color]="textColor"> Artículo </th>
     <td mat-cell *matCellDef="let articulo">
       <div fxLayoutAlign="start center" style="position: relative;">
         <div style="width: 100px;
@@ -17,34 +17,34 @@
 
 
   <ng-container matColumnDef="precio_unitario">
-    <th mat-header-cell *matHeaderCellDef> Precio Unitario </th>
+    <th mat-header-cell *matHeaderCellDef [style.color]="textColor"> Precio Unitario </th>
     <td mat-cell *matCellDef="let articulo"> <span class="mat-small">{{articulo.precio_unitario | formatoMoneda}}</span> </td>
     <td mat-footer-cell *matFooterCellDef> </td>
   </ng-container>
   <ng-container matColumnDef="cantidad">
-    <th mat-header-cell *matHeaderCellDef> Cantidad </th>
+    <th mat-header-cell *matHeaderCellDef [style.color]="textColor"> Cantidad </th>
     <td mat-cell *matCellDef="let articulo"> <span class="mat-small">{{articulo.cantidad}}</span> </td>
     <td mat-footer-cell *matFooterCellDef>  </td>
   </ng-container>
   <ng-container matColumnDef="subtotal">
-    <th mat-header-cell *matHeaderCellDef> Subtotal</th>
+    <th mat-header-cell *matHeaderCellDef [style.color]="textColor"> Subtotal</th>
     <td mat-cell *matCellDef="let articulo"> <span class="mat-small">{{articulo.precio_unitario * articulo.cantidad | formatoMoneda}}</span> </td>
     <td mat-footer-cell *matFooterCellDef> </td>
   </ng-container>
   <ng-container matColumnDef="descuento">
-    <th mat-header-cell *matHeaderCellDef> Descuento </th>
+    <th mat-header-cell *matHeaderCellDef [style.color]="textColor"> Descuento </th>
     <td mat-cell *matCellDef="let articulo"> <span class="mat-small">{{getDescuento(articulo.precio_unitario, articulo.descuento) * articulo.cantidad | formatoMoneda}}({{articulo.descuento ? articulo.descuento + '%' : '0%'}})</span> </td>
     <td mat-footer-cell *matFooterCellDef>  </td>
   </ng-container>
   <ng-container matColumnDef="total">
-    <th mat-header-cell *matHeaderCellDef> Total </th>
+    <th mat-header-cell *matHeaderCellDef [style.color]="textColor"> Total </th>
     <td mat-cell *matCellDef="let articulo"> <span class="mat-small">{{articulo.cantidad *
       (articulo.precio_unitario - getDescuento(articulo.precio_unitario, articulo.descuento)) | formatoMoneda}}</span> </td>
     <td mat-footer-cell *matFooterCellDef> {{getTotalCost() | formatoMoneda}} </td>
   </ng-container>
 
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns" [style.background-color]="'rgb('+color+')'"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
 </table>
