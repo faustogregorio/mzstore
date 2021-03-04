@@ -38,6 +38,7 @@ import { UsuarioPedidosComponent } from './usuarios/usuario-pedidos/usuario-pedi
 import { UsuarioPedidoArticulosComponent } from './usuarios/usuario-pedidos/usuario-pedido-articulos/usuario-pedido-articulos.component';
 import { ModificarPedidoEstadoComponent } from './pedidos/modificar-pedido-estado/modificar-pedido-estado.component';
 import { ModificarPasswordComponent } from './usuarios/modificar-password/modificar-password.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -81,10 +82,14 @@ import { ModificarPasswordComponent } from './usuarios/modificar-password/modifi
     PipesModule,
     MatDividerModule,
     MatMenuModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatDialogModule
   ], entryComponents: [
     UsuarioPedidosComponent,
     ModificarPedidoEstadoComponent
+  ],
+  exports: [
+    UsuarioPedidoArticulosComponent
   ]
 })
 export class AdminModule { }

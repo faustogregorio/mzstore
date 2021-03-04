@@ -18,7 +18,7 @@ export class ModificarPasswordComponent {
     private formBuilder: FormBuilder
   ) {
     this.form = this.formBuilder.group({
-      password: ['', [Validators.required, Validators.maxLength(20), Validators.minLength(6)]]
+      password: ['', [Validators.required, Validators.maxLength(20), Validators.minLength(6), Validators.pattern('^[A-Za-z0-9]+$')]]
     });
   }
 

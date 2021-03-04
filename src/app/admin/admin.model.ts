@@ -64,7 +64,7 @@ export interface Pedido {
   email: string;
   id_pedido: number;
   fecha_pedido: Date;
-  id_pedido_estado: number;
+  id_pedido_estado?: number;
   pedido_estado: string;
   estado_color: string;
 

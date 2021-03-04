@@ -111,7 +111,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   onCategoriaClicked(idCategoria: number): void {
-    const encode = {id: idCategoria, val: ''};
+    const encode = { id: idCategoria, val: '' };
     const encoded = this.getEncoded(encode);
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.router.navigateByUrl(`/buscar/${encoded}`);
@@ -119,7 +119,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   }
 
-  getEncoded(encode: {id: number, val: string}): string {
+  getEncoded(encode: { id: number, val: string }): string {
     return this.cryptojs.encode(JSON.stringify(encode));
   }
 
