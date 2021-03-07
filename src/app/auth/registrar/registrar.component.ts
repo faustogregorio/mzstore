@@ -24,7 +24,7 @@ export class RegistrarComponent implements OnInit {
       id_usuario: [0],
       nombre_completo: ['', [Validators.required, Validators.pattern('^[A-ZÑñÁÉÍÓÚáéíóúa-z ]+$'), Validators.maxLength(100)]],
       telefono: ['', [Validators.required, Validators.pattern('^[0-9]+$'), Validators.minLength(10), Validators.maxLength(10)]],
-      email: ['', [Validators.required, Validators.email, Validators.maxLength(100)]],
+      email: ['', [Validators.email, Validators.maxLength(100)]],
       password: ['', [Validators.required, Validators.pattern('^[A-Za-z0-9]+$'), Validators.minLength(6), Validators.maxLength(20)]],
       confirmar_password: ['', [Validators.required]]
     }, {

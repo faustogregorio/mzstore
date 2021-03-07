@@ -15,8 +15,35 @@
       DATOS PERSONALES
     </h1>
 
-    <div style="margin-top: 9px">
-      <p>hola que hace</p>
+    <div style="margin-top: 50px;width: 100%;" fxLayoutAlign="center start">
+      <div fxFlex="100%" [formGroup]="userForm" >
+        <div fxLayoutAlign="start center" fxLayoutGap="8px">
+          <mat-form-field appearance="legacy" fxFlex="400px" [style.font-size]="'20px'" style="text-align: center;">
+            <mat-label>NOMBRE COMPLETO</mat-label>
+            <input matInput formControlName="nombre_completo">
+          </mat-form-field>
+          <button mat-button color="primary" *ngIf="modificado.nombre_completo && userForm.get('nombre_completo')?.valid">APLICAR CAMBIO</button>
+        </div>
+        <div fxLayoutAlign="start center" fxLayoutGap="8px">
+          <mat-form-field appearance="legacy" fxFlex="400px" [style.font-size]="'20px'" style="text-align: center;">
+            <mat-label>TELÉFONO</mat-label>
+            <input matInput formControlName="telefono">
+          </mat-form-field>
+          <button mat-button color="primary" *ngIf="modificado.telefono && userForm.get('telefono')?.valid">APLICAR CAMBIO</button>
+
+        </div>
+        <div fxLayoutAlign="start center" fxLayoutGap="8px">
+          <mat-form-field appearance="legacy" fxFlex="400px" [style.font-size]="'20px'" style="text-align: center;">
+            <mat-label>CORREO ELETRÓNICO</mat-label>
+            <input matInput formControlName="email">
+          </mat-form-field>
+          <button mat-button color="primary" *ngIf="modificado.email && userForm.get('email')?.valid">APLICAR CAMBIO</button>
+
+        </div>
+        <div>
+          <p class="mat-small" (click)="ngOnInit()" style="cursor: pointer;color: teal;">Modificar contraseña</p>
+        </div>
+      </div>
     </div>
   </div>
 </div>

@@ -38,6 +38,7 @@ export interface TokenData {
 export interface Token {
   id_usuario: number;
   nombre_completo: string;
+  telefono: string;
   email: string;
   esAdmin: boolean;
 }

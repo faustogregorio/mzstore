@@ -37,6 +37,7 @@ export class AppComponent implements OnInit, OnDestroy {
       data: {
         id_usuario: 0,
         nombre_completo: '',
+        telefono: '',
         email: '',
         esAdmin: false
       },
@@ -46,12 +47,25 @@ export class AppComponent implements OnInit, OnDestroy {
       nbf: 0
     };
     this.authenticationStatusSubscription = this.authService.authenticationStatusChanged.subscribe(
-      (status: CheckAuth) => {
+      {
+        next: (status: CheckAuth) => {
+          console.log('cambio a : ', status);
+          this.isAuthenticated = status.authenticated;
+          this.esAdmin = status.esAdmin;
+          this.datosToken = this.authService.getTokenData;
+        },
+        error: (error) => {
+          console.log(error);
+        }
+      }
+      /* (status: CheckAuth) => {
         console.log('cambio a : ', status);
         this.isAuthenticated = status.authenticated;
         this.esAdmin = status.esAdmin;
         this.datosToken = this.authService.getTokenData;
-      }
+      }, error => {
+        console.log(error);
+      } */
     );
     this.getCategorias();
   }
