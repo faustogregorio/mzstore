@@ -17,15 +17,18 @@
 
     <div style="margin-top: 50px;width: 100%;" fxLayoutAlign="center start">
       <div fxFlex="100%" [formGroup]="userForm" >
+        <div>
+          <p class="mat-body-2" (click)="ngOnInit()" style="margin-top: 50px;margin-bottom: 20px;cursor: pointer;color: teal;text-align: start;font-size: 1.5rem">Información Basica</p>
+        </div>
         <div fxLayoutAlign="start center" fxLayoutGap="8px">
-          <mat-form-field appearance="legacy" fxFlex="400px" [style.font-size]="'20px'" style="text-align: center;">
+          <mat-form-field appearance="legacy" fxFlex="100%" [style.font-size]="'20px'" style="text-align: center;">
             <mat-label>NOMBRE COMPLETO</mat-label>
             <input matInput formControlName="nombre_completo">
           </mat-form-field>
           <button mat-button color="primary" *ngIf="modificado.nombre_completo && userForm.get('nombre_completo')?.valid">APLICAR CAMBIO</button>
         </div>
         <div fxLayoutAlign="start center" fxLayoutGap="8px">
-          <mat-form-field appearance="legacy" fxFlex="400px" [style.font-size]="'20px'" style="text-align: center;">
+          <mat-form-field appearance="legacy" fxFlex="100%" [style.font-size]="'20px'" style="text-align: center;">
             <mat-label>TELÉFONO</mat-label>
             <input matInput formControlName="telefono">
           </mat-form-field>
@@ -33,7 +36,7 @@
 
         </div>
         <div fxLayoutAlign="start center" fxLayoutGap="8px">
-          <mat-form-field appearance="legacy" fxFlex="400px" [style.font-size]="'20px'" style="text-align: center;">
+          <mat-form-field appearance="legacy" fxFlex="100%" [style.font-size]="'20px'" style="text-align: center;">
             <mat-label>CORREO ELETRÓNICO</mat-label>
             <input matInput formControlName="email">
           </mat-form-field>
@@ -41,8 +44,29 @@
 
         </div>
         <div>
-          <p class="mat-small" (click)="ngOnInit()" style="cursor: pointer;color: teal;">Modificar contraseña</p>
+          <p class="mat-body-2" (click)="ngOnInit()" style="margin-top: 50px;margin-bottom: 20px;cursor: pointer;color: teal;text-align: start;font-size: 1.5rem">Modificar contraseña</p>
         </div>
+        <span>
+          <div fxLayoutAlign="start center" fxLayoutGap="8px">
+            <mat-form-field appearance="legacy" floatLabel="always" fxFlex="100%" [style.font-size]="'20px'" style="text-align: center;">
+              <mat-label>CONTRASEÑA ACTUAL</mat-label>
+              <input matInput >
+            </mat-form-field>
+
+          </div>
+          <div fxLayoutAlign="start center" fxLayoutGap="8px">
+            <mat-form-field appearance="legacy" floatLabel="always" fxFlex="100%" [style.font-size]="'20px'" style="text-align: center;">
+              <mat-label>NUEVA CONTRASEÑA</mat-label>
+              <input matInput >
+            </mat-form-field>
+
+          </div>
+          <div style="text-align: center;">
+            <button mat-flat-button color="primary">MODIFICAR CONTRASEÑA</button>
+
+          </div>
+        </span>
+
       </div>
     </div>
   </div>
