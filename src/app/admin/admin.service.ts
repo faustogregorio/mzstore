@@ -1,9 +1,16 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 import { Categoria, Marca, ResponseCategoria, ResponseMarca, ResponseSubcategoria, Subcategoria } from '../buscar/buscar.model';
-import { GenericServerResponse, Imagen, ResponseArticulo, ResponseArticulos, ResponseSaveArticulo, ResponseUsuarios, ResponseUsuarioPedidos, ResponseUsuarioPedidoArticulos, ResponsePedidos, ResponsePedidoEstados, PedidoEstado } from './admin.model';
+import {
+  GenericServerResponse,
+  Imagen, ResponseArticulo,
+  ResponseArticulos, ResponseSaveArticulo,
+  ResponseUsuarios, ResponseUsuarioPedidos,
+  ResponseUsuarioPedidoArticulos, ResponsePedidos,
+  ResponsePedidoEstados, PedidoEstado
+} from './admin.model';
 
 @Injectable({
   providedIn: 'root'
@@ -97,7 +104,7 @@ export class AdminService {
   }
   updateUsuarioPassword(password: string, idUsuario: number): Observable<GenericServerResponse> {
     return this.http.patch<GenericServerResponse>(
-      `${this.domain}usuario/usuarioPasswordModificar.php`,
+      `${this.domain}usuario/adminModificarPassword.php`,
       { password, id_usuario: idUsuario },
       this.getHttpOptions());
   }

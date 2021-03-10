@@ -18,7 +18,7 @@
     <div style="margin-top: 50px;width: 100%;" fxLayoutAlign="center start">
       <div fxFlex="100%" [formGroup]="userForm" >
         <div>
-          <p class="mat-body-2" (click)="ngOnInit()" style="margin-top: 50px;margin-bottom: 20px;cursor: pointer;color: teal;text-align: start;font-size: 1.5rem">Información Basica</p>
+          <p class="mat-body-2" style="margin-top: 50px;margin-bottom: 20px;color: teal;text-align: start;font-size: 1.5rem">Información Basica</p>
         </div>
         <div fxLayoutAlign="start center" fxLayoutGap="8px">
           <mat-form-field appearance="legacy" fxFlex="100%" [style.font-size]="'20px'" style="text-align: center;">
@@ -44,28 +44,48 @@
 
         </div>
         <div>
-          <p class="mat-body-2" (click)="ngOnInit()" style="margin-top: 50px;margin-bottom: 20px;cursor: pointer;color: teal;text-align: start;font-size: 1.5rem">Modificar contraseña</p>
+          <p class="mat-body-2" style="margin-top: 50px;margin-bottom: 20px;color: teal;text-align: start;font-size: 1.5rem">Modificar contraseña</p>
         </div>
-        <span>
+
           <div fxLayoutAlign="start center" fxLayoutGap="8px">
             <mat-form-field appearance="legacy" floatLabel="always" fxFlex="100%" [style.font-size]="'20px'" style="text-align: center;">
               <mat-label>CONTRASEÑA ACTUAL</mat-label>
-              <input matInput >
+              <input matInput type="password" formControlName="actual_password">
             </mat-form-field>
 
           </div>
           <div fxLayoutAlign="start center" fxLayoutGap="8px">
             <mat-form-field appearance="legacy" floatLabel="always" fxFlex="100%" [style.font-size]="'20px'" style="text-align: center;">
               <mat-label>NUEVA CONTRASEÑA</mat-label>
-              <input matInput >
+              <input matInput [type]="hide ? 'password' : 'text'" formControlName="new_password">
+              <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" type="button">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+            </mat-form-field>
+
+
+          </div>
+          <div fxLayoutAlign="start center" fxLayoutGap="8px">
+            <mat-form-field appearance="legacy" floatLabel="always" fxFlex="100%" [style.font-size]="'20px'" style="text-align: center;">
+              <mat-label>CONFIRMAR NUEVA CONTRASEÑA</mat-label>
+              <input matInput [type]="hide ? 'password' : 'text'" formControlName="confirm_new_password">
+              <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" type="button">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
             </mat-form-field>
 
           </div>
-          <div style="text-align: center;">
-            <button mat-flat-button color="primary">MODIFICAR CONTRASEÑA</button>
+          <div style="text-align: center;margin-bottom: 100px;">
+            <button mat-flat-button color="primary" type="button" [disabled]="
+            userForm.get('actual_password')?.invalid ||
+            userForm.get('new_password')?.invalid ||
+            userForm.get('confirm_new_password')?.invalid
+            "
+            (click)="modificarPassword()"
+            >MODIFICAR CONTRASEÑA</button>
 
           </div>
-        </span>
+
 
       </div>
     </div>

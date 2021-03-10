@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/auth/auth.service';
   styleUrls: ['./datos-personales.component.scss']
 })
 export class DatosPersonalesComponent implements OnInit {
+  hide = true;
   userForm: FormGroup;
   modificado = {
     nombre_completo: false,
@@ -25,6 +26,9 @@ export class DatosPersonalesComponent implements OnInit {
       telefono: [this.authService.getTokenData.data.telefono,
         [Validators.required, Validators.pattern('^[0-9]+$'), Validators.minLength(10), Validators.maxLength(10)]],
       email: [this.authService.getTokenData.data.email, [Validators.email, Validators.maxLength(100)] ],
+      actual_password: ['', Validators.required, Validators.pattern('^[A-Za-z0-9]+$'), Validators.maxLength(20)],
+      new_password: ['', [Validators.required, Validators.pattern('^[A-Za-z0-9]+$'), Validators.minLength(6), Validators.maxLength(20)]],
+      confirm_new_password: ['', [Validators.required]]
     });
   }
 
@@ -45,6 +49,8 @@ export class DatosPersonalesComponent implements OnInit {
       }
     });
   }
+  modificarPassword(): void {
 
+  }
 
 }

@@ -18,12 +18,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSortModule } from '@angular/material/sort';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [UsuarioComponent, PedidosComponent, DatosPersonalesComponent],
   imports: [
     CommonModule,
     UsuarioRoutingModule,
+    HttpClientModule,
     FlexLayoutModule,
     ReactiveFormsModule,
     FormsModule,
