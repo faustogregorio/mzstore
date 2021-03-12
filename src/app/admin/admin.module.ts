@@ -39,6 +39,8 @@ import { UsuarioPedidoArticulosComponent } from './usuarios/usuario-pedidos/usua
 import { ModificarPedidoEstadoComponent } from './pedidos/modificar-pedido-estado/modificar-pedido-estado.component';
 import { ModificarPasswordComponent } from './usuarios/modificar-password/modificar-password.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { AjustesComponent } from './ajustes/ajustes.component';
+import {MatTabsModule} from '@angular/material/tabs';
 
 @NgModule({
   declarations: [
@@ -54,7 +56,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     UsuarioPedidosComponent,
     UsuarioPedidoArticulosComponent,
     ModificarPedidoEstadoComponent,
-    ModificarPasswordComponent
+    ModificarPasswordComponent,
+    AjustesComponent
   ],
   imports: [
     CommonModule,
@@ -83,7 +86,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatDividerModule,
     MatMenuModule,
     MatExpansionModule,
-    MatDialogModule
+    MatDialogModule,
+    MatTabsModule
   ], entryComponents: [
     UsuarioPedidosComponent,
     ModificarPedidoEstadoComponent

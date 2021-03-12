@@ -58,6 +58,7 @@
         </mat-card-header>
         <mat-card-actions>
           <mat-nav-list>
+
             <mat-list-item
               (click)="redirectTo('/admin/articulos')"
               *ngIf="esAdmin"
@@ -65,22 +66,6 @@
               <mat-icon matListIcon>view_list</mat-icon>
               <span matLine>ARTÍCULOS</span>
             </mat-list-item>
-            <mat-list-item (click)="redirectTo('/usuario/datos')">
-              <mat-icon matListIcon>edit</mat-icon>
-              <span matLine>DATOS PERSONALES</span>
-            </mat-list-item>
-            <mat-list-item (click)="redirectTo('/usuario/pedidos')">
-              <mat-icon matListIcon>view_list</mat-icon>
-              <span class="mat-h4" matLine>MIS PEDIDOS</span>
-            </mat-list-item>
-            <mat-list-item
-              (click)="redirectTo('/admin/add-articulo')"
-              *ngIf="esAdmin"
-            >
-              <mat-icon matListIcon>add</mat-icon>
-              <span class="mat-h4" matLine>NUEVO ARTÍCULO</span>
-            </mat-list-item>
-
             <mat-list-item
               (click)="redirectTo('/admin/pedidos')"
               *ngIf="esAdmin"
@@ -88,12 +73,36 @@
               <mat-icon matListIcon>view_list</mat-icon>
               <span class="mat-h4" matLine>PEDIDOS</span>
             </mat-list-item>
+            <mat-list-item (click)="redirectTo('/usuario/pedidos')">
+              <mat-icon matListIcon>view_list</mat-icon>
+              <span class="mat-h4" matLine>MIS PEDIDOS</span>
+            </mat-list-item>
             <mat-list-item
-              (click)="redirectTo('/admin/usuarios')"
+            (click)="redirectTo('/admin/usuarios')"
+            *ngIf="esAdmin"
+          >
+            <mat-icon matListIcon>people</mat-icon>
+            <span class="mat-h4" matLine>USUARIOS</span>
+          </mat-list-item>
+          <mat-list-item
+              (click)="redirectTo('/admin/add-articulo')"
               *ngIf="esAdmin"
             >
-              <mat-icon matListIcon>people</mat-icon>
-              <span class="mat-h4" matLine>USUARIOS</span>
+              <mat-icon matListIcon>add</mat-icon>
+              <span class="mat-h4" matLine>NUEVO ARTÍCULO</span>
+            </mat-list-item>
+            <mat-list-item (click)="redirectTo('/usuario/datos')">
+              <mat-icon matListIcon>edit</mat-icon>
+              <span matLine>DATOS PERSONALES</span>
+            </mat-list-item>
+
+
+            <mat-list-item
+              (click)="redirectTo('/admin/ajustes')"
+              *ngIf="esAdmin"
+            >
+              <mat-icon matListIcon>settings</mat-icon>
+              <span class="mat-h4" matLine>AJUSTES</span>
             </mat-list-item>
           </mat-nav-list>
         </mat-card-actions>

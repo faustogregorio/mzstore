@@ -15,10 +15,10 @@ export class UsuarioService {
     private http: HttpClient
   ) { }
 
-  modificarPassword(idUsuario: number, password: string, newPassword: string): Observable<GenericServerResponse> {
+  modificarPassword(password: string, newPassword: string): Observable<GenericServerResponse> {
     return this.http.patch<GenericServerResponse>(
       `${this.domain}usuario/usuarioPasswordModificar.php`,
-      { id_usuario: idUsuario, password, new_password: newPassword },
+      { password, new_password: newPassword },
       this.getHttpOptions());
   }
 

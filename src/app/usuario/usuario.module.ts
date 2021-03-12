@@ -19,6 +19,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSortModule } from '@angular/material/sort';
 import { HttpClientModule } from '@angular/common/http';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [UsuarioComponent, PedidosComponent, DatosPersonalesComponent],
@@ -39,7 +40,8 @@ import { HttpClientModule } from '@angular/common/http';
     MatPaginatorModule,
     MatFormFieldModule,
     MatInputModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSnackBarModule
   ]
 })
 export class UsuarioModule { }
