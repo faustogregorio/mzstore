@@ -119,22 +119,6 @@ export class AddArticuloComponent implements OnInit {
       id_subcategoria: ['', [Validators.required, Validators.min(1)]],
       id_marca: ['', [Validators.required, Validators.min(1)]],
     });
-
-    this.categoriaForm.get('id_categoria')?.valueChanges.subscribe((idCategoria: number) => {
-      if (idCategoria === 0) {
-        this.openBottomSheet('categoria', this.categorias);
-      }
-    });
-    this.categoriaForm.get('id_subcategoria')?.valueChanges.subscribe((idSubcategoria: number) => {
-      if (idSubcategoria === 0) {
-        this.openBottomSheet('subcategoria', this.subcategorias);
-      }
-    });
-    this.categoriaForm.get('id_marca')?.valueChanges.subscribe((idMarca: number) => {
-      if (idMarca === 0) {
-        this.openBottomSheet('marca', this.marcas);
-      }
-    });
   }
 
   get descripcion(): string {

@@ -128,8 +128,18 @@ export class AdminService {
       this.getHttpOptions());
   }
 
-
-
+  getEstados(): Observable<ResponsePedidoEstados> {
+    return this.http.get<ResponsePedidoEstados>(`${this.domain}estado/estados.php`, this.getHttpOptions());
+  }
+  createEstado(pedidoEstado: string, estadoColor: string): Observable<GenericServerResponse> {
+    return this.http.post<GenericServerResponse>(`${this.domain}estado/estadoCrear.php`, {pedido_estado: pedidoEstado, estado_color: estadoColor}, this.getHttpOptions());
+  }
+  updateEstado(estado: PedidoEstado): Observable<GenericServerResponse> {
+    return this.http.patch<GenericServerResponse>(`${this.domain}estado/estadoModificar.php`, estado, this.getHttpOptions());
+  }
+  deleteEstado(idEstado: number): Observable<GenericServerResponse> {
+    return this.http.delete<GenericServerResponse>(`${this.domain}estado/estadoEliminar.php?id_pedido_estado=${idEstado}`, this.getHttpOptions());
+  }
 
   getHttpOptions(): { headers: HttpHeaders } {
     return {

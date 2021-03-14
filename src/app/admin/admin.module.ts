@@ -40,7 +40,8 @@ import { ModificarPedidoEstadoComponent } from './pedidos/modificar-pedido-estad
 import { ModificarPasswordComponent } from './usuarios/modificar-password/modificar-password.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { AjustesComponent } from './ajustes/ajustes.component';
-import {MatTabsModule} from '@angular/material/tabs';
+import { MatTabsModule } from '@angular/material/tabs';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 @NgModule({
   declarations: [
@@ -87,7 +88,8 @@ import {MatTabsModule} from '@angular/material/tabs';
     MatMenuModule,
     MatExpansionModule,
     MatDialogModule,
-    MatTabsModule
+    MatTabsModule,
+    ColorPickerModule
   ], entryComponents: [
     UsuarioPedidosComponent,
     ModificarPedidoEstadoComponent

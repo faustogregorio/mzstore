@@ -10,6 +10,132 @@
   <div style="margin-top: 20px" fxFlex="1300px">
     <h1 class="mat-display-1" style="font-weight: 600; margin: 0px 0px 20px 0px;">AJUSTES</h1>
 
+    <mat-tab-group mat-align-tabs="center" >
+      <mat-tab label="ESTADOS DE UN PEDIDO">
+        <div style="width: 100%;">
+          <p style="text-align: center;margin: 24px 24px;color: rgba(0, 0, 0, 0.85);" class="mat-body-2">Administre el flujo de los pedidos asignándole un nombre y un color a las diferentes etapas de un pedido (estados), para identificar fácilmente el estado actual de los diferentes pedidos</p>
+         <mat-divider></mat-divider>
+          <form [formGroup]="formEstado" (ngSubmit)="onSubmit()" fxLayout="row wrap" fxLayoutAlign="center stretch" fxLayoutGap="16px" style="margin: 24px 0px">
+            <span style="height: 56.56px;border-radius: 50px;cursor: pointer;" [style.background-color]="color" fxLayout="row" fxLayoutAlign="center center" [cpPosition]="'auto'"
+            [cpPositionOffset]="'50%'"
+            [cpPositionRelativeToArrow]="true"
+            [cpOutputFormat]="'rgba'"
+            [cpAlphaChannel]="'disabled'"
+            [(colorPicker)]="color">
+              <span class="mat-small" style="padding: 0px 16px;" [style.color]="setTextColor(setRGBValues(color))"
+              >
+                CLIC PARA ASIGNAR COLOR
+              </span>
+             <!--  <button mat-icon-button type="button">
+                <mat-icon mat-list-icon >label</mat-icon>
+              </button> -->
+            </span>
+            <mat-form-field appearance="legacy" floatLabel="always" fxFlex="300px">
+              <mat-label>Estado del pedido</mat-label>
+              <input matInput placeholder="Nombre del estado" formControlName="pedido_estado" #estado>
+              <mat-hint>Asigne un nombre al estado del pedido</mat-hint>
+            </mat-form-field>
+            <button mat-button color="primary">{{ agregarEstado ? 'AGREGAR' : 'MODIFICAR'}}</button>
+          </form>
+        </div>
+        <mat-divider></mat-divider>
+        <mat-list>
+          <mat-list-item *ngFor="let estado of estados">
+            <button mat-icon-button color="primary" (click)="editarEstado(estado)">
+              <mat-icon mat-list-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="eliminarEstado(estado)" *ngIf="estado.id_pedido_estado !== 1">
+              <mat-icon mat-list-icon>close</mat-icon>
+            </button>
+            <mat-icon mat-list-icon [style.color]="'rgb('+estado.estado_color+')'" style="border: 1px solid rgba(0, 0, 0, 0.05);">circle</mat-icon>
+            <div mat-line>{{estado.pedido_estado | uppercase}}</div>
+            <!-- <div mat-line> {{estado.pedido_estado}} </div> -->
+        <mat-divider></mat-divider>
 
+          </mat-list-item>
+
+        </mat-list>
+
+      </mat-tab>
+      <mat-tab label="CATEGORÍAS">
+
+
+        <form [formGroup]="categoriaForm" style="min-height: 300px">
+          <ng-template matStepLabel>Categoría</ng-template>
+          <div
+            style="width: 100%; margin-bottom: 24px"
+            fxLayoutAlign="center"
+            fxLayoutGap="24px"
+          >
+            <mat-form-field appearance="fill" fxFlex="24%">
+              <mat-label>Categoría</mat-label>
+              <mat-select formControlName="id_categoria">
+                <mat-option
+                  *ngFor="let categoria of categorias"
+                  [value]="categoria.id_categoria"
+                  >{{ categoria.categoria }}</mat-option
+                >
+                <mat-option
+                  [value]="0"
+                  class="mat-body-strong"
+                  style="color: #3f51b5"
+                  (click)="openBottomSheet('categoria', categorias)"
+                  >Agregar/Editar/Eliminar</mat-option
+                >
+              </mat-select>
+              <mat-hint>Categoría a la que pertenece</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" fxFlex="24%">
+              <mat-label>Subcategoría</mat-label>
+              <mat-select formControlName="id_subcategoria">
+                <mat-option
+                  *ngFor="let subcategoria of subcategorias"
+                  [value]="subcategoria.id_subcategoria"
+                  >{{ subcategoria.subcategoria }}</mat-option
+                >
+                <mat-option
+                  [value]="0"
+                  class="mat-body-strong"
+                  style="color: #3f51b5"
+                  (click)="openBottomSheet('subcategoria', subcategorias)"
+                  >Agregar/Editar/Eliminar</mat-option
+                >
+              </mat-select>
+              <mat-hint>Subcategoría a la que pertenece</mat-hint>
+              <!-- <mat-error *ngIf="categoriaForm.hasError('required')">You must make a selection</mat-error>
+              <mat-error *ngIf="categoriaForm.hasError('pattern') && !selected.hasError('required')">
+                Your selection is invalid
+              </mat-error> -->
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" fxFlex="24%">
+              <mat-label>Marca</mat-label>
+              <mat-select formControlName="id_marca">
+                <mat-option
+                  *ngFor="let marca of marcas"
+                  [value]="marca.id_marca"
+                  >{{ marca.marca }}</mat-option
+                >
+                <mat-option
+                  [value]="0"
+                  class="mat-body-strong"
+                  style="color: #3f51b5"
+                  (click)="openBottomSheet('marca', marcas)"
+                  >Agregar/Editar/Eliminar</mat-option
+                >
+              </mat-select>
+              <mat-hint>Marca del artículo</mat-hint>
+              <!-- <mat-error *ngIf="categoriaForm.hasError('required')">You must make a selection</mat-error>
+              <mat-error *ngIf="categoriaForm.hasError('pattern') && !selected.hasError('required')">
+                Your selection is invalid
+              </mat-error> -->
+            </mat-form-field>
+          </div>
+        </form>
+
+
+      </mat-tab>
+    </mat-tab-group>
   </div>
 </div>

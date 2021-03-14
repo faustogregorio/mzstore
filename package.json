@@ -25,6 +25,7 @@
     "@auth0/angular-jwt": "^5.0.2",
     "@kolkov/angular-editor": "^1.1.4",
     "crypto-js": "^4.0.0",
+    "ngx-color-picker": "^11.0.0",
     "ngx-infinite-scroll": "^10.0.1",
     "rxjs": "~6.6.6",
     "tslib": "^2.0.0",
