@@ -11,7 +11,7 @@
     <h1 class="mat-display-1" style="font-weight: 600; margin: 0px 0px 20px 0px;">AJUSTES</h1>
 
     <mat-tab-group mat-align-tabs="center" >
-      <mat-tab label="ESTADOS DE UN PEDIDO">
+      <mat-tab label="ESTADOS">
         <div style="width: 100%;">
           <p style="text-align: center;margin: 24px 24px;color: rgba(0, 0, 0, 0.85);" class="mat-body-2">Administre el flujo de los pedidos asignándole un nombre y un color a las diferentes etapas de un pedido (estados), para identificar fácilmente el estado actual de los diferentes pedidos</p>
          <mat-divider></mat-divider>
@@ -24,7 +24,7 @@
             [(colorPicker)]="color">
               <span class="mat-small" style="padding: 0px 16px;" [style.color]="setTextColor(setRGBValues(color))"
               >
-                CLIC PARA ASIGNAR COLOR
+                CLIC PARA {{ agregarEstado ? 'ASIGNAR' : 'MODIFICAR'}} COLOR
               </span>
              <!--  <button mat-icon-button type="button">
                 <mat-icon mat-list-icon >label</mat-icon>
@@ -58,83 +58,29 @@
 
       </mat-tab>
       <mat-tab label="CATEGORÍAS">
+        <p style="text-align: center;font-size: 1.2rem;margin: 24px 24px;color: rgba(0, 0, 0, 0.85);" class="mat-body-2">ADMINISTRAR LAS CATEGORÍAS</p>
+        <div style="text-align: center;">
+          <button mat-stroked-button (click)="openBottomSheet('categoria', categorias)" type="button" color="primary" style="padding: 16px;">
+            VER TODAS LAS CATEGORÍAS
+          </button>
+        </div>
 
-
-        <form [formGroup]="categoriaForm" style="min-height: 300px">
-          <ng-template matStepLabel>Categoría</ng-template>
-          <div
-            style="width: 100%; margin-bottom: 24px"
-            fxLayoutAlign="center"
-            fxLayoutGap="24px"
-          >
-            <mat-form-field appearance="fill" fxFlex="24%">
-              <mat-label>Categoría</mat-label>
-              <mat-select formControlName="id_categoria">
-                <mat-option
-                  *ngFor="let categoria of categorias"
-                  [value]="categoria.id_categoria"
-                  >{{ categoria.categoria }}</mat-option
-                >
-                <mat-option
-                  [value]="0"
-                  class="mat-body-strong"
-                  style="color: #3f51b5"
-                  (click)="openBottomSheet('categoria', categorias)"
-                  >Agregar/Editar/Eliminar</mat-option
-                >
-              </mat-select>
-              <mat-hint>Categoría a la que pertenece</mat-hint>
-            </mat-form-field>
-
-            <mat-form-field appearance="fill" fxFlex="24%">
-              <mat-label>Subcategoría</mat-label>
-              <mat-select formControlName="id_subcategoria">
-                <mat-option
-                  *ngFor="let subcategoria of subcategorias"
-                  [value]="subcategoria.id_subcategoria"
-                  >{{ subcategoria.subcategoria }}</mat-option
-                >
-                <mat-option
-                  [value]="0"
-                  class="mat-body-strong"
-                  style="color: #3f51b5"
-                  (click)="openBottomSheet('subcategoria', subcategorias)"
-                  >Agregar/Editar/Eliminar</mat-option
-                >
-              </mat-select>
-              <mat-hint>Subcategoría a la que pertenece</mat-hint>
-              <!-- <mat-error *ngIf="categoriaForm.hasError('required')">You must make a selection</mat-error>
-              <mat-error *ngIf="categoriaForm.hasError('pattern') && !selected.hasError('required')">
-                Your selection is invalid
-              </mat-error> -->
-            </mat-form-field>
-
-            <mat-form-field appearance="fill" fxFlex="24%">
-              <mat-label>Marca</mat-label>
-              <mat-select formControlName="id_marca">
-                <mat-option
-                  *ngFor="let marca of marcas"
-                  [value]="marca.id_marca"
-                  >{{ marca.marca }}</mat-option
-                >
-                <mat-option
-                  [value]="0"
-                  class="mat-body-strong"
-                  style="color: #3f51b5"
-                  (click)="openBottomSheet('marca', marcas)"
-                  >Agregar/Editar/Eliminar</mat-option
-                >
-              </mat-select>
-              <mat-hint>Marca del artículo</mat-hint>
-              <!-- <mat-error *ngIf="categoriaForm.hasError('required')">You must make a selection</mat-error>
-              <mat-error *ngIf="categoriaForm.hasError('pattern') && !selected.hasError('required')">
-                Your selection is invalid
-              </mat-error> -->
-            </mat-form-field>
-          </div>
-        </form>
-
-
+      </mat-tab>
+      <mat-tab label="SUBCATEGORÍAS">
+        <p style="text-align: center;font-size: 1.2rem;margin: 24px 24px;color: rgba(0, 0, 0, 0.85);" class="mat-body-2">ADMINISTRAR LAS SUBCATEGORÍAS</p>
+        <div style="text-align: center;">
+          <button mat-stroked-button (click)="openBottomSheet('subcategoria', subcategorias)" type="button" color="primary" style="padding: 16px;">
+            VER TODAS LAS SUBCATEGORÍAS
+          </button>
+        </div>
+      </mat-tab>
+      <mat-tab label="MARCAS">
+        <p style="text-align: center;font-size: 1.2rem;margin: 24px 24px;color: rgba(0, 0, 0, 0.85);" class="mat-body-2">ADMINISTRAR LAS MARCAS</p>
+        <div style="text-align: center;">
+          <button mat-stroked-button (click)="openBottomSheet('marca', marcas)" type="button" color="primary" style="padding: 16px;">
+            VER TODAS LAS MARCAS
+          </button>
+        </div>
       </mat-tab>
     </mat-tab-group>
   </div>
