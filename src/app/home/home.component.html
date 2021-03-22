@@ -8,6 +8,7 @@
   fxLayoutAlign="center"
 >
   <div fxFlex="1300px" fxLayout="row wrap" fxLayoutAlign="start start">
+
     <!--     <carousel
 
       [lightDOM]="true"
@@ -88,18 +89,26 @@
       </div>
     </div>
     <mat-grid-list
-      style="margin: 20px 0px 40px 0px;"
+      style="margin: 20px 0px 40px 0px"
       fxFlex="100%"
       cols="4"
       gutterSize="40px"
       rowHeight="2:1"
     >
       <mat-grid-tile
-        style="background-color: #00BCD4;border-radius: 10px; cursor: pointer"
+        style="background-color: #00bcd4; border-radius: 10px; cursor: pointer"
         *ngFor="let categoria of categorias"
         (click)="onCategoriaClicked(categoria.id_categoria)"
       >
-        <span style="margin: 20px;font-weight: 500;font-size: 1.2rem;text-align: center;">{{ categoria.categoria }}</span>
+        <span
+          style="
+            margin: 20px;
+            font-weight: 500;
+            font-size: 1.2rem;
+            text-align: center;
+          "
+          >{{ categoria.categoria }}</span
+        >
       </mat-grid-tile>
     </mat-grid-list>
   </div>

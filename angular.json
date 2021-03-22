@@ -34,7 +34,8 @@
               "src/styles.scss"
             ],
             "scripts": [
-              "./node_modules/crypto-js/crypto-js.js"
+              "./node_modules/crypto-js/crypto-js.js",
+              "./src/assets/js/js-cloudimage-360-view.min.js"
             ]
           },
           "configurations": {

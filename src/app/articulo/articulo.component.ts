@@ -1,15 +1,15 @@
 import { Location } from '@angular/common';
-import { Component, Inject, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { CryptoService } from '../services/crypto.service';
-
+declare var window: any;
 @Component({
   selector: 'app-articulo',
   templateUrl: './articulo.component.html',
   styleUrls: ['./articulo.component.scss']
 })
-export class ArticuloComponent implements OnInit {
+export class ArticuloComponent implements OnInit, AfterViewInit {
   encoded = '';
   decoded = 0;
   corruptEncoded = false;
@@ -50,7 +50,9 @@ export class ArticuloComponent implements OnInit {
     /* this.encoded = this.route.snapshot.params.id;
     this.corruptEncoded = this.checkDecodedStringWasNotCorrupted(this.encoded); */
   }
-
+  ngAfterViewInit(): void {
+    window.CI360.init();
+  }
   back(): void {
     /* this.history.pop() */
     /* if (this.history.length > 0) {

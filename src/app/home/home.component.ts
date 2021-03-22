@@ -1,11 +1,14 @@
 
-import { Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Categoria } from '../buscar/buscar.model';
 import { BuscarService } from '../buscar/buscar.service';
 
 import { CryptoService } from '../services/crypto.service';
+
+
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -65,6 +68,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
   }
+
 
   @HostListener('window:blur', ['$event'])
   onpagehide(event: FocusEvent): void {

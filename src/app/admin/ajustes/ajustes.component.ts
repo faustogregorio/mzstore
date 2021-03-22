@@ -165,7 +165,6 @@ export class AjustesComponent implements OnInit {
           default:
             break;
         }
-        /* this.updateValorMasRecienteCategoriaForm(opcion); */
       }
     );
   }

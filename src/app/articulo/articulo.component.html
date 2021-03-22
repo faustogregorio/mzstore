@@ -58,15 +58,28 @@
           <mat-icon>arrow_right</mat-icon>
         </div>
       </div>
-      <div style="height: 100%; width: 100%; position: absolute; z-index: 9">
-        <img
+      <div style="width: 100%;height: 100vh; position: absolute; z-index: 9;"
+      fxLayoutAlign="center center">
+        <!-- <img
           [src]="imagenUrl"
           style="width: 100%; height: 100%; object-fit: contain"
           alt=""
-        />
+        /> -->
+        <div style="height: calc(100vh - 100px); width: calc(100% - 10%);overflow: hidden;" fxLayout="column" fxLayoutAlign="center center">
+          <div
+          class="cloudimage-360"
+      data-folder="https://scaleflex.cloudimg.io/crop/1920x700/n/https://scaleflex.airstore.io/demo/360-car/"
+      data-filename="iris-{index}.jpeg"
+      data-amount="36"
+          data-bottom-circle="true"
+          data-hide-360-logo
+          data-full-screen
+        ></div>
+        </div>
+
       </div>
     </div>
-    <div
+<!--     <div
       style="position: relative; width: 100%; background-color: greenyellow"
       fxFlex="100px"
     >
@@ -98,7 +111,7 @@
         "
       >
       </app-carousel>
-    </div>
+    </div> -->
   </div>
   <div
     fxFlex="512px"
@@ -106,10 +119,14 @@
     fxLayout="row wrap"
     fxLayoutAlign="start start"
   >
-    <div fxFlex="100%" style="height: 150px;margin-right: 16px;" fxLayout="column">
+    <div
+      fxFlex="100%"
+      style="height: 150px; margin-right: 16px"
+      fxLayout="column"
+    >
       <div
         fxFlex="65px"
-        style="margin-top: 16px; width: 100%;"
+        style="margin-top: 16px; width: 100%"
         fxLayout="row"
         fxLayoutAlign="start center"
         fxLayoutGap="16px"
@@ -132,20 +149,18 @@
           matTooltip="XIAOMI REDMI NOTE 9 BLANCO (POLAR WHITE) XIAOMI REDMI NOTE 9 BLANCO (POLAR WHITE) XIAOMI REDMI NOTE 9 BLANCO (POLAR WHITE)"
           matTooltipShowDelay="1000"
         >
-        XIAOMI REDMI NOTE 9 BLANCO (POLAR WHITE)
+          XIAOMI REDMI NOTE 9 BLANCO (POLAR WHITE)
         </span>
         <!-- <div>
           <button mat-stroked-button type="button" color="primary">COMPRAR</button>
         </div> -->
       </div>
       <div
-        style="
-          width: 100%;
-        "
+        style="width: 100%"
         fxLayoutAlign="space-between center"
         fxLayoutGap="16px"
       >
-        <span style="font-weight: 400;font-size: 1rem;">MX$5,418.00</span>
+        <span style="font-weight: 400; font-size: 1rem">MX$5,418.00</span>
         <!-- <div
           fxLayout="row"
           fxLayoutAlign="start center"
@@ -159,7 +174,9 @@
             >
           </div>
         </div> -->
-        <button mat-stroked-button type="button" color="primary">COMPRAR</button>
+        <button mat-stroked-button type="button" color="primary">
+          COMPRAR
+        </button>
         <!-- <button
           style="margin-right: 10px"
           mat-icon-button
@@ -170,7 +187,7 @@
           <mat-icon>add_shopping_cart</mat-icon>
         </button> -->
       </div>
-      <span style="font-weight: 500;font-size: 0.75rem;">Marca: IPHONE</span>
+      <span style="font-weight: 500; font-size: 0.75rem">Marca: IPHONE</span>
     </div>
     <div fxFlex="100%" style="height: calc(100vh - 100px)">
       <mat-tab-group
