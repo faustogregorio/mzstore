@@ -20,15 +20,37 @@ export interface Properties {
 
 export interface Images {
   [index: number]: {
-    path: string;
+    /* path: string;
     width?: number;
-    height?: number;
-    //type?: 'image' | 'video'
+    height?: number; */
+    // type?: 'image' | 'video'
+    id_articulo: number;
+    sku: string;
+    articulo: string;
+    precio: number;
+    descuento: number;
+    stock: number;
+    id_subcategoria: number;
+    subcategoria: string;
+    id_marca: number;
+    marca: string;
+    imagen: string;
   };
 }
 
 export interface Image {
-  path: string;
+  /* path: string;
   width?: number;
-  height?: number;
+  height?: number; */
+  id_articulo: number;
+  sku: string;
+  articulo: string;
+  precio: number;
+  descuento: number;
+  stock: number;
+  id_subcategoria: number;
+  subcategoria: string;
+  id_marca: number;
+  marca: string;
+  imagen: string;
 }

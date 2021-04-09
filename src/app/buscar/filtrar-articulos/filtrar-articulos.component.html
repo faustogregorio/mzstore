@@ -24,20 +24,6 @@
           style="object-fit: contain"
         />
       </div>
-      <!--       <div
-      fxFlex="100%"
-      class="search-results"
-      infiniteScroll
-      [infiniteScrollDistance]="scrollDistance"
-      [infiniteScrollThrottle]="throttle"
-      [infiniteScrollContainer]="'.main-container'"
-      (scrolled)="onScrollDown()"
-      [fromRoot]="true"
-    >
-      <p *ngFor="let i of array">
-        {{ i }}
-      </p>
-    </div> -->
       <mat-grid-list
         fxFlex="100%"
         style="background-color: white;margin-bottom: 100px;"
@@ -52,66 +38,35 @@
         gutterSize="100px"
         *ngIf="!corruptEncoded"
       >
-        <!-- <mat-grid-tile *ngFor="let i of parcialArticulos">{{ i.articulo }}</mat-grid-tile> -->
         <mat-grid-tile *ngFor="let articulo of parcialArticulos">
           <div fxFlex="100%" fxLayout="column">
             <div
               style="height: 390px; cursor: pointer; position: relative"
               (click)="onClickArticulo(articulo)"
             >
-              <!-- <div
-              style="
-                position: absolute;
-                height: 50px;
-                width: 50px;
-                bottom: 0;
-                right: 0;
-                clip-path: polygon(
-                  0% 0%,
-                  100% 0%,
-                  100% 75%,
-                  75% 75%,
-                  75% 100%,
-                  50% 75%,
-                  0% 75%
-                );
-                border-radius: 5px;
-                background-color: #c21912;
-              "
-              fxLayoutAlign="center center"
-            >
-              <p
-                style="
-                  color: whitesmoke;
-                  margin: 0;
-                  font-weight: 500;
-                  font-size: 0.75rem;
-                "
-              >
-                Oferta
-              </p>
-            </div> -->
               <img
                 [src]="urlImagenes+articulo.imagen"
                 style="width: 100%; height: 390px; object-fit: contain"
               />
             </div>
             <div fxLayout="row">
-              <!-- <div
-              style="background-color: #f44336; border-radius: 5px"
+              <div
+              *ngIf="articulo.stock === 0"
+              style="background-color: #df2935; border-radius: 5px;margin-left: 10px"
               fxLayoutAlign="center center"
             >
               <p
                 style="
                   padding: 5px;
                   margin: 0;
+                  color: whitesmoke;
                   font-weight: 500;
                   font-size: 0.75rem;
                 "
               >
-                Agotado
+                AGOTADO
               </p>
-            </div> -->
+            </div>
               <!-- <div
               style="background-color: #2196F3; border-radius: 5px"
               fxLayoutAlign="center center"
@@ -127,9 +82,10 @@
                 Nuevo
               </p>
             </div> -->
-              <!-- <div
+              <div
+              *ngIf="articulo.descuento > 0"
                 style="
-                  background-color: #ffc107;
+                  background-color: #f9dc5c;
                   border-radius: 5px;
                   margin-left: 10px;
                 "
@@ -143,9 +99,9 @@
                     font-size: 0.75rem;
                   "
                 >
-                  Oferta
+                  OFERTA
                 </p>
-              </div> -->
+              </div>
               <p
                 class="mat-body-strong"
                 style="
@@ -173,31 +129,33 @@
                 justify-content: space-between;
               "
             >
-              <span style="margin-left: 10px" class="mat-h2">{{ articulo.precio | formatoMoneda}}</span>
-              <!-- <div
+              <span *ngIf="!(articulo.descuento > 0)" style="margin-left: 10px" class="mat-h2">{{ articulo.precio | formatoMoneda}}</span>
+              <div
+              *ngIf="articulo.descuento > 0"
                 fxLayout="row"
                 style="margin-left: 10px"
                 fxLayoutAlign="start center"
                 fxLayoutGap="5px"
               >
-                <span style="font-size: 1.3rem; color: #f57f17">-30%</span>
+                <span style="font-size: 1.3rem; color: #df2935">-{{ articulo.descuento }}%</span>
                 <div fxLayout="column">
                   <span style="font-weight: 500; font-size: 1.1rem"
-                    >MX$3,418.00</span
+                    >{{ articulo.precio - getDescuento(articulo.precio, articulo.descuento) | formatoMoneda}}</span
                   >
                   <span style="text-decoration: line-through" class="mat-small"
                     >{{ articulo.precio | formatoMoneda}}</span
                   >
                 </div>
-              </div> -->
+              </div>
               <button
                 style="margin-right: 10px"
                 mat-icon-button
                 color="primary"
                 type="button"
-                matTooltip="Agregar este producto al carrito de compras"
+                matTooltip="AGREGAR ESTE PRODUCTO AL CARRITO DE COMPRAS"
+                [disabled]="articulo.stock < 1"
               >
-                <mat-icon>add_shopping_cart</mat-icon>
+                <mat-icon> {{ articulo.stock > 0 ? 'add_shopping_cart' : 'remove_shopping_cart'}} </mat-icon>
               </button>
             </div>
           </div>

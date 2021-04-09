@@ -9,6 +9,7 @@ import { ResponseMarca, ResponseCategoria, ResponseSubcategoria, ResponseBuscarA
 })
 export class BuscarService {
   articulosChanged = new BehaviorSubject<BuscarArticulo[]>([]);
+  DOMAIN = environment.api;
   constructor(
     private http: HttpClient
   ) { }
@@ -32,5 +33,15 @@ export class BuscarService {
 
   updateArticulos(artculos: BuscarArticulo[]): void {
     this.articulosChanged.next(artculos);
+  }
+
+  getArticulosDestacados(): Observable<ResponseBuscarArticulo> {
+    return this.http.get<ResponseBuscarArticulo>(`${this.DOMAIN}articulo/articulosDestacados.php`);
+  }
+  getLoMasNuevo(): Observable<ResponseBuscarArticulo> {
+    return this.http.get<ResponseBuscarArticulo>(`${this.DOMAIN}articulo/articulosMasNuevos.php`);
+  }
+  getOfertas(): Observable<ResponseBuscarArticulo> {
+    return this.http.get<ResponseBuscarArticulo>(`${this.DOMAIN}articulo/articulosOfertas.php`);
   }
 }

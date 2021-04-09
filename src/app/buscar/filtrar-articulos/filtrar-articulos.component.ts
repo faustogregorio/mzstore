@@ -144,6 +144,10 @@ export class FiltrarArticulosComponent implements OnInit, OnDestroy {
     }
   }
 
+  getDescuento(precio: number, descuento: number): number {
+    return Math.trunc(descuento ? (precio * descuento / 100) : 0);
+  }
+
   ngOnDestroy(): void {
     this.articulosChanged$.unsubscribe();
   }

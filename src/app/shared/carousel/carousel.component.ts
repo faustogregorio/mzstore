@@ -21,6 +21,7 @@ import { Container } from './container';
 import { Cells } from './cells';
 import { Slide } from './slide';
 import { Utils } from './utils';
+import { environment } from 'src/environments/environment.prod';
 
 @Component({
   selector: 'app-carousel',
@@ -28,6 +29,8 @@ import { Utils } from './utils';
   styleUrls: ['./carousel.component.sass']
 })
 export class CarouselComponent implements OnDestroy, OnInit, OnChanges, AfterViewInit {
+  rutaImg = environment.urlImagenes;
+
   carousel: any;
   container: any;
   utils: any;
@@ -216,6 +219,9 @@ export class CarouselComponent implements OnDestroy, OnInit, OnChanges, AfterVie
     private elementRef: ElementRef,
     private ref: ChangeDetectorRef) {
 
+  }
+  getDescuento(precio: number, descuento: number): number {
+    return Math.trunc(descuento ? (precio * descuento / 100) : 0);
   }
   onClickCell(imagen: any): void {
     this.imagen.emit(imagen);

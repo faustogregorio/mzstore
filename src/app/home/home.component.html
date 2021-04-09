@@ -30,16 +30,17 @@
       </div>
     </div>
     <app-carousel
+    *ngIf="imagenesDestacadas"
       #carousel
       [esArticulo]="true"
-      [images]="imagenes"
+      [images]="imagenesDestacadas"
       [height]="500"
       objectFit="contain"
       [cellsToShow]="3"
       [loop]="true"
       [autoplay]="true"
       [transitionDuration]="1000"
-      [autoplayInterval]="7000"
+      [autoplayInterval]="3500"
       [margin]="20"
       [transitionTimingFunction]="'ease'"
       [arrows]="true"
@@ -64,12 +65,12 @@
     </div> -->
     <div fxFlex="100%" style="margin-top: 100px">
       <div class="etiqueta" fxFlex="250px" fxLayoutAlign="center center">
-        <span style="font-weight: 500; font-size: 1.2rem">NUEVO</span>
+        <span style="font-weight: 500; font-size: 1.2rem">LO MÁS NUEVO</span>
       </div>
     </div>
 
     <app-mostrar-articulos
-      [articulos]="imagenes"
+      [articulos]="loMasNuevo"
       style="width: 100%"
     ></app-mostrar-articulos>
 
@@ -79,7 +80,7 @@
       </div>
     </div>
     <app-mostrar-articulos
-      [articulos]="imagenes"
+      [articulos]="ofertas"
       style="width: 100%"
     ></app-mostrar-articulos>
 
@@ -89,14 +90,14 @@
       </div>
     </div>
     <mat-grid-list
-      style="margin: 20px 0px 40px 0px"
+      style="margin: 40px 0px 40px 0px"
       fxFlex="100%"
-      cols="4"
+      cols="6"
       gutterSize="40px"
-      rowHeight="2:1"
+      rowHeight="1:1"
     >
       <mat-grid-tile
-        style="background-color: #00bcd4; border-radius: 10px; cursor: pointer"
+        style="background-color: #ffc600; border-radius: 50%; cursor: pointer"
         *ngFor="let categoria of categorias"
         (click)="onCategoriaClicked(categoria.id_categoria)"
       >
@@ -104,10 +105,11 @@
           style="
             margin: 20px;
             font-weight: 500;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             text-align: center;
+            color: black;
           "
-          >{{ categoria.categoria }}</span
+          >{{ categoria.categoria | uppercase}}</span
         >
       </mat-grid-tile>
     </mat-grid-list>

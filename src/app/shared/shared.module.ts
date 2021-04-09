@@ -14,6 +14,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import { MostrarArticulosComponent } from './mostrar-articulos/mostrar-articulos.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import {MatDialogModule} from '@angular/material/dialog';
+import { PipesModule } from '../pipes/pipes.module';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatRippleModule,
     FlexLayoutModule,
     MatTooltipModule,
-    MatGridListModule
+    MatGridListModule,
+    PipesModule
   ],
   exports: [
     CommonModule,

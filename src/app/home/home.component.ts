@@ -1,8 +1,7 @@
-
-import { Component, HostListener, OnDestroy, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { Categoria } from '../buscar/buscar.model';
+import { BuscarArticulo, Categoria } from '../buscar/buscar.model';
 import { BuscarService } from '../buscar/buscar.service';
 
 import { CryptoService } from '../services/crypto.service';
@@ -16,7 +15,7 @@ import { CryptoService } from '../services/crypto.service';
 })
 export class HomeComponent implements OnInit, OnDestroy {
   encode = {id: 0, val: ''};
-  imagenes = [
+  /* imagenes = [
     { id: 0, path: 'https://m.media-amazon.com/images/I/51QZuRpM08L.jpg' },
     { id: 1, path: 'https://m.media-amazon.com/images/I/61aj2CfNW1L.jpg' },
     { id: 2, path: 'https://m.media-amazon.com/images/I/51fN8rWFLXL.jpg' },
@@ -32,7 +31,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     { id: 11, path: 'https://m.media-amazon.com/images/I/51syGoBPNyL.jpg' },
     { id: 12, path: 'https://m.media-amazon.com/images/I/61pNsQ7rWmL.jpg' },
     { id: 13, path: 'https://m.media-amazon.com/images/I/71P0MKK4HIL.jpg' },
-  ];
+  ]; */
+  imagenesDestacadas!: BuscarArticulo[];
+  loMasNuevo!: BuscarArticulo[];
+  ofertas!: BuscarArticulo[];
   autoplay = true;
   @ViewChild('carousel') carousel: any;
   cellToShow = 4;
@@ -44,6 +46,30 @@ export class HomeComponent implements OnInit, OnDestroy {
     private dialog: MatDialog
   ) {
     this.getCategorias();
+    this.buscarService.getArticulosDestacados().subscribe({
+      next: response => {
+        this.imagenesDestacadas = response.articulos;
+      },
+      error: error => {
+        console.log(error);
+      }
+    });
+    this.buscarService.getLoMasNuevo().subscribe({
+      next: response => {
+        this.loMasNuevo = response.articulos;
+      },
+      error: error => {
+        console.log(error);
+      }
+    });
+    this.buscarService.getOfertas().subscribe({
+      next: response => {
+        this.ofertas = response.articulos;
+      },
+      error: error => {
+        console.log(error);
+      }
+    });
 
   }
   getCategorias(): void {
@@ -84,10 +110,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   cambiar(): number {
     return this.cellToShow;
   }
-  acCell(): void {
+/*   acCell(): void {
     this.cellToShow = 5;
-    this.imagenes = this.imagenes.filter((imagen: any) => { if (imagen) { return imagen; } });
+    this.imagenesDestacadas = this.imagenesDestacadas.filter((imagen: BuscarArticulo) => { if (imagen) { return imagen; } });
 
-  }
+  } */
 
 }

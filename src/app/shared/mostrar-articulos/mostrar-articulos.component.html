@@ -7,30 +7,6 @@
 >
   <mat-grid-tile *ngFor="let articulo of articulos">
     <div fxFlex="100%" fxLayout="column">
-      <!-- <div
-        style="
-          position: absolute;
-          height: 50px;
-          width: 50px;
-          clip-path:polygon(13% 13%, 30% 13%, 37% 0%,   50% 8%,  62% 0%,   70% 13%,87% 13%, 87% 30%, 100% 37%, 92% 50%, 100% 62%, 87% 70%, 87% 87%, 70% 87%, 62% 100%, 50% 92%, 37% 100%, 30% 87%,13% 87%, 13% 70%, 0% 62%,   8% 50%, 0% 37%,   13% 30%);
-          background-color: #0277BD;
-        "
-        fxLayoutAlign="center center"
-      >
-        <p style="color: whitesmoke; margin: 0; font-weight: 500;font-size: 0.75rem;">Nuevo</p>
-      </div> -->
-
-      <!-- <div
-        style="
-          position: absolute;
-          height: 25px;
-          width: 50px;
-          background-color: #C21912;
-        "
-        fxLayoutAlign="center center"
-      >
-        <p style="color: whitesmoke; margin: 0; font-weight: 500;font-size: 0.75rem;">Agotado</p>
-      </div> -->
       <div
         style="height: 290px; cursor: pointer; position: relative"
         (click)="onClickArticulo(articulo)"
@@ -68,11 +44,28 @@
           </p>
         </div> -->
         <img
-          [src]="articulo.path"
+          [src]="rutaImg+articulo.imagen"
           style="width: 100%; height: 290px; object-fit: contain"
         />
       </div>
       <div fxLayout="row">
+        <div
+              *ngIf="articulo.stock === 0"
+              style="background-color: #df2935; border-radius: 5px;margin-left: 10px"
+              fxLayoutAlign="center center"
+            >
+              <p
+                style="
+                  padding: 5px;
+                  margin: 0;
+                  color: whitesmoke;
+                  font-weight: 500;
+                  font-size: 0.75rem;
+                "
+              >
+                AGOTADO
+              </p>
+            </div>
         <!-- <div
           style="background-color: #f44336; border-radius: 5px"
           fxLayoutAlign="center center"
@@ -103,7 +96,7 @@
             Nuevo
           </p>
         </div> -->
-        <div
+        <!-- <div
           style="background-color: #FFC107; border-radius: 5px;margin-left: 10px;"
           fxLayoutAlign="center center"
         >
@@ -136,7 +129,45 @@
         >
           XIAOMI REDMI NOTE 9 BLANCO (POLAR WHITE) XIAOMXIAOMI REDMI NOTE 9
           BLANCO (POLAR WHITE) XIAOM
-        </p>
+        </p> -->
+        <div
+              *ngIf="articulo.descuento > 0"
+                style="
+                  background-color: #f9dc5c;
+                  border-radius: 5px;
+                  margin-left: 10px;
+                "
+                fxLayoutAlign="center center"
+              >
+                <p
+                  style="
+                    padding: 5px;
+                    margin: 0;
+                    font-weight: 500;
+                    font-size: 0.75rem;
+                  "
+                >
+                  OFERTA
+                </p>
+              </div>
+              <p
+                class="mat-body-strong"
+                style="
+                  margin: 10px;
+                  display: -webkit-box;
+                  -webkit-box-orient: vertical;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  white-space: normal;
+                  -webkit-line-clamp: 2;
+                  cursor: pointer;
+                "
+                (click)="onClickArticulo(articulo)"
+                [matTooltip]="articulo.articulo"
+                matTooltipShowDelay="600"
+              >
+                {{ articulo.articulo}}
+              </p>
       </div>
       <div
         style="
@@ -147,18 +178,23 @@
         "
       >
         <!-- <span style="margin-left: 10px" class="mat-h2">MX$5,418.00</span> -->
-        <div
+        <span *ngIf="!(articulo.descuento > 0)" style="margin-left: 10px" class="mat-h2">{{ articulo.precio | formatoMoneda}}</span>
+              <div
+              *ngIf="articulo.descuento > 0"
           fxLayout="row"
           style="margin-left: 10px"
           fxLayoutAlign="start center"
           fxLayoutGap="5px"
         >
-          <span style="font-size: 1.3rem; color: #F57F17">-30%</span>
+        <span style="font-size: 1.3rem; color: #df2935">-{{ articulo.descuento }}%</span>
+
           <div fxLayout="column">
-            <span style="font-weight: 500; font-size: 1.1rem">MX$3,418.00</span>
-            <span style="text-decoration: line-through" class="mat-small"
-              >MX$5,418.00</span
-            >
+            <span style="font-weight: 500; font-size: 1.1rem"
+                    >{{ articulo.precio - getDescuento(articulo.precio, articulo.descuento) | formatoMoneda}}</span
+                  >
+                  <span style="text-decoration: line-through" class="mat-small"
+                    >{{ articulo.precio | formatoMoneda}}</span
+                  >
           </div>
         </div>
         <button
@@ -166,10 +202,11 @@
           mat-icon-button
           color="primary"
           type="button"
-          matTooltip="Agregar este producto al carrito de compras"
-        >
-          <mat-icon>add_shopping_cart</mat-icon>
-        </button>
+          matTooltip="AGREGAR ESTE PRODUCTO AL CARRITO DE COMPRAS"
+                [disabled]="articulo.stock < 1"
+              >
+                <mat-icon> {{ articulo.stock > 0 ? 'add_shopping_cart' : 'remove_shopping_cart'}} </mat-icon>
+              </button>
       </div>
     </div>
   </mat-grid-tile>

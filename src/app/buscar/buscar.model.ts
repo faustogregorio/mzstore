@@ -32,8 +32,11 @@ export interface ResponseBuscarArticulo {
 }
 export interface BuscarArticulo {
   id_articulo: number;
+  sku: string;
   articulo: string;
   precio: number;
+  descuento: number;
+  stock: number;
   id_subcategoria: number;
   subcategoria: string;
   id_marca: number;

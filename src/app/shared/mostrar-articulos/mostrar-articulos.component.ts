@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ArticuloComponent } from 'src/app/articulo/articulo.component';
+import { BuscarArticulo } from 'src/app/buscar/buscar.model';
+import { environment } from 'src/environments/environment.prod';
 
 @Component({
   selector: 'app-mostrar-articulos',
@@ -8,7 +10,8 @@ import { ArticuloComponent } from 'src/app/articulo/articulo.component';
   styleUrls: ['./mostrar-articulos.component.scss']
 })
 export class MostrarArticulosComponent implements OnInit {
-  @Input() articulos: any;
+  rutaImg = environment.urlImagenes;
+  @Input() articulos!: BuscarArticulo[];
   constructor(
     private dialog: MatDialog
   ) { }
@@ -23,6 +26,9 @@ export class MostrarArticulosComponent implements OnInit {
       panelClass: 'dialog',
       autoFocus: false,
     });
+  }
+  getDescuento(precio: number, descuento: number): number {
+    return Math.trunc(descuento ? (precio * descuento / 100) : 0);
   }
 
 }

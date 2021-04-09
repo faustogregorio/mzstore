@@ -41,12 +41,50 @@
         >
           <img
             *ngIf="getImage(i) && getImage(i)['image']"
-            [src]="getImage(i)['image']['path']"
+            [src]="rutaImg+getImage(i)['image']['imagen']"
             [style.object-fit]="objectFit"
             draggable="false"
           />
         </div>
-        <p
+        <div fxLayout="row">
+          <div
+          *ngIf="getImage(i)['image'].stock === 0"
+          style="background-color: #df2935; border-radius: 5px;margin-left: 10px"
+          fxLayoutAlign="center center"
+        >
+          <p
+            style="
+              padding: 5px;
+              margin: 0;
+              color: whitesmoke;
+              font-weight: 500;
+              font-size: 0.75rem;
+            "
+          >
+            AGOTADO
+          </p>
+        </div>
+          <div
+          *ngIf="getImage(i)['image'].descuento > 0"
+            style="
+              background-color: #f9dc5c;
+              border-radius: 5px;
+              margin-left: 10px;
+            "
+            fxLayoutAlign="center center"
+          >
+            <p
+              style="
+                padding: 5px;
+                margin: 0;
+                font-weight: 500;
+                font-size: 0.75rem;
+              "
+            >
+              OFERTA
+            </p>
+          </div>
+          <p
           class="mat-body-strong"
           style="
             margin: 10px;
@@ -59,12 +97,13 @@
             cursor: pointer;
           "
           (click)="onClickCell(getImage(i))"
-          matTooltip="XIAOMI REDMI NOTE 9 BLANCO (POLAR WHITE) XIAOMI REDMI NOTE 9 BLANCO (POLAR WHITE) XIAOMI REDMI NOTE 9 BLANCO (POLAR WHITE)"
+          [matTooltip]="getImage(i)['image']['articulo']"
           matTooltipShowDelay="1500"
         >
-          XIAOMI REDMI NOTE 9 BLANCO (POLAR WHITE) XIAOMI REDMI NOTE 9 BLANCO
-          (POLAR WHITE) XIAOMI REDMI NOTE 9 BLANCO (POLAR WHITE)
+          {{ getImage(i)['image']['articulo'] }}
         </p>
+        </div>
+
         <div
           style="
             height: 40px;
@@ -74,15 +113,18 @@
           "
         >
           <!-- <span class="mat-h2">MX$5,418.00</span> -->
-          <div fxLayout="row" style="margin-left: 10px;" fxLayoutAlign="start center" fxLayoutGap="5px">
-            <span style="font-size: 1.3rem; color: red">-30%</span>
+          <span *ngIf="!(getImage(i)['image'].descuento > 0)" style="margin-left: 10px" class="mat-h2">{{ getImage(i)['image'].precio | formatoMoneda}}</span>
+
+          <div *ngIf="getImage(i)['image'].descuento > 0" fxLayout="row" style="margin-left: 10px;" fxLayoutAlign="start center" fxLayoutGap="5px">
+            <span style="font-size: 1.3rem; color: #df2935">-{{ getImage(i)['image'].descuento }}%</span>
+
             <div fxLayout="column">
               <span style="font-weight: 500; font-size: 1.1rem"
-                >MX$3,418.00</span
-              >
-              <span style="text-decoration: line-through" class="mat-small"
-                >MX$5,418.00</span
-              >
+                    >{{ getImage(i)['image'].precio - getDescuento(getImage(i)['image'].precio, getImage(i)['image'].descuento) | formatoMoneda}}</span
+                  >
+                  <span style="text-decoration: line-through" class="mat-small"
+                    >{{ getImage(i)['image'].precio | formatoMoneda}}</span
+                  >
             </div>
           </div>
           <button
@@ -90,10 +132,10 @@
             mat-icon-button
             color="primary"
             type="button"
-            matTooltip="Agregar al carrito de compras"
-          >
-            <mat-icon>add_shopping_cart</mat-icon>
-          </button>
+            matTooltip="AGREGAR ESTE PRODUCTO AL CARRITO DE COMPRAS"
+              >
+                <mat-icon>add_shopping_cart</mat-icon>
+              </button>
         </div>
       </div>
     </ng-template>
