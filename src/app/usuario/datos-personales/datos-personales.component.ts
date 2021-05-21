@@ -65,6 +65,11 @@ export class DatosPersonalesComponent implements OnInit {
           {
             next: (response) => {
               this.openSnackBar(response.message);
+              this.userForm.patchValue({
+                actual_password: '',
+                new_password: '',
+                confirm_new_password: ''
+              });
             },
             error: (error) => {
               this.openSnackBar(error.error ? error.error.message : 'Error desconocido', 'ERROR', 4000);

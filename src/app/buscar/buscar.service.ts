@@ -27,7 +27,7 @@ export class BuscarService {
   }
 
   getArticulosPorCategoria(idCategoria: number): Observable<ResponseBuscarArticulo> {
-    return this.http.post<ResponseBuscarArticulo>(`${environment.api}/articulo/articulosPorCategoria.php`,
+    return this.http.post<ResponseBuscarArticulo>(`${environment.api}articulo/articulosPorCategoria.php`,
       { id_categoria: idCategoria });
   }
 

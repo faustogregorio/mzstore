@@ -31,7 +31,6 @@ export class AuthGuard implements CanActivate {
           resolve(this.router.createUrlTree(['/auth/login']));
 
         }, error => {
-          console.log(error);
           resolve(this.router.createUrlTree(['/auth/login']));
 
         });
