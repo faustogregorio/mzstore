@@ -25,7 +25,7 @@ export class AuthGuard implements CanActivate {
     return new Promise((resolve, reject) => {
       this.authService.isAuthenticated.subscribe(
         response => {
-          if (response.autheticated) {
+          if (response.authenticated) {
             resolve(true);
           }
           resolve(this.router.createUrlTree(['/auth/login']));

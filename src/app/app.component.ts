@@ -73,7 +73,7 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.authService.isAuthenticated.subscribe(
       respuesta => {
-        this.authService.updateAuthenticationStatus(respuesta.autheticated, this.datosToken.data.esAdmin);
+        this.authService.updateAuthenticationStatus(respuesta.authenticated, this.datosToken.data.esAdmin);
         console.log(this.datosToken);
       }, error => {
         this.authService.updateAuthenticationStatus(false, false);

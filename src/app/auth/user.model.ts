@@ -22,7 +22,7 @@ export interface RegistrarRespuesta {
 
 export interface Authenticated {
   token: string;
-  autheticated: boolean;
+  authenticated: boolean;
   message: string;
 }
 
